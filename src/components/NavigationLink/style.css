@@ -1,0 +1,6 @@
+.add-animation-to-link {
+  transition: 0.2s;
+}
+.add-animation-to-link:hover {
+  transform: scale(1.1);
+}
