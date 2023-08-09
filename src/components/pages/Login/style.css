@@ -1,0 +1,10 @@
+.add-text-animation {
+  transition: 0.2s;
+}
+.add-text-animation:hover {
+  transform: scale(1.1);
+}
+
+.add-text-shadow-logo {
+  text-shadow: 1px 2px 3px red;
+}
