@@ -118,6 +118,7 @@ const Explore = () => {
 
   const FailureView = () => (
     <div className="flex flex-col items-center justify-center h-full w-full">
+      <h1>Something went, Wrong</h1>
       <p>{apiStaus.errorMsg}</p>
     </div>
   );
