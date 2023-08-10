@@ -72,7 +72,7 @@ const Explore = () => {
           ...prev,
           status: constApiStatus.inProgress,
         }));
-        const apiUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+        const apiUrl = `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
         const response = await fetch(apiUrl);
         if (response.ok === true) {
           const data = await response.json();
