@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdLocationPin } from "react-icons/md";
+import { ProgressBar } from "react-loader-spinner";
 import ReusableInput from "../../utils/ReusableInput";
 import ReusableButton from "../../utils/ReusableButton";
 import EachRestaurantCard from "../../components/EachRestaurantCard";
@@ -101,18 +102,17 @@ const Explore = () => {
   };
   const SuccessView = () => (
     <>
-      {apiStaus.status === constApiStatus.success ? (
-        <p className="text-center flex items-center justify-center my-2 font-bold capitalize">
-          <MdLocationPin />
-          {apiStaus.cityName}
-        </p>
+      {apiStaus?.data?.length > 0 ? (
+        <ul className="p-0 flex flex-col sm:flex-row sm:flex-wrap space-y-3">
+          <li></li>
+          {apiStaus?.data?.map((each) => (
+            <EachRestaurantCard
+              key={each.info.id}
+              restaurantList={each?.info}
+            />
+          ))}
+        </ul>
       ) : null}
-      <ul className="p-0 flex flex-col sm:flex-row sm:flex-wrap space-y-3">
-        <li></li>
-        {apiStaus?.data?.map((each) => (
-          <EachRestaurantCard key={each.info.id} restaurantList={each?.info} />
-        ))}
-      </ul>
     </>
   );
 
@@ -137,7 +137,7 @@ const Explore = () => {
   };
 
   return (
-    <div className="p-2 h-[90%] px-10 relative">
+    <div className="p-2 h-[90%] md:px-10 relative">
       <div
         className={`search-city flex items-center border border-black w-fit rounded-md ${
           isSearchEmpty ? "border-red-600 border-2" : null
@@ -163,7 +163,27 @@ const Explore = () => {
         />
       </div>
       <div className="main-body h-full w-full flex flex-col">
-        <div className="mb-4">{RenderResults()}</div>
+        <div className="mb-4">
+          {apiStaus?.status === constApiStatus?.success ? (
+            <p className="text-center flex items-center justify-center my-2 font-bold capitalize">
+              <MdLocationPin />
+              {apiStaus.cityName}
+            </p>
+          ) : apiStaus?.status === constApiStatus?.inProgress ? (
+            <p className="text-center flex items-center justify-center">
+              <ProgressBar
+                height="40"
+                width="40"
+                ariaLabel="progress-bar-loading"
+                wrapperStyle={{}}
+                wrapperClass="progress-bar-wrapper"
+                borderColor="#F4442E"
+                barColor="#51E5FF"
+              />
+            </p>
+          ) : null}
+          {RenderResults()}
+        </div>
         <div className="border flex flex-col items-center mt-auto w-full">
           <Footer />
         </div>
