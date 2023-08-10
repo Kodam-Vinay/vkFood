@@ -1,44 +1,45 @@
-import "./style.css";
-import NaviagationLink from "../NavigationLink";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import "./style.css";
+import NaviagationLink from "../NavigationLink";
+
+// import useLocalStorageLinks from "../../utils/useLocalStorageLinks";
 
 const navigationLinks = [
   {
-    id: "Home",
+    id: "home",
     value: "Home",
     route: "/",
   },
   {
-    id: "Explore",
+    id: "explore",
     value: "Explore",
     route: "/explore-food",
   },
   {
-    id: "Contact",
-    value: "Contact",
-    route: "/contact",
-  },
-  {
-    id: "About",
+    id: "about",
     value: "About",
     route: "/about",
+  },
+  {
+    id: "cart",
+    value: "Cart",
+    route: "/cart",
   },
 ];
 
 const Header = () => {
   const [activeId, setActiveId] = useState(navigationLinks[0].id);
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
-
   const onClickNavigationLink = (id) => {
     setActiveId(id);
   };
   return (
     <nav className="header bg-blue-300 flex justify-between items-center h-[10vh] px-2 sm:px-3 md:px-20">
       <Link to="/" onClick={() => setActiveId(navigationLinks[0].id)}>
-        <h1 className="logo text-3xl text-white">Vinay</h1>
+        <h1 className="logo text-3xl text-white add-style-food-icon">Food</h1>
       </Link>
 
       {/* small screen */}
@@ -48,7 +49,7 @@ const Header = () => {
       >
         <GiHamburgerMenu color="white" />
       </button>
-      {hamburgerClicked ? (
+      {hamburgerClicked && (
         <div className="md:hidden mt-auto flex flex-col items-center pt-6 z-10">
           <button
             onClick={() => setHamburgerClicked(false)}
@@ -58,7 +59,7 @@ const Header = () => {
           >
             <AiOutlineClose color="red" />
           </button>
-          <ul className="links">
+          <ul className="links bg-gray-200 px-5">
             {navigationLinks.map((eachItem) => (
               <NaviagationLink
                 key={eachItem.id}
@@ -69,7 +70,7 @@ const Header = () => {
             ))}
           </ul>
         </div>
-      ) : null}
+      )}
 
       {/* from medium screen */}
       <div className="hidden md:flex">
