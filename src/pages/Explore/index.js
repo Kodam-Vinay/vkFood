@@ -5,6 +5,7 @@ import ReusableInput from "../../utils/ReusableInput";
 import ReusableButton from "../../utils/ReusableButton";
 import EachRestaurantCard from "../../components/EachRestaurantCard";
 import Shimmer from "../../components/Shimmer";
+import Footer from "../../components/Footer";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -98,7 +99,6 @@ const Explore = () => {
       }
     }
   };
-  console.log(apiStaus.data);
   const SuccessView = () => (
     <>
       {apiStaus.status === constApiStatus.success ? (
@@ -107,7 +107,8 @@ const Explore = () => {
           {apiStaus.cityName}
         </p>
       ) : null}
-      <ul className="p-2 overflow-y-auto h-full flex flex-col sm:flex-row">
+      <ul className="p-0 flex flex-col sm:flex-row sm:flex-wrap space-y-3">
+        <li></li>
         {apiStaus?.data?.map((each) => (
           <EachRestaurantCard key={each.info.id} restaurantList={each?.info} />
         ))}
@@ -135,7 +136,7 @@ const Explore = () => {
   };
 
   return (
-    <div className="p-2 h-[70%]">
+    <div className="p-2 h-[90%] px-10 relative">
       <div
         className={`search-city flex items-center border border-black w-fit rounded-md ${
           isSearchEmpty ? "border-red-600 border-2" : null
@@ -143,7 +144,7 @@ const Explore = () => {
       >
         <ReusableInput
           type="search"
-          className="p-1 pb-2"
+          className="p-1 pb-2 w-full max-w-[250px]"
           placeholder="Enter A City Name"
           onChange={(e) => {
             const newCityName = e.target.value;
@@ -160,7 +161,12 @@ const Explore = () => {
           onClick={onClickSearch}
         />
       </div>
-      <div className="main-body h-full w-full">{RenderResults()}</div>
+      <div className="main-body h-full w-full flex flex-col">
+        <div className="mb-4">{RenderResults()}</div>
+        <div className="border flex flex-col items-center mt-auto w-full">
+          <Footer />
+        </div>
+      </div>
     </div>
   );
 };
