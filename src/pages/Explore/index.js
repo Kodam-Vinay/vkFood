@@ -76,7 +76,7 @@ const Explore = () => {
         }));
         let apiUrl = "";
         apiUrl = isMobile
-          ? `https://corsproxy.io/?https://www.swiggy.com/mapi/homepage/getCards?lat=${lat}&lng=${lon}`
+          ? `https://corsproxy.io/?https://www.swiggy.com/mapi/homepage/getCards?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`
           : `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
         const response = await fetch(apiUrl);
         if (response.ok === true) {
@@ -84,7 +84,7 @@ const Explore = () => {
           if (isMobile) {
             setApiStatus((prev) => ({
               ...prev,
-              data: data?.data?.success?.cards[1]?.gridWidget?.gridElements
+              data: data?.data?.success?.cards[4]?.gridWidget?.gridElements
                 ?.infoWithStyle?.restaurants,
               cityName: cityName,
               status: constApiStatus.success,
@@ -128,11 +128,11 @@ const Explore = () => {
       }
     }
   };
-
+  console.log(apiStaus.data);
   const SuccessView = () => (
     <>
       {apiStaus?.data?.length > 0 ? (
-        <ul className="p-0 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap  space-y-3">
+        <ul className="p-0 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap w-full space-y-3">
           <li></li>
           {apiStaus?.data?.map((each) => (
             <EachRestaurantCard
@@ -172,7 +172,7 @@ const Explore = () => {
   };
 
   return (
-    <div className="p-2 h-[85%] px-2 sm:px-3 md:px-10 relative">
+    <div className="p-2 h-[85%] sm:px-3 md:px-10 relative">
       <div className="flex flex-col sm:flex-row sm:items-center">
         <div
           className={`search-city flex items-center border border-black w-fit self-center sm:self-start rounded-md ${
@@ -204,10 +204,10 @@ const Explore = () => {
             {apiStaus.cityName}
           </p>
         ) : apiStaus?.status === constApiStatus?.inProgress ? (
-          <p className="text-center sm:m-auto flex items-center justify-center">
+          <p className="text-center sm:mx-auto flex items-center justify-center">
             <ProgressBar
               height="40"
-              width="40"
+              width="50"
               ariaLabel="progress-bar-loading"
               wrapperStyle={{}}
               wrapperClass="progress-bar-wrapper"
