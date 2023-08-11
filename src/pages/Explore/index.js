@@ -7,6 +7,7 @@ import ReusableButton from "../../utils/ReusableButton";
 import EachRestaurantCard from "../../components/EachRestaurantCard";
 import Shimmer from "../../components/Shimmer";
 import Footer from "../../components/Footer";
+import useDeviceCheck from "../../utils/useDeviceCheck";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -28,10 +29,11 @@ const Explore = () => {
     cityName: "",
     data: [],
   });
+  const isMobile = useDeviceCheck();
   useEffect(() => {
     getData();
-    //eslint-disable-next-line
-  }, [geoLactions]);
+    // eslint-disable-next-line
+  }, [isMobile, geoLactions]);
 
   const onClickSearch = async () => {
     if (cityName === "") {
@@ -59,8 +61,7 @@ const Explore = () => {
       }
     }
   };
-
-  async function getData() {
+  const getData = async () => {
     const { lat, lon } = geoLactions;
     if (lat === "" && lon === "") {
       setApiStatus((prev) => ({
@@ -73,29 +74,42 @@ const Explore = () => {
           ...prev,
           status: constApiStatus.inProgress,
         }));
-        const apiUrl = `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+        let apiUrl = "";
+        apiUrl = isMobile
+          ? `https://corsproxy.io/?https://www.swiggy.com/mapi/homepage/getCards?lat=${lat}&lng=${lon}`
+          : `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
         const response = await fetch(apiUrl);
         if (response.ok === true) {
           const data = await response.json();
-          if (
-            data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-              ?.restaurants
-          ) {
+          if (isMobile) {
             setApiStatus((prev) => ({
               ...prev,
-              data: data?.data?.cards[2]?.card?.card?.gridElements
+              data: data?.data?.success?.cards[1]?.gridWidget?.gridElements
                 ?.infoWithStyle?.restaurants,
               cityName: cityName,
               status: constApiStatus.success,
             }));
           } else {
-            setApiStatus((prev) => ({
-              ...prev,
-              data: data?.data?.cards[1]?.card?.card?.gridElements
-                ?.infoWithStyle?.restaurants,
-              cityName: cityName,
-              status: constApiStatus.success,
-            }));
+            if (
+              data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+                ?.restaurants
+            ) {
+              setApiStatus((prev) => ({
+                ...prev,
+                data: data?.data?.cards[2]?.card?.card?.gridElements
+                  ?.infoWithStyle?.restaurants,
+                cityName: cityName,
+                status: constApiStatus.success,
+              }));
+            } else {
+              setApiStatus((prev) => ({
+                ...prev,
+                data: data?.data?.cards[1]?.card?.card?.gridElements
+                  ?.infoWithStyle?.restaurants,
+                cityName: cityName,
+                status: constApiStatus.success,
+              }));
+            }
           }
         } else {
           setApiStatus((prev) => ({
@@ -113,7 +127,7 @@ const Explore = () => {
         }));
       }
     }
-  }
+  };
 
   const SuccessView = () => (
     <>

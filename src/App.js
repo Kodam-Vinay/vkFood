@@ -1,20 +1,30 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Error from "./pages/Error";
 import Cart from "./pages/Cart";
+import SearchContext from "./utils/SearchContext";
 
 const Explore = lazy(() => import("./pages/Explore"));
 
 const RenderLayout = () => {
+  const [searchInput, setSearchInput] = useState("");
+  // const [isSearchClicked, setSearchCliked] = useState(false);
   return (
-    <div className="h-[99vh] flex flex-col overflow-x-hidden font-grotesque">
-      <Header />
-      <Outlet /> {/* this outlet will replaced by children components  */}
-    </div>
+    <SearchContext.Provider
+      value={{
+        searchInput: searchInput,
+        setSearchInput: setSearchInput,
+      }}
+    >
+      <div className="h-[99vh] flex flex-col overflow-x-hidden font-grotesque">
+        <Header />
+        <Outlet /> {/* this outlet will replaced by children components  */}
+      </div>
+    </SearchContext.Provider>
   );
 };
 
