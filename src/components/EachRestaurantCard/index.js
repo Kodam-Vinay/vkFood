@@ -21,7 +21,6 @@ const EachRestaurantCard = (props) => {
         <p className="font-[500] text-base">
           {cuisines.slice(0, 4).join(", ")}
         </p>
-        {console.log(locality)}
         <p className="font-[300] text-sm">
           {locality ? locality + "," : null} {areaName}
         </p>

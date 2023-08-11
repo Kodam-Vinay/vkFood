@@ -128,7 +128,6 @@ const Explore = () => {
       }
     }
   };
-  console.log(apiStaus.data);
   const SuccessView = () => (
     <>
       {apiStaus?.data?.length > 0 ? (
