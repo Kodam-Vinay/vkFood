@@ -11,7 +11,7 @@ body {
   scroll-behavior: smooth;
 }
 .add-animation {
-  transition: 0.2s;
+  transition: 0.5s;
 }
 .add-animation:hover {
   transform: scale(1.1);

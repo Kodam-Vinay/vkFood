@@ -9,6 +9,7 @@ import Cart from "./pages/Cart";
 import SearchContext from "./utils/SearchContext";
 
 const Explore = lazy(() => import("./pages/Explore"));
+const ResturantCardInfo = lazy(() => import("./components/ResturantCardInfo"));
 
 const RenderLayout = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -44,13 +45,27 @@ function App() {
           element: <About />,
         },
         {
-          path: "explore-food",
-          element: (
-            <Suspense fallback={<h1>Loading.....</h1>}>
-              <Explore />
-            </Suspense>
-          ),
+          path: "explore-food/",
+          children: [
+            {
+              path: "",
+              element: (
+                <Suspense fallback={<h1>Loading.....</h1>}>
+                  <Explore />
+                </Suspense>
+              ),
+            },
+            {
+              path: ":id",
+              element: (
+                <Suspense fallback={<h1>Loading.....</h1>}>
+                  <ResturantCardInfo />
+                </Suspense>
+              ),
+            },
+          ],
         },
+
         {
           path: "cart",
           element: <Cart />,
