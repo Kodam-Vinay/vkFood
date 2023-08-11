@@ -2,7 +2,7 @@ import { v4 as uuidV4 } from "uuid";
 
 const Shimmer = () => {
   return (
-    <div className="mt-10 main-shimmer space-y-3 w-full p-0 flex flex-col sm:flex-row sm:flex-wrap">
+    <div className="mt-10 main-shimmer p-0 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap  space-y-3">
       <div></div>
       {Array(20)
         .fill("")

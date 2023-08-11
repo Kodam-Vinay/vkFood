@@ -23,13 +23,14 @@ const Explore = () => {
     lon: "",
   });
   const [apiStaus, setApiStatus] = useState({
-    status: constApiStatus.intial,
+    status: constApiStatus.initial,
     errorMsg: "",
     cityName: "",
     data: [],
   });
   useEffect(() => {
     getData();
+    //eslint-disable-next-line
   }, [geoLactions]);
 
   const onClickSearch = async () => {
@@ -59,7 +60,7 @@ const Explore = () => {
     }
   };
 
-  const getData = async () => {
+  async function getData() {
     const { lat, lon } = geoLactions;
     if (lat === "" && lon === "") {
       setApiStatus((prev) => ({
@@ -76,13 +77,27 @@ const Explore = () => {
         const response = await fetch(apiUrl);
         if (response.ok === true) {
           const data = await response.json();
-          setApiStatus((prev) => ({
-            ...prev,
-            data: data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-              ?.restaurants,
-            cityName: cityName,
-            status: constApiStatus.success,
-          }));
+          console.log(data);
+          if (
+            data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+              ?.restaurants
+          ) {
+            setApiStatus((prev) => ({
+              ...prev,
+              data: data?.data?.cards[2]?.card?.card?.gridElements
+                ?.infoWithStyle?.restaurants,
+              cityName: cityName,
+              status: constApiStatus.success,
+            }));
+          } else {
+            setApiStatus((prev) => ({
+              ...prev,
+              data: data?.data?.cards[1]?.card?.card?.gridElements
+                ?.infoWithStyle?.restaurants,
+              cityName: cityName,
+              status: constApiStatus.success,
+            }));
+          }
         } else {
           setApiStatus((prev) => ({
             ...prev,
@@ -99,11 +114,13 @@ const Explore = () => {
         }));
       }
     }
-  };
+  }
+  console.log(apiStaus);
+
   const SuccessView = () => (
     <>
       {apiStaus?.data?.length > 0 ? (
-        <ul className="p-0 flex flex-col sm:flex-row sm:flex-wrap space-y-3">
+        <ul className="p-0 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap  space-y-3">
           <li></li>
           {apiStaus?.data?.map((each) => (
             <EachRestaurantCard
@@ -112,7 +129,13 @@ const Explore = () => {
             />
           ))}
         </ul>
-      ) : null}
+      ) : (
+        <div className="h-full flex flex-col justify-center items-center">
+          <p className="text-xl font-bold">
+            🥺 Sorry, Delivery is Not Available in your city
+          </p>
+        </div>
+      )}
     </>
   );
 
@@ -137,54 +160,54 @@ const Explore = () => {
   };
 
   return (
-    <div className="p-2 h-[90%] md:px-10 relative">
-      <div
-        className={`search-city flex items-center border border-black w-fit rounded-md ${
-          isSearchEmpty ? "border-red-600 border-2" : null
-        }`}
-      >
-        <ReusableInput
-          type="search"
-          className="p-1 pb-2 w-full max-w-[250px]"
-          placeholder="Enter A City Name"
-          onChange={(e) => {
-            const newCityName = e.target.value;
-            setCityName(newCityName);
-          }}
-          onKeyDown={(e) => (e.key === "Enter" ? onClickSearch() : null)}
-          value={cityName}
-        />
-        <ReusableButton
-          value={<FaSearch />}
-          className={`h-10 border flex flex-col items-center justify-center border-black border-r-0 border-b-0 border-t-0 hover:bg-blue-300 ${
+    <div className="p-2 h-[85%] px-2 sm:px-3 md:px-10 relative">
+      <div className="flex flex-col sm:flex-row sm:items-center">
+        <div
+          className={`search-city flex items-center border border-black w-fit self-center sm:self-start rounded-md ${
             isSearchEmpty ? "border-red-600 border-2" : null
           }`}
-          onClick={onClickSearch}
-        />
-      </div>
-      <div className="main-body h-full w-full flex flex-col">
-        <div className="mb-4">
-          {apiStaus?.status === constApiStatus?.success ? (
-            <p className="text-center flex items-center justify-center my-2 font-bold capitalize">
-              <MdLocationPin />
-              {apiStaus.cityName}
-            </p>
-          ) : apiStaus?.status === constApiStatus?.inProgress ? (
-            <p className="text-center flex items-center justify-center">
-              <ProgressBar
-                height="40"
-                width="40"
-                ariaLabel="progress-bar-loading"
-                wrapperStyle={{}}
-                wrapperClass="progress-bar-wrapper"
-                borderColor="#F4442E"
-                barColor="#51E5FF"
-              />
-            </p>
-          ) : null}
-          {RenderResults()}
+        >
+          <ReusableInput
+            type="search"
+            className="p-1 pb-2 w-full max-w-[250px]"
+            placeholder="Enter A City Name"
+            onChange={(e) => {
+              const newCityName = e.target.value;
+              setCityName(newCityName);
+            }}
+            onKeyDown={(e) => (e.key === "Enter" ? onClickSearch() : null)}
+            value={cityName}
+          />
+          <ReusableButton
+            value={<FaSearch />}
+            className={`h-10 border flex flex-col items-center justify-center border-black border-r-0 border-b-0 border-t-0 hover:bg-blue-300 ${
+              isSearchEmpty ? "border-red-600 border-2" : null
+            }`}
+            onClick={onClickSearch}
+          />
         </div>
-        <div className="border flex flex-col items-center mt-auto w-full">
+        {apiStaus?.status === constApiStatus?.success ? (
+          <p className="text-center sm:m-auto flex items-center justify-center my-2 font-bold capitalize">
+            <MdLocationPin />
+            {apiStaus.cityName}
+          </p>
+        ) : apiStaus?.status === constApiStatus?.inProgress ? (
+          <p className="text-center sm:m-auto flex items-center justify-center">
+            <ProgressBar
+              height="40"
+              width="40"
+              ariaLabel="progress-bar-loading"
+              wrapperStyle={{}}
+              wrapperClass="progress-bar-wrapper"
+              borderColor="#F4442E"
+              barColor="#51E5FF"
+            />
+          </p>
+        ) : null}
+      </div>
+      <div className="main-body h-full w-full flex flex-col mt-4">
+        <div className="mb-4">{RenderResults()}</div>
+        <div className="border flex flex-col h-[5%] items-center justify-center mt-auto w-full">
           <Footer />
         </div>
       </div>
