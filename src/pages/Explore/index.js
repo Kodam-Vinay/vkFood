@@ -77,7 +77,6 @@ const Explore = () => {
         const response = await fetch(apiUrl);
         if (response.ok === true) {
           const data = await response.json();
-          console.log(data);
           if (
             data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
               ?.restaurants
@@ -115,7 +114,6 @@ const Explore = () => {
       }
     }
   }
-  console.log(apiStaus);
 
   const SuccessView = () => (
     <>
