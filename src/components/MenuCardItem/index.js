@@ -11,7 +11,6 @@ const MenuCardItem = (props) => {
     imageId,
     price,
   } = menuDetails;
-  //   console.log(menuDetails);
   return (
     <li className="border-b-2 p-2 flex justify-between">
       <div className="w-2/3 space-y-1">
@@ -33,11 +32,11 @@ const MenuCardItem = (props) => {
           }
           alt={name}
           title={name}
-          className="h-28 rounded-md w-48"
+          className="h-28 rounded-md w-48 sm:h-36 sm:w-52 shadow-sm shadow-black"
         />
         <ReusableButton
           value="Add +"
-          className="hover:bg-blue-300 hover:text-white self-center"
+          className="hover:bg-blue-300 hover:text-white self-center mt-1"
         />
       </div>
     </li>

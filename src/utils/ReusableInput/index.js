@@ -1,5 +1,6 @@
 const ReusableInput = (props) => {
-  const { type, className, inputId, onChange, placeholder, onKeyDown } = props;
+  const { type, className, inputId, onChange, placeholder, onKeyDown, value } =
+    props;
   return (
     <input
       type={type}
@@ -8,6 +9,7 @@ const ReusableInput = (props) => {
       onChange={onChange}
       placeholder={placeholder}
       onKeyDown={onKeyDown}
+      value={value}
     />
   );
 };

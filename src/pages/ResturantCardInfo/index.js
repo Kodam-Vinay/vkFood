@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosTimer } from "react-icons/io";
-import { FaRupeeSign } from "react-icons/fa";
-import useDeviceCheck from "../../utils/useDeviceCheck";
 import { useParams } from "react-router-dom";
+import useDeviceCheck from "../../utils/useDeviceCheck";
 import {
   CLOUDINARY_IMG_URL,
   RESTAURANT_CARD_API_URL_DESKTOP,
@@ -14,6 +13,7 @@ import Footer from "../../components/Footer";
 import RatingStar from "../../components/svgs/RatingStar";
 import ReusableButton from "../../utils/ReusableButton";
 import MenuCardItem from "../../components/MenuCardItem";
+import MenuCardShimmer from "../../components/MenuCardShimmer";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -99,7 +99,6 @@ const ResturantCardInfo = () => {
           menuInfo: menuInfo,
         },
       }));
-      console.log(data);
     } else {
       setApiStatus((prev) => ({
         ...prev,
@@ -137,46 +136,55 @@ const ResturantCardInfo = () => {
                   }
                   alt={name}
                   title={name}
-                  className="w-32 h-32 rounded-sm mr-4"
+                  className="w-32 h-32 sm:w-44 sm:h-44 rounded-md shadow-md shadow-black mr-4"
                 />
                 <div className="restaurant-menu-main-img-text space-y-1">
-                  <h1 className="font-bold text-sm">{name}</h1>
+                  <h1 className="font-bold text-sm sm:text-base md:text-xl">
+                    {name}
+                  </h1>
                   <p className="text-sm">{cuisines.slice(0, 2).join(", ")}</p>
                   <p className="text-sm">
                     {areaName}, {city}
                   </p>
                 </div>
               </div>
-              <div className="flex mb-3 justify-between">
-                <div className="flex flex-col items-center">
-                  <p className="text-green-700 font-bold ml-2 flex items-center">
-                    <FaRupeeSign />
-                    {costForTwoMessage.slice(1)}
+              <div className="flex mb-3 items-center sm:-mt-24 sm:ml-40">
+                <div className="flex flex-col items-center h-20 w-32 sm:w-44">
+                  <p className="text-green-700 font-bold text-sm xs:text-base">
+                    {costForTwoMessage}
                   </p>
-                  <div className="flex items-center mt-3 font-bold">
-                    <IoIosTimer size={25} />
+                  <div className="flex items-center mt-2 font-bold text-sm xs:text-base">
+                    <IoIosTimer className="h-4 w-4 xs:h-4 xs:w-4 sm:h-6 sm:w-6" />
                     <p>{slaString}</p>
                   </div>
                 </div>
-                <div className="rating-container border h-20 w-28 rounded-md p-1 space-y-2">
+                <div className="rating-container border h-16 w-28 xs:h-20 xs:w-32 rounded-md p-1 space-y-1 sm:space-y-2 ml-2 xs:ml-8">
                   <div className="flex items-center">
-                    <RatingStar color="green" />
-                    <p className="text-green-700 font-bold ml-2">{avgRating}</p>
+                    <RatingStar
+                      color="green"
+                      className="h-4 w-4 xs:h-4 xs:w-4 sm:h-6 sm:w-6"
+                    />
+                    <p className="text-green-700 font-bold ml-2 text-sm xs:text-base">
+                      {avgRating}
+                    </p>
                   </div>
                   <hr />
-                  <p className="text-green-700 font-bold">
+                  <p className="text-green-700 font-bold text-sm xs:text-base">
                     {totalRatingsString}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center">
-                <p className="font-bold text-sm xs:text-base">
-                  Free Delivery On Order Above Rs.299
-                </p>
-              </div>
+            </div>
+            <div className="flex items-center">
+              <p className="font-bold text-sm xs:text-base">
+                Free Delivery On Order Above Rs.299
+              </p>
             </div>
             <hr className="border-dotted my-5 border-black" />
-            <h1 className="font-bold mb-4">MENU</h1>
+            <div className="mb-4 flex items-center">
+              <h1 className="font-bold">MENU</h1>
+              {/* <ReusableInput /> */}
+            </div>
             <ul className="menu-restaurant h-full">
               {menuInfo.map((eachItem) => (
                 <MenuCardItem
@@ -215,7 +223,7 @@ const ResturantCardInfo = () => {
   const RenderResults = () => {
     switch (apiStaus.status) {
       case constApiStatus.inProgress:
-        return <p>Loading....</p>;
+        return <MenuCardShimmer />;
       case constApiStatus.success:
         return <SuccessView />;
       case constApiStatus.failure:
@@ -226,9 +234,9 @@ const ResturantCardInfo = () => {
   };
 
   return (
-    <div className="p-2 h-[90%] sm:px-3 md:px-10 relative">
+    <div className="p-2 h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 relative">
       <div className="main-body h-full w-full flex flex-col mt-4">
-        <div className="mb-4">{RenderResults()}</div>
+        <div className="mb-4">{<RenderResults />}</div>
         <div className="border flex flex-col h-[5%] items-center justify-center mt-auto w-full">
           <Footer />
         </div>
