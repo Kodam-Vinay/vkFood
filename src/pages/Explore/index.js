@@ -8,6 +8,11 @@ import EachRestaurantCard from "../../components/EachRestaurantCard";
 import Shimmer from "../../components/Shimmer";
 import Footer from "../../components/Footer";
 import useDeviceCheck from "../../utils/useDeviceCheck";
+import useGeoLocations from "../../utils/useGeoLocations";
+import {
+  ALL_RESTAURANTS_API_URL_DESKTOP,
+  ALL_RESTAURANTS_API_URL_MOBILE,
+} from "../../config/Constants";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -19,55 +24,51 @@ const constApiStatus = {
 const Explore = () => {
   const [cityName, setCityName] = useState("");
   const [isSearchEmpty, setSearchEmpty] = useState(false);
-  const [geoLactions, setGeoLocations] = useState({
-    lat: "",
-    lon: "",
-  });
+  const [searchClicked, setSearchClicked] = useState(false);
   const [apiStaus, setApiStatus] = useState({
     status: constApiStatus.initial,
     errorMsg: "",
     cityName: "",
     data: [],
   });
+
+  const getGeoLocation = useGeoLocations(
+    cityName,
+    setSearchEmpty,
+    setApiStatus,
+    constApiStatus
+  );
+  const [geoLactions, setGeoLocations] = useState({
+    lat: "",
+    lon: "",
+  });
   const isMobile = useDeviceCheck();
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line
   }, [isMobile, geoLactions]);
 
   const onClickSearch = async () => {
-    if (cityName === "") {
-      setSearchEmpty(true);
-    } else {
-      setSearchEmpty(false);
-      setApiStatus((prev) => ({
-        ...prev,
-        status: constApiStatus.inProgress,
-      }));
-      try {
-        const apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=a3547addf902f2a1e709f062a2e801dd`;
-        const data = await fetch(apiUrl);
-        const response = await data.json();
-        setGeoLocations({
-          lat: response[0].lat,
-          lon: response[0].lon,
-        });
-      } catch (error) {
-        setApiStatus((prev) => ({
-          ...prev,
-          status: constApiStatus.failure,
-          errorMsg: "Please Enter The Correct City Name",
-        }));
-      }
-    }
+    setSearchClicked(true);
+    const result = await getGeoLocation();
+    setGeoLocations(result);
   };
+
   const getData = async () => {
     const { lat, lon } = geoLactions;
     if (lat === "" && lon === "") {
-      setApiStatus((prev) => ({
-        ...prev,
-        status: constApiStatus.initial,
-      }));
+      if (searchClicked) {
+        setApiStatus((prev) => ({
+          ...prev,
+          status: constApiStatus.inProgress,
+        }));
+      } else {
+        setApiStatus((prev) => ({
+          ...prev,
+          status: constApiStatus.initial,
+        }));
+      }
     } else {
       try {
         setApiStatus((prev) => ({
@@ -76,19 +77,38 @@ const Explore = () => {
         }));
         let apiUrl = "";
         apiUrl = isMobile
-          ? `https://corsproxy.io/?https://www.swiggy.com/mapi/homepage/getCards?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`
-          : `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+          ? ALL_RESTAURANTS_API_URL_MOBILE.replace(
+              "lat=dummy1&lng=dummy2",
+              `lat=${lat}&lng=${lon}`
+            )
+          : ALL_RESTAURANTS_API_URL_DESKTOP.replace(
+              "lat=dummy1&lng=dummy2",
+              `lat=${lat}&lng=${lon}`
+            );
         const response = await fetch(apiUrl);
         if (response.ok === true) {
           const data = await response.json();
           if (isMobile) {
-            setApiStatus((prev) => ({
-              ...prev,
-              data: data?.data?.success?.cards[4]?.gridWidget?.gridElements
-                ?.infoWithStyle?.restaurants,
-              cityName: cityName,
-              status: constApiStatus.success,
-            }));
+            if (
+              data?.data?.success?.cards[4]?.gridWidget?.gridElements
+                ?.infoWithStyle?.restaurants
+            ) {
+              setApiStatus((prev) => ({
+                ...prev,
+                data: data?.data?.success?.cards[4]?.gridWidget?.gridElements
+                  ?.infoWithStyle?.restaurants,
+                cityName: cityName,
+                status: constApiStatus.success,
+              }));
+            } else {
+              setApiStatus((prev) => ({
+                ...prev,
+                data: data?.data?.success?.cards[1]?.gridWidget?.gridElements
+                  ?.infoWithStyle?.restaurants,
+                cityName: cityName,
+                status: constApiStatus.success,
+              }));
+            }
           } else {
             if (
               data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
@@ -128,6 +148,7 @@ const Explore = () => {
       }
     }
   };
+
   const SuccessView = () => (
     <>
       {apiStaus?.data?.length > 0 ? (
@@ -206,10 +227,7 @@ const Explore = () => {
           <p className="text-center sm:mx-auto flex items-center justify-center">
             <ProgressBar
               height="40"
-              width="50"
-              ariaLabel="progress-bar-loading"
-              wrapperStyle={{}}
-              wrapperClass="progress-bar-wrapper"
+              width="150"
               borderColor="#F4442E"
               barColor="#51E5FF"
             />

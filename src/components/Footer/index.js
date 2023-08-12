@@ -3,29 +3,21 @@ import { FaLinkedin } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 import "./style.css";
+import { EMAIL_URL, INSTAGRAM_URL, LINKEDIN_URL } from "../../config/Constants";
 
 const Footer = () => {
   const onClickMail = () => {
-    window.location = "mailto:ccvinaykumarkodam@outlook.com";
+    window.location = EMAIL_URL;
   };
   return (
     <div className="footer flex w-24 justify-between self-center bottom-1 mt-auto overflow-hidden">
-      <Link
-        to="https://www.linkedin.com/in/vinay-kumar-kodam-4054bb21b/"
-        target="_blank"
-        className="add-animation-link"
-      >
+      <Link to={LINKEDIN_URL} target="_blank" className="add-animation-link">
         <FaLinkedin className="rounded-md h-6 w-6" />
       </Link>
-      <Link
-        to="https://www.instagram.com/_vinay_vinni_7/"
-        target="_blank"
-        className="add-animation-link"
-      >
+      <Link to={INSTAGRAM_URL} target="_blank" className="add-animation-link">
         <AiFillInstagram className="rounded-md h-6 w-6" />
       </Link>
       <Link
-        to="https://www.linkedin.com/in/vinay-kumar-kodam-4054bb21b/"
         target="_blank"
         className="add-animation-link"
         onClick={onClickMail}
