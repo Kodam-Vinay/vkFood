@@ -35,6 +35,7 @@ const Header = () => {
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
   const onClickNavigationLink = (id) => {
     setActiveId(id);
+    setHamburgerClicked(false);
   };
   return (
     <nav className="header bg-blue-300 flex justify-between items-center h-[10vh] px-2 xs:px-6 sm:px-10 md:px-20 sticky z-10">

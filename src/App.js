@@ -47,11 +47,7 @@ function App() {
             },
             {
               path: ":id",
-              element: (
-                <Suspense fallback={<h1>Loading.....</h1>}>
-                  <ResturantCardInfo />
-                </Suspense>
-              ),
+              element: <ResturantCardInfo />,
             },
           ],
         },
