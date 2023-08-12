@@ -27,6 +27,7 @@ const useGeoLocations = (
           lat: response[0].lat,
           lon: response[0].lon,
         };
+        localStorage.setItem("geoLactions", JSON.stringify(geoLactions));
       } catch (error) {
         setApiStatus((prev) => ({
           ...prev,
@@ -35,6 +36,7 @@ const useGeoLocations = (
         }));
       }
     }
+
     return geoLactions;
   };
 
