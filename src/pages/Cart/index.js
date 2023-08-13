@@ -6,6 +6,7 @@ import { v4 as uuidV4 } from "uuid";
 import ReusableButton from "../../utils/ReusableButton";
 import { CLOUDINARY_IMG_URL } from "../../config/Constants";
 import { Link } from "react-router-dom";
+import { FaRupeeSign } from "react-icons/fa";
 
 const Cart = () => {
   const { cartItemsList, setCartItemList } = useContext(CartContext);
@@ -46,8 +47,14 @@ const Cart = () => {
   const renderResults = () => (
     <div className="w-full h-full p-2">
       <ul className="w-full h-full space-y-2 flex flex-col mt-0">
-        <h1 className="font-bold text-xl self-end mb-3">
-          <span className="border-0 text-blue-300">Total: {TotalPrice}</span>{" "}
+        <h1 className="font-bold text-xl self-end mb-3 flex items-center">
+          <span className="border-0 text-blue-300 flex items-center">
+            Total:
+          </span>
+          <span className="flex items-center ml-2">
+            <FaRupeeSign />
+            {TotalPrice}
+          </span>
         </h1>
         {cartItemsList.map((eachItem) => (
           <CartItem key={uuidV4()} cartItemDetails={eachItem} />
