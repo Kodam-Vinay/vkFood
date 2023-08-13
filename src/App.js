@@ -14,23 +14,48 @@ const Explore = lazy(() => import("./pages/Explore"));
 const RenderLayout = () => {
   const [ItemsInCart, setItemsInCart] = useState(0);
   const [cartItemsList, setCartItemList] = useState([]);
-  const onClickMinus = () => {
-    if (ItemsInCart > 0) {
-      setItemsInCart((prev) => prev - 1);
-    }
+
+  const onClickMinus = (id) => {
+    const updatedList = cartItemsList.map((eachItem) => {
+      if (eachItem.id === id) {
+        if (eachItem.ItemsInCart < 1) {
+          const updatedList = cartItemsList.filter(
+            (eachItem) => eachItem.id !== id
+          );
+          setCartItemList(updatedList);
+        }
+        return { ...eachItem, ItemsInCart: eachItem.ItemsInCart - 1 };
+      }
+      return eachItem;
+    });
+    setCartItemList(updatedList);
   };
-  const onClickPlus = () => {
-    setItemsInCart((prev) => prev + 1);
+
+  const onClickRemove = (id) => {
+    const updatedList = cartItemsList.filter((eachItem) => eachItem.id !== id);
+    setCartItemList(updatedList);
   };
-  console.log(cartItemsList);
+
+  const onClickPlus = (id) => {
+    const updatedList = cartItemsList.map((eachItem) => {
+      if (eachItem.id === id) {
+        return { ...eachItem, ItemsInCart: eachItem.ItemsInCart + 1 };
+      }
+      return eachItem;
+    });
+    setCartItemList(updatedList);
+  };
+
   return (
     <CartContext.Provider
       value={{
-        ItemsInCart: ItemsInCart,
-        onClickMinus: onClickMinus,
-        onClickPlus: onClickPlus,
         cartItemsList: cartItemsList,
         setCartItemList: setCartItemList,
+        ItemsInCart: ItemsInCart,
+        setItemsInCart: setItemsInCart,
+        onClickMinus: onClickMinus,
+        onClickPlus: onClickPlus,
+        onClickRemove: onClickRemove,
       }}
     >
       <div className="h-[99vh] flex flex-col overflow-x-hidden font-grotesque">
@@ -57,7 +82,7 @@ function App() {
           element: <About />,
         },
         {
-          path: "explore-food/",
+          path: "explore-food",
           children: [
             {
               path: "",

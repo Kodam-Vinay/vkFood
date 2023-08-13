@@ -7,23 +7,18 @@ import CartContext from "../../utils/CartContext";
 import FoodTypeIcon from "../svgs/FoodTypeIcon";
 import { CLOUDINARY_IMG_URL, SWIGGY_IMG_URL } from "../../config/Constants";
 import ReusableButton from "../../utils/ReusableButton";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const MenuCardItem = (props) => {
+  const [ItemsInCart, setItemsInCart] = useState(0);
+
   const { menuDetails } = props;
-  const { id, name, imageId, price } = menuDetails;
+  const { id, name, imageId, price, defaultPrice } = menuDetails;
   const vegClassifier = menuDetails?.itemAttribute?.vegClassifier;
-  let {
-    onClickMinus,
-    onClickPlus,
-    ItemsInCart,
-    setCartItemList,
-    cartItemsList,
-  } = useContext(CartContext);
+  let { setCartItemList, cartItemsList } = useContext(CartContext);
+
   const onClickAdd = () => {
-    console.log(id);
     let result = cartItemsList.find((eachItem) => eachItem.id === id);
-    console.log(result);
     if (result) {
       let newCount = result.ItemsInCart + ItemsInCart;
       const updatedList = cartItemsList.map((eachItem) => {
@@ -41,6 +36,15 @@ const MenuCardItem = (props) => {
     }
   };
 
+  const onClickMinus = () => {
+    if (ItemsInCart > 0) {
+      setItemsInCart((prev) => prev - 1);
+    }
+  };
+  const onClickPlus = () => {
+    setItemsInCart((prev) => prev + 1);
+  };
+
   return (
     <li className="border-b-2 p-2 flex justify-between">
       <div className="w-2/3 space-y-1">
@@ -52,7 +56,7 @@ const MenuCardItem = (props) => {
         <p className="font-bold text-sm">{name}</p>
         <p className="flex items-center">
           <FaRupeeSign />
-          <span>{price ? price / 100 : "Not Mentioned"}</span>
+          <span>{price ? price / 100 : defaultPrice / 100}</span>
         </p>
       </div>
       <div className="image-and-add-button-container flex flex-col">

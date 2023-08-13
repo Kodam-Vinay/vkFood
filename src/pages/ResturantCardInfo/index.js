@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosTimer } from "react-icons/io";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ import RatingStar from "../../components/svgs/RatingStar";
 import ReusableButton from "../../utils/ReusableButton";
 import MenuCardItem from "../../components/MenuCardItem";
 import MenuCardShimmer from "../../components/MenuCardShimmer";
+import CartContext from "../../utils/CartContext";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -44,6 +45,8 @@ const ResturantCardInfo = () => {
     getData();
     // eslint-disable-next-line
   }, []);
+
+  const { cartItemsList } = useContext(CartContext);
 
   const getData = async () => {
     setApiStatus((prev) => ({
@@ -185,6 +188,14 @@ const ResturantCardInfo = () => {
               <h1 className="font-bold">MENU</h1>
               {/* <ReusableInput /> */}
             </div>
+            {cartItemsList.length > 0 && (
+              <Link to="/cart">
+                <ReusableButton
+                  value="Go To Cart"
+                  className="relative top-auto hover:bg-blue-300 hover:text-white"
+                />
+              </Link>
+            )}
             <ul className="menu-restaurant h-full">
               {menuInfo.map((eachItem) => (
                 <MenuCardItem
