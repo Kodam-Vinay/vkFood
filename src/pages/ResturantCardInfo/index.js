@@ -136,7 +136,7 @@ const ResturantCardInfo = () => {
                   }
                   alt={name}
                   title={name}
-                  className="w-32 h-32 sm:w-44 sm:h-44 rounded-md shadow-md shadow-black mr-4"
+                  className="w-32 h-32 sm:w-48 sm:h-44 rounded-md shadow-md shadow-black mr-4"
                 />
                 <div className="restaurant-menu-main-img-text space-y-1">
                   <h1 className="font-bold text-sm sm:text-base md:text-xl">
@@ -165,7 +165,7 @@ const ResturantCardInfo = () => {
                       className="h-4 w-4 xs:h-4 xs:w-4 sm:h-6 sm:w-6"
                     />
                     <p className="text-green-700 font-bold ml-2 text-sm xs:text-base">
-                      {avgRating}
+                      {avgRating ? avgRating : "NEW"}
                     </p>
                   </div>
                   <hr />
