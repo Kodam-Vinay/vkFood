@@ -55,7 +55,7 @@ const Cart = () => {
         <span className="border-0 text-blue-300 flex items-center">Total:</span>
         <span className="flex items-center ml-2">
           <FaRupeeSign />
-          {TotalPrice}
+          {Math.round(TotalPrice)}
         </span>
       </h1>
       <ul className="w-full h-full space-y-2 flex flex-col mt-0 pb-4 pt-2 px-1">

@@ -29,7 +29,7 @@ const CartItem = (props) => {
         }
         alt={name}
         title={name}
-        className="h-24 rounded-md w-24 self-center sm:h-36 sm:w-48 shadow-sm shadow-black mr-5"
+        className="h-24 rounded-md w-24 self-center sm:h-36 sm:w-36 shadow-sm shadow-black mr-5"
       />
       <div className="h-full w-full">
         <div className="space-y-2">
@@ -63,8 +63,8 @@ const CartItem = (props) => {
           <FaRupeeSign />
           <span>
             {price
-              ? (price / 100) * ItemsInCart
-              : (defaultPrice / 100) * ItemsInCart}
+              ? Math.round(price / 100) * ItemsInCart
+              : Math.round(defaultPrice / 100) * ItemsInCart}
           </span>
         </p>
       </div>

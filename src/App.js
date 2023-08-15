@@ -37,7 +37,6 @@ const navigationLinks = [
 ];
 
 const RenderLayout = () => {
-  const [ItemsInCart, setItemsInCart] = useState(0);
   const storedData = JSON.parse(localStorage.getItem("cartList"));
   const [cartItemsList, setCartItemList] = useState(
     storedData !== null ? storedData : []
@@ -97,8 +96,6 @@ const RenderLayout = () => {
         value={{
           cartItemsList: cartItemsList,
           setCartItemList: setCartItemList,
-          ItemsInCart: ItemsInCart,
-          setItemsInCart: setItemsInCart,
           onClickMinus: onClickMinus,
           onClickPlus: onClickPlus,
           onClickRemove: onClickRemove,

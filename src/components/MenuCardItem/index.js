@@ -14,7 +14,7 @@ const MenuCardItem = (props) => {
   const { menuDetails } = props;
   const { id, name, imageId, price, defaultPrice } = menuDetails;
   const vegClassifier = menuDetails?.itemAttribute?.vegClassifier;
-  let { setCartItemList, cartItemsList } = useContext(CartContext);
+  let { cartItemsList, setCartItemList } = useContext(CartContext);
   const onClickAdd = () => {
     let result = cartItemsList.find((eachItem) => eachItem.id === id);
     if (result) {
@@ -26,7 +26,6 @@ const MenuCardItem = (props) => {
         return eachItem;
       });
       setCartItemList(updatedList);
-      console.log(updatedList);
     } else {
       if (ItemsInCart === 0) {
       } else {
@@ -42,7 +41,6 @@ const MenuCardItem = (props) => {
   const onClickPlus = () => {
     setItemsInCart((prev) => prev + 1);
   };
-
   return (
     <li className="border-b-2 p-2 flex justify-between">
       <div className="w-2/3 space-y-1">
@@ -54,7 +52,9 @@ const MenuCardItem = (props) => {
         <p className="font-bold text-sm">{name}</p>
         <p className="flex items-center">
           <FaRupeeSign />
-          <span>{price ? price / 100 : defaultPrice / 100}</span>
+          <span>
+            {price ? Math.round(price / 100) : Math.round(defaultPrice / 100)}
+          </span>
         </p>
       </div>
       <div className="image-and-add-button-container flex flex-col">

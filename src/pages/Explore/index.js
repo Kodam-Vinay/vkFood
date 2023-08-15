@@ -13,7 +13,6 @@ import {
   ALL_RESTAURANTS_API_URL_DESKTOP,
   ALL_RESTAURANTS_API_URL_MOBILE,
 } from "../../config/Constants";
-import useAutoLocation from "../../utils/useAutoLocation";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -23,15 +22,24 @@ const constApiStatus = {
 };
 
 const Explore = () => {
-  const [cityName, setCityName] = useState("");
+  const storedData = JSON.parse(sessionStorage.getItem("exploreData"));
+  const [cityName, setCityName] = useState(
+    storedData !== null ? storedData.apiStaus.cityName : ""
+  );
   const [isSearchEmpty, setSearchEmpty] = useState(false);
-  const [searchClicked, setSearchClicked] = useState(false);
-  const [apiStaus, setApiStatus] = useState({
-    status: constApiStatus.initial,
-    errorMsg: "",
-    cityName: "",
-    data: [],
-  });
+  const [searchClicked, setSearchClicked] = useState(
+    storedData !== null ? storedData.searchClicked : false
+  );
+  const [apiStaus, setApiStatus] = useState(
+    storedData !== null
+      ? storedData.apiStaus
+      : {
+          status: constApiStatus.initial,
+          errorMsg: "",
+          cityName: "",
+          data: [],
+        }
+  );
 
   const getGeoLocation = useGeoLocations(
     cityName,
@@ -40,30 +48,46 @@ const Explore = () => {
     constApiStatus
   );
 
-  // useAutoLocation()
-  //   .then((data) => {
-  //     console.log(data);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  useEffect(() => {
+    storeData();
+  }, []);
 
-  const [geoLactions, setGeoLocations] = useState({
-    lat: "",
-    lon: "",
-  });
+  const [geoLactions, setGeoLocations] = useState(
+    storedData
+      ? storedData.geoLactions
+      : {
+          lat: "",
+          lon: "",
+        }
+  );
+
+  const storeData = () => {
+    sessionStorage.setItem(
+      "exploreData",
+      JSON.stringify({
+        apiStaus,
+        searchClicked,
+        geoLactions,
+      })
+    );
+  };
 
   const isMobile = useDeviceCheck();
-
   useEffect(() => {
     getData();
     // eslint-disable-next-line
-  }, [isMobile, geoLactions]);
+  }, [geoLactions]);
 
   const onClickSearch = async () => {
-    setSearchClicked(true);
-    const result = await getGeoLocation();
-    setGeoLocations(result);
+    if (cityName === "") {
+      setSearchClicked(false);
+      setSearchEmpty(true);
+    } else {
+      setSearchClicked(true);
+      setSearchEmpty(false);
+      const result = await getGeoLocation();
+      setGeoLocations(result);
+    }
   };
 
   const getData = async () => {
