@@ -136,7 +136,7 @@ const ResturantCardInfo = () => {
       availability,
       sla: { slaString },
     } = restaurantInfo;
-    console.log(restaurantInfo);
+
     return (
       <div className="p-0 flex flex-col justify-center sm:flex-row w-full">
         {availability.opened ? (
