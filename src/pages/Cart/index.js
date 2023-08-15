@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import CartContext from "../../utils/CartContext";
+import NavigationContext from "../../utils/NavigationContext";
 import "./style.css";
 import CartItem from "../../components/CartItem";
 import { v4 as uuidV4 } from "uuid";
@@ -10,6 +11,7 @@ import { FaRupeeSign } from "react-icons/fa";
 
 const Cart = () => {
   const { cartItemsList, setCartItemList } = useContext(CartContext);
+  const { setActiveId } = useContext(NavigationContext);
   const onClickRemoveAll = () => {
     setCartItemList([]);
   };
@@ -38,6 +40,7 @@ const Cart = () => {
           <ReusableButton
             value="Go To Explore"
             className="hover:bg-blue-300 hover:text-white"
+            onClick={() => setActiveId("explore")}
           />
         </Link>
       </div>
@@ -45,17 +48,15 @@ const Cart = () => {
   );
 
   const renderResults = () => (
-    <div className="w-full h-full p-2">
-      <ul className="w-full h-full space-y-2 flex flex-col mt-0">
-        <h1 className="font-bold text-xl self-end mb-3 flex items-center">
-          <span className="border-0 text-blue-300 flex items-center">
-            Total:
-          </span>
-          <span className="flex items-center ml-2">
-            <FaRupeeSign />
-            {TotalPrice}
-          </span>
-        </h1>
+    <div className="w-full h-full p-2 flex flex-col">
+      <h1 className="font-bold text-xl mb-3 self-end flex items-center">
+        <span className="border-0 text-blue-300 flex items-center">Total:</span>
+        <span className="flex items-center ml-2">
+          <FaRupeeSign />
+          {TotalPrice}
+        </span>
+      </h1>
+      <ul className="w-full h-full space-y-2 flex flex-col mt-0 pb-4 pt-2 px-1">
         {cartItemsList.map((eachItem) => (
           <CartItem key={uuidV4()} cartItemDetails={eachItem} />
         ))}
@@ -64,7 +65,7 @@ const Cart = () => {
   );
 
   return (
-    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 relative overflow-y-hidden">
+    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 relative">
       <div className="h-full w-full">
         <div className="w-full flex items-center justify-between h-6">
           <h1 className="font-bold text-xl">Cart</h1>
@@ -76,7 +77,7 @@ const Cart = () => {
             />
           )}
         </div>
-        <div className="mt-5 h-full w-full overflow-y-auto">
+        <div className="mt-5 h-full w-full">
           {cartItemsList.length > 0 ? renderResults() : renderEmptyPage()}
         </div>
       </div>

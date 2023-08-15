@@ -1,48 +1,31 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import "./style.css";
 import NaviagationLink from "../NavigationLink";
-
-// import useLocalStorageLinks from "../../utils/useLocalStorageLinks";
-
-const navigationLinks = [
-  {
-    id: "home",
-    value: "Home",
-    route: "/",
-  },
-  {
-    id: "explore",
-    value: "Explore",
-    route: "/explore-food",
-  },
-  {
-    id: "about",
-    value: "About",
-    route: "/about",
-  },
-  {
-    id: "cart",
-    value: "Cart",
-    route: "/cart",
-  },
-];
+import NavigationContext from "../../utils/NavigationContext";
 
 const Header = () => {
-  const [activeId, setActiveId] = useState(navigationLinks[0].id);
+  const { activeId, setActiveId, navigationLinks } =
+    useContext(NavigationContext);
+
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
   const onClickNavigationLink = (id) => {
     setActiveId(id);
     setHamburgerClicked(false);
   };
+
   return (
     <nav className="header bg-blue-300 flex justify-between items-center h-[10vh] px-2 xs:px-6 sm:px-10 md:px-20 sticky z-10">
-      <Link to="/" onClick={() => setActiveId(navigationLinks[0].id)}>
-        <h1 className="logo text-3xl text-white add-style-food-icon">Food</h1>
+      <Link to="/">
+        <h1
+          className="logo text-3xl text-white add-style-food-icon cursor-pointer"
+          onClick={() => setActiveId("home")}
+        >
+          Food
+        </h1>
       </Link>
-
       {/* small screen */}
       <button
         onClick={() => setHamburgerClicked(true)}

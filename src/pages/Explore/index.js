@@ -13,6 +13,7 @@ import {
   ALL_RESTAURANTS_API_URL_DESKTOP,
   ALL_RESTAURANTS_API_URL_MOBILE,
 } from "../../config/Constants";
+import useAutoLocation from "../../utils/useAutoLocation";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -38,10 +39,20 @@ const Explore = () => {
     setApiStatus,
     constApiStatus
   );
+
+  // useAutoLocation()
+  //   .then((data) => {
+  //     console.log(data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+
   const [geoLactions, setGeoLocations] = useState({
     lat: "",
     lon: "",
   });
+
   const isMobile = useDeviceCheck();
 
   useEffect(() => {

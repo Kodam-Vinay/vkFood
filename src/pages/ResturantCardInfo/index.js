@@ -15,6 +15,7 @@ import ReusableButton from "../../utils/ReusableButton";
 import MenuCardItem from "../../components/MenuCardItem";
 import MenuCardShimmer from "../../components/MenuCardShimmer";
 import CartContext from "../../utils/CartContext";
+import NavigationContext from "../../utils/NavigationContext";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -45,8 +46,12 @@ const ResturantCardInfo = () => {
     getData();
     // eslint-disable-next-line
   }, []);
-
+  const { setActiveId } = useContext(NavigationContext);
   const { cartItemsList } = useContext(CartContext);
+
+  const onCickCart = () => {
+    setActiveId("cart");
+  };
 
   const getData = async () => {
     setApiStatus((prev) => ({
@@ -188,14 +193,16 @@ const ResturantCardInfo = () => {
               <h1 className="font-bold">MENU</h1>
               {/* <ReusableInput /> */}
             </div>
-            {cartItemsList.length > 0 && (
+            {cartItemsList.length > 0 ? (
               <Link to="/cart">
                 <ReusableButton
-                  value="Go To Cart"
-                  className="relative top-auto hover:bg-blue-300 hover:text-white"
+                  type="button"
+                  value="Cart"
+                  className="hover:bg-blue-300 hover:text-white"
+                  onClick={onCickCart}
                 />
               </Link>
-            )}
+            ) : null}
             <ul className="menu-restaurant h-full">
               {menuInfo.map((eachItem) => (
                 <MenuCardItem
@@ -221,6 +228,7 @@ const ResturantCardInfo = () => {
                 type="button"
                 value="Go Back"
                 className="hover:bg-blue-300 hover:text-white"
+                onClick={setActiveId("explore")}
               />
             </Link>
           </div>

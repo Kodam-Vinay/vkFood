@@ -93,13 +93,15 @@ const MenuCardItem = (props) => {
                   title={name}
                   className="xs:h-20 rounded-md xs:w-32 w-14 h-14 self-center mb-3 add-animation"
                 />
-                <div className="div-add-remove-cart-buttons flex items-center justify-center">
+                <div className="div-add-remove-cart-buttons flex items-center justify-around">
                   <ReusableButton
                     value={<AiOutlineMinus />}
                     className="add-animation border-none"
                     onClick={onClickMinus}
                   />
-                  <p className="text-sm mb-2">Count: {ItemsInCart}</p>
+                  <p className="text-xl mb-2 text-blue-300 font-bold">
+                    {ItemsInCart}
+                  </p>
                   <ReusableButton
                     value={<AiOutlinePlus />}
                     className="add-animation border-none"

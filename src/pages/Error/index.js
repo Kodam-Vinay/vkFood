@@ -24,6 +24,9 @@ const Error = () => {
           type="button"
           value="Home"
           className="hover:bg-blue-400 hover:text-white font-[600] text-base md:text-xl"
+          onClick={() =>
+            sessionStorage.setItem("activeId", JSON.stringify("home"))
+          }
         />
       </Link>
     </div>

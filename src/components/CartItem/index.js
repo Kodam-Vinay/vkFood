@@ -29,12 +29,21 @@ const CartItem = (props) => {
         }
         alt={name}
         title={name}
-        className="h-28 rounded-md w-28 sm:h-36 sm:w-52 shadow-sm shadow-black mr-5"
+        className="h-24 rounded-md w-24 self-center sm:h-36 sm:w-48 shadow-sm shadow-black mr-5"
       />
       <div className="h-full w-full">
         <div className="space-y-2">
-          <p className="font-bold text-sm sm:text-xl text-blue-300">{name}</p>
-          <div className="div-add-remove-cart-buttons flex items-center justify-between sm:w-20 xs:w-24 mt-4">
+          <div className="flex items-center justify-between px-2">
+            <p className="font-[600] sm:font-bold text-sm sm:text-xl text-blue-300">
+              {name}
+            </p>
+            <ReusableButton
+              value={<AiOutlineClose />}
+              className="add-animation border-0 h-2 w-2 mb-2"
+              onClick={onClickRemoveItem}
+            />
+          </div>
+          <div className="div-add-remove-cart-buttons flex items-center justify-between sm:w-28 xs:w-24 mt-4">
             <ReusableButton
               value={<AiOutlineMinus />}
               className="add-animation border hover:bg-blue-300 hover:text-white flex items-center justify-center h-7 w-7"
@@ -50,21 +59,14 @@ const CartItem = (props) => {
             />
           </div>
         </div>
-        <div className="mt-3 flex items-center justify-between w-full p-2">
-          <p className="flex items-center text-sm sm:text-xl">
-            <FaRupeeSign />
-            <span>
-              {price
-                ? (price / 100) * ItemsInCart
-                : (defaultPrice / 100) * ItemsInCart}
-            </span>
-          </p>
-          <ReusableButton
-            value={<AiOutlineClose />}
-            className="add-animation border-0 h-2 w-2 -mt-40 sm:-mt-48"
-            onClick={onClickRemoveItem}
-          />
-        </div>
+        <p className="flex items-center text-sm sm:text-xl mt-3 p-2">
+          <FaRupeeSign />
+          <span>
+            {price
+              ? (price / 100) * ItemsInCart
+              : (defaultPrice / 100) * ItemsInCart}
+          </span>
+        </p>
       </div>
     </li>
   );
