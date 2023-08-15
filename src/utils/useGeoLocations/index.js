@@ -1,16 +1,22 @@
+import { useEffect, useState } from "react";
 import { GEO_LOCATION_URL } from "../../config/Constants";
 
 const useGeoLocations = (
   cityName,
   setSearchEmpty,
   setApiStatus,
-  constApiStatus
+  constApiStatus,
+  searchClicked
 ) => {
-  let geoLactions = { lat: "", lon: "" };
+  useEffect(() => {
+    getGeoLocation();
+  }, [searchClicked]);
+
+  const [geoLocations, setGeoLocations] = useState({ lat: "", lon: "" });
   const getGeoLocation = async () => {
-    if (cityName === "") {
+    if (cityName === "" && searchClicked) {
       setSearchEmpty(true);
-    } else {
+    } else if (cityName !== "" && searchClicked) {
       setSearchEmpty(false);
       setApiStatus((prev) => ({
         ...prev,
@@ -23,11 +29,10 @@ const useGeoLocations = (
         );
         const data = await fetch(apiUrl);
         const response = await data.json();
-        geoLactions = {
+        setGeoLocations({
           lat: response[0].lat,
           lon: response[0].lon,
-        };
-        localStorage.setItem("geoLactions", JSON.stringify(geoLactions));
+        });
       } catch (error) {
         setApiStatus((prev) => ({
           ...prev,
@@ -36,10 +41,7 @@ const useGeoLocations = (
         }));
       }
     }
-
-    return geoLactions;
   };
-
-  return getGeoLocation;
+  return geoLocations;
 };
 export default useGeoLocations;

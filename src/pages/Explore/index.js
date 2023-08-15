@@ -22,14 +22,12 @@ const constApiStatus = {
 };
 
 const Explore = () => {
-  const storedData = JSON.parse(sessionStorage.getItem("exploreData"));
+  const storedData = JSON.parse(sessionStorage.getItem("apiData"));
   const [cityName, setCityName] = useState(
-    storedData !== null ? storedData.apiStaus.cityName : ""
+    storedData !== null ? storedData.cityName : ""
   );
   const [isSearchEmpty, setSearchEmpty] = useState(false);
-  const [searchClicked, setSearchClicked] = useState(
-    storedData !== null ? storedData.searchClicked : false
-  );
+  const [searchClicked, setSearchClicked] = useState(false);
   const [apiStaus, setApiStatus] = useState(
     storedData !== null
       ? storedData.apiStaus
@@ -41,70 +39,42 @@ const Explore = () => {
         }
   );
 
-  const getGeoLocation = useGeoLocations(
+  const geoLocations = useGeoLocations(
     cityName,
     setSearchEmpty,
     setApiStatus,
-    constApiStatus
+    constApiStatus,
+    searchClicked
   );
 
-  useEffect(() => {
-    storeData();
-  }, []);
-
-  const [geoLactions, setGeoLocations] = useState(
-    storedData
-      ? storedData.geoLactions
-      : {
-          lat: "",
-          lon: "",
-        }
+  sessionStorage.setItem(
+    "apiData",
+    JSON.stringify({ apiStaus, geoLocations, cityName })
   );
-
-  const storeData = () => {
-    sessionStorage.setItem(
-      "exploreData",
-      JSON.stringify({
-        apiStaus,
-        searchClicked,
-        geoLactions,
-      })
-    );
-  };
 
   const isMobile = useDeviceCheck();
   useEffect(() => {
     getData();
     // eslint-disable-next-line
-  }, [geoLactions]);
+  }, [geoLocations]);
 
   const onClickSearch = async () => {
-    if (cityName === "") {
+    setSearchClicked(true);
+  };
+
+  const onChangeCityName = (event) => {
+    setSearchClicked(false);
+    setCityName(event.target.value);
+  };
+
+  const getData = async () => {
+    const { lat, lon } = geoLocations;
+    if (lat === "" && lon === "") {
       setSearchClicked(false);
       setSearchEmpty(true);
     } else {
       setSearchClicked(true);
       setSearchEmpty(false);
-      const result = await getGeoLocation();
-      setGeoLocations(result);
-    }
-  };
-
-  const getData = async () => {
-    const { lat, lon } = geoLactions;
-    if (lat === "" && lon === "") {
-      if (searchClicked) {
-        setApiStatus((prev) => ({
-          ...prev,
-          status: constApiStatus.inProgress,
-        }));
-      } else {
-        setApiStatus((prev) => ({
-          ...prev,
-          status: constApiStatus.initial,
-        }));
-      }
-    } else {
       try {
         setApiStatus((prev) => ({
           ...prev,
@@ -225,30 +195,26 @@ const Explore = () => {
         return null;
     }
   };
-
   return (
     <div className="p-2 h-[85%] sm:px-3 md:px-10 relative">
       <div className="flex flex-col sm:flex-row sm:items-center">
         <div
           className={`search-city flex items-center border border-black w-fit self-center sm:self-start rounded-md ${
-            isSearchEmpty ? "border-red-600 border-2" : null
+            searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
           }`}
         >
           <ReusableInput
             type="search"
             className="p-1 pb-2 w-full max-w-[250px]"
             placeholder="Enter A City Name"
-            onChange={(e) => {
-              const newCityName = e.target.value;
-              setCityName(newCityName);
-            }}
+            onChange={onChangeCityName}
             onKeyDown={(e) => (e.key === "Enter" ? onClickSearch() : null)}
             value={cityName}
           />
           <ReusableButton
             value={<FaSearch />}
             className={`h-10 border flex flex-col items-center justify-center border-black border-r-0 border-b-0 border-t-0 hover:bg-blue-300 ${
-              isSearchEmpty ? "border-red-600 border-2" : null
+              searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
             }`}
             onClick={onClickSearch}
           />
