@@ -3,7 +3,7 @@ import { CLOUDINARY_IMG_URL, SWIGGY_IMG_URL } from "../../config/Constants";
 import ReusableButton from "../../utils/ReusableButton";
 import { FaRupeeSign } from "react-icons/fa";
 import { useContext } from "react";
-import CartContext from "../../utils/CartContext";
+import CartContext from "../../context/CartContext";
 
 const CartItem = (props) => {
   const { cartItemDetails } = props;

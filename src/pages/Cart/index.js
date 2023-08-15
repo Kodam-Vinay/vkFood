@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import CartContext from "../../utils/CartContext";
-import NavigationContext from "../../utils/NavigationContext";
+import CartContext from "../../context/CartContext";
+import NavigationContext from "../../context/NavigationContext";
 import "./style.css";
 import CartItem from "../../components/CartItem";
 import { v4 as uuidV4 } from "uuid";
@@ -15,6 +15,7 @@ const Cart = () => {
   const onClickRemoveAll = () => {
     setCartItemList([]);
   };
+
   let TotalPrice = 0;
   cartItemsList.map((each) => {
     if (each.price) {
@@ -24,6 +25,7 @@ const Cart = () => {
     }
     return null;
   });
+
   const renderEmptyPage = () => (
     <div className="h-full w-full flex flex-col items-center justify-center">
       <img

@@ -3,7 +3,7 @@ import { AiOutlinePlus, AiOutlineMinus, AiOutlineClose } from "react-icons/ai";
 import Popup from "reactjs-popup";
 
 import "./style.css";
-import CartContext from "../../utils/CartContext";
+import CartContext from "../../context/CartContext";
 import FoodTypeIcon from "../svgs/FoodTypeIcon";
 import { CLOUDINARY_IMG_URL, SWIGGY_IMG_URL } from "../../config/Constants";
 import ReusableButton from "../../utils/ReusableButton";
@@ -11,12 +11,10 @@ import { useContext, useState } from "react";
 
 const MenuCardItem = (props) => {
   const [ItemsInCart, setItemsInCart] = useState(0);
-
   const { menuDetails } = props;
   const { id, name, imageId, price, defaultPrice } = menuDetails;
   const vegClassifier = menuDetails?.itemAttribute?.vegClassifier;
   let { setCartItemList, cartItemsList } = useContext(CartContext);
-
   const onClickAdd = () => {
     let result = cartItemsList.find((eachItem) => eachItem.id === id);
     if (result) {
@@ -28,6 +26,7 @@ const MenuCardItem = (props) => {
         return eachItem;
       });
       setCartItemList(updatedList);
+      console.log(updatedList);
     } else {
       if (ItemsInCart === 0) {
       } else {
@@ -35,7 +34,6 @@ const MenuCardItem = (props) => {
       }
     }
   };
-
   const onClickMinus = () => {
     if (ItemsInCart > 0) {
       setItemsInCart((prev) => prev - 1);

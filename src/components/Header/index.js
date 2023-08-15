@@ -4,7 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import "./style.css";
 import NaviagationLink from "../NavigationLink";
-import NavigationContext from "../../utils/NavigationContext";
+import NavigationContext from "../../context/NavigationContext";
 
 const Header = () => {
   const { activeId, setActiveId, navigationLinks } =

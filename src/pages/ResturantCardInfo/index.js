@@ -14,8 +14,8 @@ import RatingStar from "../../components/svgs/RatingStar";
 import ReusableButton from "../../utils/ReusableButton";
 import MenuCardItem from "../../components/MenuCardItem";
 import MenuCardShimmer from "../../components/MenuCardShimmer";
-import CartContext from "../../utils/CartContext";
-import NavigationContext from "../../utils/NavigationContext";
+import CartContext from "../../context/CartContext";
+import NavigationContext from "../../context/NavigationContext";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -48,7 +48,6 @@ const ResturantCardInfo = () => {
   }, []);
   const { setActiveId } = useContext(NavigationContext);
   const { cartItemsList } = useContext(CartContext);
-
   const onCickCart = () => {
     setActiveId("cart");
   };
@@ -92,9 +91,16 @@ const ResturantCardInfo = () => {
           menuInfo =
             data?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]
               ?.card?.card?.itemCards;
-        } else {
+        } else if (
+          data?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]
+            ?.card?.card?.itemCards
+        ) {
           menuInfo =
             data?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]
+              ?.card?.card?.itemCards;
+        } else {
+          menuInfo =
+            data?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[4]
               ?.card?.card?.itemCards;
         }
       }

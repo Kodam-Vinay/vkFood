@@ -1,5 +1,5 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -7,9 +7,9 @@ import About from "./pages/About";
 import Error from "./pages/Error";
 import Cart from "./pages/Cart";
 import ResturantCardInfo from "./pages/ResturantCardInfo";
-import CartContext from "./utils/CartContext";
-import useNavigationLink from "./utils/useNavigationLink";
-import NavigationContext from "./utils/NavigationContext";
+import CartContext from "./context/CartContext";
+import useNavigationLink from "./utils/useNavigationLinkSessionStorage";
+import NavigationContext from "./context/NavigationContext";
 
 const Explore = lazy(() => import("./pages/Explore"));
 
@@ -38,12 +38,25 @@ const navigationLinks = [
 
 const RenderLayout = () => {
   const [ItemsInCart, setItemsInCart] = useState(0);
-  const [cartItemsList, setCartItemList] = useState([]);
+  const storedData = JSON.parse(localStorage.getItem("cartList"));
+  const [cartItemsList, setCartItemList] = useState(
+    storedData !== null ? storedData : []
+  );
   const storedActiveId = JSON.parse(sessionStorage.getItem("activeId"));
 
   const [activeId, setActiveId] = useState(
     storedActiveId !== null ? storedActiveId : "home"
   );
+
+  useEffect(() => {
+    storeData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartItemsList]);
+
+  const storeData = () => {
+    localStorage.setItem("cartList", JSON.stringify(cartItemsList));
+  };
+
   useNavigationLink(activeId);
   const onClickMinus = (id) => {
     const updatedList = cartItemsList.map((eachItem) => {
@@ -54,7 +67,6 @@ const RenderLayout = () => {
       }
       return eachItem;
     });
-    console.log(updatedList);
     setCartItemList(updatedList);
   };
 

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CLOUDINARY_IMG_URL } from "../../config/Constants";
 import ReusableButton from "../../utils/ReusableButton";
 import { useContext } from "react";
-import NavigationContext from "../../utils/NavigationContext";
+import NavigationContext from "../../context/NavigationContext";
 const Home = () => {
   const { setActiveId } = useContext(NavigationContext);
   return (
