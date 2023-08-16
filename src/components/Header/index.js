@@ -6,7 +6,7 @@ import "./style.css";
 import NaviagationLink from "../NavigationLink";
 import NavigationContext from "../../context/NavigationContext";
 import Cookies from "js-cookie";
-
+import UserDetails from "../../utils/UserDetails";
 const Header = () => {
   const { activeId, setActiveId, navigationLinks } =
     useContext(NavigationContext);
@@ -17,10 +17,13 @@ const Header = () => {
     setActiveId(id);
     setHamburgerClicked(false);
   };
+  const user = UserDetails();
 
   const onClickLogout = () => {
     Cookies.remove("jwtToken");
     navigate("/login");
+    sessionStorage.removeItem("apiData");
+    sessionStorage.setItem("activeId", JSON.stringify("home"));
   };
 
   return (
@@ -34,12 +37,21 @@ const Header = () => {
         </h1>
       </Link>
       {/* small screen */}
-      <button
-        onClick={() => setHamburgerClicked(true)}
-        className={`${hamburgerClicked ? "hidden" : "block"} md:hidden`}
-      >
-        <GiHamburgerMenu color="white" />
-      </button>
+      <div className="flex items-center w-14 justify-between md:hidden">
+        <img
+          src={user.picture}
+          alt="profileLogo"
+          className={`rounded-full h-8 w-8 ${
+            hamburgerClicked ? "hidden" : "block"
+          }`}
+        />
+        <button
+          onClick={() => setHamburgerClicked(true)}
+          className={`${hamburgerClicked ? "hidden" : "block"}`}
+        >
+          <GiHamburgerMenu color="white" />
+        </button>
+      </div>
       {hamburgerClicked && (
         <div className="md:hidden mt-auto flex flex-col items-center pt-6 z-10">
           <button
@@ -70,7 +82,12 @@ const Header = () => {
 
       {/* from medium screen */}
       <div className="hidden md:flex">
-        <ul className="links md:flex md:space-x-5 p-0">
+        <ul className="links md:flex md:space-x-5 p-0 md:items-center">
+          <img
+            src={user.picture}
+            alt="profileLogo"
+            className="rounded-full h-10 w-10"
+          />
           {navigationLinks.map((eachItem) => (
             <NaviagationLink
               key={eachItem.id}

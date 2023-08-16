@@ -13,6 +13,7 @@ import {
   ALL_RESTAURANTS_API_URL_DESKTOP,
   ALL_RESTAURANTS_API_URL_MOBILE,
 } from "../../config/Constants";
+// import { AutoLocation } from "../../utils/AutoLocation";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -28,6 +29,7 @@ const Explore = () => {
   );
   const [isSearchEmpty, setSearchEmpty] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
+  // const { latitude, longitude, error } = AutoLocation();
   const [apiStaus, setApiStatus] = useState(
     storedData !== null
       ? storedData.apiStaus
@@ -38,6 +40,20 @@ const Explore = () => {
           data: [],
         }
   );
+  // useEffect(() => {
+  //   setToStorage();
+  // }, [latitude, longitude]);
+
+  // const setToStorage = () => {
+  //   sessionStorage.setItem(
+  //     "apiData",
+  //     JSON.stringify({
+  //       apiStaus,
+  //       geoLocations: { latitude, longitude },
+  //       cityName,
+  //     })
+  //   );
+  // };
 
   const geoLocations = useGeoLocations(
     cityName,
@@ -195,6 +211,15 @@ const Explore = () => {
         return null;
     }
   };
+
+  // AutoLocation(cityName)
+  //   .then((data) => {
+  //     console.log(data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+
   return (
     <div className="p-2 h-[85%] sm:px-3 md:px-10 relative">
       <div className="flex flex-col sm:flex-row sm:items-center">
