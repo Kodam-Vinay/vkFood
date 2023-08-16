@@ -1,19 +1,26 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import "./style.css";
 import NaviagationLink from "../NavigationLink";
 import NavigationContext from "../../context/NavigationContext";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const { activeId, setActiveId, navigationLinks } =
     useContext(NavigationContext);
+  const navigate = useNavigate();
 
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
   const onClickNavigationLink = (id) => {
     setActiveId(id);
     setHamburgerClicked(false);
+  };
+
+  const onClickLogout = () => {
+    Cookies.remove("jwtToken");
+    navigate("/login");
   };
 
   return (
@@ -52,6 +59,11 @@ const Header = () => {
                 isActive={eachItem.id === activeId}
               />
             ))}
+            <li className="add-animation-to-link font-[600] h-9 cursor-pointer">
+              <button type="button" onClick={onClickLogout}>
+                Logout
+              </button>
+            </li>
           </ul>
         </div>
       )}
@@ -67,6 +79,11 @@ const Header = () => {
               isActive={eachItem.id === activeId}
             />
           ))}
+          <li className="add-animation-to-link font-[600] h-9 cursor-pointer">
+            <button type="button" onClick={onClickLogout}>
+              Logout
+            </button>
+          </li>
         </ul>
       </div>
     </nav>

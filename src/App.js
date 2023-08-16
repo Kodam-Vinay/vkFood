@@ -10,6 +10,9 @@ import ResturantCardInfo from "./pages/ResturantCardInfo";
 import CartContext from "./context/CartContext";
 import useNavigationLink from "./utils/useNavigationLinkSessionStorage";
 import NavigationContext from "./context/NavigationContext";
+import Login from "./pages/Login";
+import ProtectedRoute from "./context/ProtectedRoute";
+import LoginRoute from "./context/LoginRoute";
 
 const Explore = lazy(() => import("./pages/Explore"));
 
@@ -114,16 +117,28 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <RenderLayout />,
+      element: (
+        <ProtectedRoute>
+          <RenderLayout />
+        </ProtectedRoute>
+      ),
       errorElement: <Error />,
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: (
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "about",
-          element: <About />,
+          element: (
+            <ProtectedRoute>
+              <About />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "explore-food",
@@ -131,23 +146,41 @@ function App() {
             {
               path: "",
               element: (
-                <Suspense fallback={<h1>Loading.....</h1>}>
-                  <Explore />
-                </Suspense>
+                <ProtectedRoute>
+                  <Suspense fallback={<h1>Loading.....</h1>}>
+                    <Explore />
+                  </Suspense>
+                </ProtectedRoute>
               ),
             },
             {
               path: ":id",
-              element: <ResturantCardInfo />,
+              element: (
+                <ProtectedRoute>
+                  <ResturantCardInfo />
+                </ProtectedRoute>
+              ),
             },
           ],
         },
 
         {
           path: "cart",
-          element: <Cart />,
+          element: (
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          ),
         },
       ],
+    },
+    {
+      path: "/login",
+      element: (
+        <LoginRoute>
+          <Login />
+        </LoginRoute>
+      ),
     },
   ]);
   return <RouterProvider router={router} />;

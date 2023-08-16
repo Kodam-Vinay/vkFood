@@ -19,17 +19,16 @@ const useAutoLocation = async () => {
     function success(position) {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
-      setAutoGeoLocation({
+      setAutoGeoLocation((prev) => ({
+        ...prev,
         lat: latitude,
         lon: longitude,
-      });
+      }));
     }
   };
-
   function error() {
     console.log("Unable to get the position");
   }
-
   return autoGeoLaction;
 };
 

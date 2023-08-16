@@ -5,6 +5,7 @@ import { useContext } from "react";
 import NavigationContext from "../../context/NavigationContext";
 const Home = () => {
   const { setActiveId } = useContext(NavigationContext);
+
   return (
     <div className="home flex flex-col items-center justify-center h-[80%]">
       <img
