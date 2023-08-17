@@ -6,6 +6,9 @@ const CartContext = createContext({
   onClickMinus: () => {},
   onClickPlus: () => {},
   onClickRemove: () => {},
+  onClickAdd: () => {},
+  isAddClicked: false,
+  setIsAddClicked: () => {},
 });
 
 CartContext.displayName = "CartContext";

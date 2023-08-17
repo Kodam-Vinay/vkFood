@@ -34,7 +34,7 @@ const Login = () => {
             setCredentials(credentialResponse.credential);
           }}
           onError={() => {
-            console.log("login failed");
+            throw new Error();
           }}
         ></GoogleLogin>
       </div>

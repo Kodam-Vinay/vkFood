@@ -1,0 +1,12 @@
+.add-animation-cart-icon {
+  animation: mover 1s 1 alternate;
+}
+
+@keyframes mover {
+  0% {
+    margin-top: -20px;
+  }
+  100% {
+    margin-top: -8px;
+  }
+}

@@ -1,6 +1,5 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
-import { BsCart4 } from "react-icons/bs";
 import "./App.css";
 import Header from "./components/Header";
 import About from "./pages/About";
@@ -14,6 +13,7 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./context/ProtectedRoute";
 import LoginRoute from "./context/LoginRoute";
 import { BallTriangle } from "react-loader-spinner";
+import CartLogoWithCount from "./components/CartLogoWithCount";
 
 const Home = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -40,13 +40,14 @@ const navigationLinks = [
   },
   {
     id: "cart",
-    value: <BsCart4 size={26} className="-mt-2 md:mt-1" />,
+    value: <CartLogoWithCount />,
     route: "/cart",
   },
 ];
 
 const RenderLayout = () => {
   const storedData = JSON.parse(localStorage.getItem("cartList"));
+  const [isAddClicked, setIsAddClicked] = useState(false);
   const [cartItemsList, setCartItemList] = useState(
     storedData !== null ? storedData : []
   );
@@ -64,7 +65,6 @@ const RenderLayout = () => {
   const storeData = () => {
     localStorage.setItem("cartList", JSON.stringify(cartItemsList));
   };
-
   useNavigationLink(activeId);
   const onClickMinus = (id) => {
     const updatedList = cartItemsList.map((eachItem) => {
@@ -93,6 +93,22 @@ const RenderLayout = () => {
     setCartItemList(updatedList);
   };
 
+  const onClickAdd = (id, menuDetails) => {
+    let result = cartItemsList.find((eachItem) => eachItem.id === id);
+    if (result) {
+      let newCount = result.ItemsInCart + 1;
+      const updatedList = cartItemsList.map((eachItem) => {
+        if (eachItem.id === id) {
+          return { ...eachItem, ItemsInCart: newCount };
+        }
+        return eachItem;
+      });
+      setCartItemList(updatedList);
+    } else {
+      setCartItemList((prev) => [...prev, { ...menuDetails, ItemsInCart: 1 }]);
+    }
+  };
+
   return (
     <NavigationContext.Provider
       value={{
@@ -108,6 +124,9 @@ const RenderLayout = () => {
           onClickMinus: onClickMinus,
           onClickPlus: onClickPlus,
           onClickRemove: onClickRemove,
+          onClickAdd: onClickAdd,
+          isAddClicked: isAddClicked,
+          setIsAddClicked: setIsAddClicked,
         }}
       >
         <div className="h-[99vh] flex flex-col overflow-x-hidden font-grotesque">

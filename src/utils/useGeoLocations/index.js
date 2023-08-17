@@ -10,6 +10,7 @@ const useGeoLocations = (
 ) => {
   useEffect(() => {
     getGeoLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchClicked]);
 
   const [geoLocations, setGeoLocations] = useState({ lat: "", lon: "" });
