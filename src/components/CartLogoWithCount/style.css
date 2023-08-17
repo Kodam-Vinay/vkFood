@@ -1,5 +1,5 @@
 .add-animation-cart-icon {
-  animation: mover 1s 1 alternate;
+  animation: mover 2s 1 alternate;
 }
 
 @keyframes mover {

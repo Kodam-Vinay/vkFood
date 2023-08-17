@@ -49,7 +49,7 @@ const MenuCardItem = (props) => {
         />
         <ReusableButton
           type="button"
-          className="hover:bg-blue-300 hover:text-white self-center mt-1 border rounded-md px-2 py-1"
+          className="hover:bg-blue-300 hover:text-white self-center mt-1 border rounded-md px-2 py-1 relative bottom-2"
           onClick={onClickAddItem}
           value="Add +"
         />

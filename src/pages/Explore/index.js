@@ -221,7 +221,7 @@ const Explore = () => {
   //   });
 
   return (
-    <div className="p-2 h-[85%] sm:px-3 md:px-10 relative">
+    <div className="p-2 h-[90%] sm:px-3 md:px-10 relative overflow-y-auto">
       <div className="flex flex-col sm:flex-row sm:items-center">
         <div
           className={`search-city flex items-center border border-black w-fit self-center sm:self-start rounded-md ${

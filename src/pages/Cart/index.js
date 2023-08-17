@@ -58,7 +58,7 @@ const Cart = () => {
           {Math.round(TotalPrice)}
         </span>
       </h1>
-      <ul className="w-full h-full space-y-2 flex flex-col mt-0 pb-4 pt-2 px-1">
+      <ul className="w-full h-full space-y-2 flex flex-col mt-0 pb-4 pt-2 px-1 overflow-y-auto">
         {cartItemsList.map((eachItem) => (
           <CartItem key={uuidV4()} cartItemDetails={eachItem} />
         ))}
@@ -67,7 +67,7 @@ const Cart = () => {
   );
 
   return (
-    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 relative">
+    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80">
       <div className="h-full w-full">
         <div className="w-full flex items-center justify-between h-6">
           <h1 className="font-bold text-xl">Cart</h1>

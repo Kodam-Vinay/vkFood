@@ -129,7 +129,7 @@ const RenderLayout = () => {
           setIsAddClicked: setIsAddClicked,
         }}
       >
-        <div className="h-[99vh] flex flex-col overflow-x-hidden font-grotesque">
+        <div className="h-[99vh] flex flex-col overflow-hidden font-grotesque">
           <Header />
           <Outlet /> {/* this outlet will replaced by children components  */}
         </div>
