@@ -1,30 +1,21 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import "./style.css";
 import NaviagationLink from "../NavigationLink";
 import NavigationContext from "../../context/NavigationContext";
-import Cookies from "js-cookie";
 import UserDetails from "../../utils/UserDetails";
+import LogoutPopup from "../LogoutPopup";
 const Header = () => {
   const { activeId, setActiveId, navigationLinks } =
     useContext(NavigationContext);
-  const navigate = useNavigate();
-
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
   const onClickNavigationLink = (id) => {
     setActiveId(id);
     setHamburgerClicked(false);
   };
   const user = UserDetails();
-
-  const onClickLogout = () => {
-    Cookies.remove("jwtToken");
-    navigate("/login");
-    sessionStorage.removeItem("apiData");
-    sessionStorage.setItem("activeId", JSON.stringify("home"));
-  };
 
   return (
     <nav className="header bg-blue-300 flex justify-between items-center h-[10vh] px-2 xs:px-6 sm:px-10 md:px-20 sticky z-10">
@@ -62,7 +53,7 @@ const Header = () => {
           >
             <AiOutlineClose color="red" />
           </button>
-          <ul className="links bg-gray-200 px-5">
+          <ul className="links bg-gray-200 px-5 py-2">
             {navigationLinks.map((eachItem) => (
               <NaviagationLink
                 key={eachItem.id}
@@ -72,9 +63,7 @@ const Header = () => {
               />
             ))}
             <li className="add-animation-to-link font-[600] h-9 cursor-pointer">
-              <button type="button" onClick={onClickLogout}>
-                Logout
-              </button>
+              <LogoutPopup />
             </li>
           </ul>
         </div>
@@ -97,9 +86,7 @@ const Header = () => {
             />
           ))}
           <li className="add-animation-to-link font-[600] h-9 cursor-pointer">
-            <button type="button" onClick={onClickLogout}>
-              Logout
-            </button>
+            <LogoutPopup />
           </li>
         </ul>
       </div>

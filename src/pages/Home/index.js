@@ -9,20 +9,24 @@ const Home = () => {
   const { setActiveId } = useContext(NavigationContext);
   const user = UserDetails();
   return (
-    <div className="home flex flex-col justify-center h-[80%]">
-      <h1 className="text-3xl ml-5 xs:ml-10 md:ml-20">Hi {user.name} !!</h1>
-      <img
-        src={CLOUDINARY_IMG_URL + "delivery-boy-home-page"}
-        alt="homePageLogo"
-        className="max-w-[300px] self-center"
-      />
-      <Link to="explore-food" className="self-center">
-        <ReusableButton
-          value="Explore Food"
-          className="hover:bg-blue-400 hover:text-white "
-          onClick={() => setActiveId("explore")}
+    <div className="home flex flex-col h-[80%]">
+      <h1 className="text-3xl ml-5 xs:ml-10 md:ml-20 pt-4">
+        Hi, {user.name} !!
+      </h1>
+      <div className="flex flex-col">
+        <img
+          src={CLOUDINARY_IMG_URL + "delivery-boy-home-page"}
+          alt="homePageLogo"
+          className="max-w-[300px] self-center"
         />
-      </Link>
+        <Link to="explore-food" className="self-center">
+          <ReusableButton
+            value="Explore Food"
+            className="hover:bg-blue-400 hover:text-white "
+            onClick={() => setActiveId("explore")}
+          />
+        </Link>
+      </div>
     </div>
   );
 };

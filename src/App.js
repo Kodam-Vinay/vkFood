@@ -1,8 +1,8 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
+import { BsCart4 } from "react-icons/bs";
 import "./App.css";
 import Header from "./components/Header";
-import Home from "./pages/Home";
 import About from "./pages/About";
 import Error from "./pages/Error";
 import Cart from "./pages/Cart";
@@ -13,6 +13,12 @@ import NavigationContext from "./context/NavigationContext";
 import Login from "./pages/Login";
 import ProtectedRoute from "./context/ProtectedRoute";
 import LoginRoute from "./context/LoginRoute";
+import { BallTriangle } from "react-loader-spinner";
+
+const Home = lazy(async () => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  return import("./pages/Home");
+});
 
 const Explore = lazy(() => import("./pages/Explore"));
 
@@ -34,7 +40,7 @@ const navigationLinks = [
   },
   {
     id: "cart",
-    value: "Cart",
+    value: <BsCart4 size={26} className="-mt-2 md:mt-1" />,
     route: "/cart",
   },
 ];
@@ -128,7 +134,15 @@ function App() {
           path: "/",
           element: (
             <ProtectedRoute>
-              <Home />
+              <Suspense
+                fallback={
+                  <div className="h-[90vh] flex flex-col items-center justify-center">
+                    <BallTriangle />
+                  </div>
+                }
+              >
+                <Home />
+              </Suspense>
             </ProtectedRoute>
           ),
         },
