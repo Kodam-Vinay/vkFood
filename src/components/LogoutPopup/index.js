@@ -32,10 +32,12 @@ const LogoutPopup = () => {
     >
       {(close) => (
         <div className="rounded-md h-full flex flex-col items-center justify-center space-y-5 p-1">
-          <h1 className="text-2xl">Are you sure, you want to logout ?</h1>
+          <h1 className="text-2xl font-[500] md:font-[600]">
+            Are you sure, you want to logout ?
+          </h1>
           <div className="flex space-x-3">
             <ReusableButton
-              className="bg-red-400 px-2 rounded-md flex items-center hover:bg-red-500 border-0"
+              className="bg-red-400 px-2 font-bold text-white rounded-md flex items-center hover:bg-red-500 border-0"
               onClick={() => close()}
               value="Cancel"
               ref={ref}
@@ -43,7 +45,7 @@ const LogoutPopup = () => {
             <ReusableButton
               value="Confirm"
               onClick={onClickLogout}
-              className="bg-green-100 px-2 rounded-md flex items-center hover:bg-green-200 border-0"
+              className="bg-green-400 px-2 font-bold text-white rounded-md flex items-center hover:bg-green-500 border-0"
               ref={ref}
             />
           </div>
