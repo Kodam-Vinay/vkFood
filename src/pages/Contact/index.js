@@ -129,7 +129,7 @@ const Contact = () => {
   };
 
   return (
-    <div id="contact" className="h-[87%]">
+    <div id="contact" className="h-[89%]">
       <div className="p-1 xs:p-4 mt-4 sm:px-12 md:px-[65px] lg:px-[142px] flex flex-col h-full">
         <div className="mt-4 md:flex md:items-center space-x-6 justify-around">
           <form onSubmit={onSubmitForm} className="space-y-3 order-2">
