@@ -296,7 +296,7 @@ const ResturantCardInfo = () => {
   };
 
   return (
-    <div className="p-2 h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 relative">
+    <div className="p-2 h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 relative">
       <div className="main-body h-full w-full flex flex-col mt-4">
         <div className="mb-4">{<RenderResults />}</div>
       </div>

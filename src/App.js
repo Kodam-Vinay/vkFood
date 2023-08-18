@@ -163,7 +163,7 @@ function App() {
             <ProtectedRoute>
               <Suspense
                 fallback={
-                  <div className="h-[90vh] flex flex-col items-center justify-center">
+                  <div className="h-[80vh] flex flex-col items-center justify-center">
                     <BallTriangle />
                   </div>
                 }

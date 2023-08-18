@@ -53,8 +53,6 @@ const Explore = () => {
   //     })
   //   );
   // };
-
-  console.log(apiStaus?.data?.sort(apiStaus?.data?.info?.avgRating));
   const geoLocations = useGeoLocations(
     cityName,
     setSearchEmpty,
@@ -173,7 +171,7 @@ const Explore = () => {
   const SuccessView = () => (
     <>
       {apiStaus?.data?.length > 0 ? (
-        <ul className="p-0 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap w-full space-y-3">
+        <ul className="p-1 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap w-full space-y-3 h-full">
           <li></li>
           {apiStaus?.data?.map((each) => (
             <EachRestaurantCard
@@ -221,8 +219,8 @@ const Explore = () => {
   //   });
 
   return (
-    <div className="p-2 h-[90%] sm:px-3 md:px-10 relative overflow-y-auto">
-      <div className="flex flex-col sm:flex-row sm:items-center">
+    <div className="p-2 h-[85%] sm:px-3 md:px-10 relative">
+      <div className="flex flex-col sm:flex-row sm:items-center overflow-hidden h-[10%]">
         <div
           className={`search-city flex items-center border border-gray-400 w-fit self-center sm:self-start rounded-md ${
             searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
@@ -260,7 +258,7 @@ const Explore = () => {
           </p>
         ) : null}
       </div>
-      <div className="main-body h-full w-full flex flex-col mt-4">
+      <div className="main-body w-full flex flex-col mt-4 overflow-y-auto h-full">
         <div className="mb-4">{RenderResults()}</div>
       </div>
     </div>
