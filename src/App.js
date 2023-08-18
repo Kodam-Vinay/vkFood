@@ -14,6 +14,7 @@ import ProtectedRoute from "./context/ProtectedRoute";
 import LoginRoute from "./context/LoginRoute";
 import { BallTriangle } from "react-loader-spinner";
 import CartLogoWithCount from "./components/CartLogoWithCount";
+import AddToCartContext from "./context/AddToCartContext";
 
 const Home = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -99,9 +100,10 @@ const RenderLayout = () => {
   };
 
   const onClickAdd = (id, menuDetails) => {
-    let result = cartItemsList.find((eachItem) => eachItem.id === id);
+    console.log(storedData);
+    const result = cartItemsList.find((eachItem) => eachItem.id === id);
     if (result) {
-      let newCount = result.ItemsInCart + 1;
+      const newCount = result.ItemsInCart + 1;
       const updatedList = cartItemsList.map((eachItem) => {
         if (eachItem.id === id) {
           return { ...eachItem, ItemsInCart: newCount };
@@ -113,7 +115,6 @@ const RenderLayout = () => {
       setCartItemList((prev) => [...prev, { ...menuDetails, ItemsInCart: 1 }]);
     }
   };
-
   return (
     <NavigationContext.Provider
       value={{
@@ -122,26 +123,31 @@ const RenderLayout = () => {
         navigationLinks: navigationLinks,
       }}
     >
-      <CartContext.Provider
+      <AddToCartContext.Provider
         value={{
-          cartItemsList: cartItemsList,
-          setCartItemList: setCartItemList,
-          onClickMinus: onClickMinus,
-          onClickPlus: onClickPlus,
-          onClickRemove: onClickRemove,
-          onClickAdd: onClickAdd,
           isAddClicked: isAddClicked,
           setIsAddClicked: setIsAddClicked,
+          onClickAdd: onClickAdd,
         }}
       >
-        <div
-          className="h-[93vh] sm:99vh flex flex-col apply-font"
-          onContextMenu={onClickContextMenu}
+        <CartContext.Provider
+          value={{
+            onClickMinus: onClickMinus,
+            onClickPlus: onClickPlus,
+            onClickRemove: onClickRemove,
+            cartItemsList: cartItemsList,
+            setCartItemList: setCartItemList,
+          }}
         >
-          <Header />
-          <Outlet /> {/* this outlet will replaced by children components  */}
-        </div>
-      </CartContext.Provider>
+          <div
+            className="h-[93vh] sm:99vh flex flex-col apply-font"
+            onContextMenu={onClickContextMenu}
+          >
+            <Header />
+            <Outlet /> {/* this outlet will replaced by children components  */}
+          </div>
+        </CartContext.Provider>
+      </AddToCartContext.Provider>
     </NavigationContext.Provider>
   );
 };

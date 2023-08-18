@@ -1,11 +1,11 @@
 import { FaRupeeSign } from "react-icons/fa";
 import "./style.css";
-import CartContext from "../../context/CartContext";
 import FoodTypeIcon from "../svgs/FoodTypeIcon";
 import { CLOUDINARY_IMG_URL, SWIGGY_IMG_URL } from "../../config/Constants";
 import ReusableButton from "../../utils/ReusableButton";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
+import AddToCartContext from "../../context/AddToCartContext";
 
 const MenuCardItem = (props) => {
   const { menuDetails } = props;
@@ -15,18 +15,17 @@ const MenuCardItem = (props) => {
       ? menuDetails?.itemAttribute?.vegClassifier
       : "VEG"
   );
-  const { onClickAdd, setIsAddClicked, isAddClicked } = useContext(CartContext);
+  const { onClickAdd, setIsAddClicked } = useContext(AddToCartContext);
   useEffect(() => {
     const timerId = setTimeout(() => {
       setIsAddClicked(false);
     }, 2000);
 
-    console.log(timerId);
     return () => {
       clearTimeout(timerId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAddClicked]);
+  }, []);
   const onClickAddItem = () => {
     onClickAdd(id, menuDetails);
     setIsAddClicked(true);

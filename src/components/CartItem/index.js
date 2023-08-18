@@ -10,7 +10,6 @@ const CartItem = (props) => {
   const { name, id, price, defaultPrice, imageId, ItemsInCart } =
     cartItemDetails;
   const { onClickMinus, onClickPlus, onClickRemove } = useContext(CartContext);
-  console.log(ItemsInCart);
   const onClickDecrease = () => {
     onClickMinus(id);
   };
