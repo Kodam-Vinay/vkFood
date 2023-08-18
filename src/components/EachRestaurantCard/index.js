@@ -15,7 +15,7 @@ const EachRestaurantCard = (props) => {
   } = restaurantList;
   return (
     <Link to={`${id}`} className="w-full sm:max-w-[260px]">
-      <li className="flex sm:h-[390px] sm:max-w-[260px] sm:flex-col items-center xs:items-start border shadow-md rounded-md p-2 sm:mr-5 sm:mb-3">
+      <li className="flex sm:h-[390px] sm:max-w-[260px] sm:flex-col items-center xs:items-start  hover:shadow-md hover:shadow-black rounded-md p-2 sm:mr-5 sm:mb-3">
         <img
           src={
             cloudinaryImageId

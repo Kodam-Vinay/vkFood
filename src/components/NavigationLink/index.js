@@ -7,11 +7,11 @@ const NaviagationLink = (props) => {
   const onClickLink = () => {
     onClickNavigationLink(id);
   };
-  const applyColor = isActive ? "text-red-300" : "";
+  const applyColor = isActive ? "text-red-400" : "text-gray-500";
   return (
     <Link to={route}>
       <li
-        className={`add-animation-to-link font-[600] h-9 ${applyColor} cursor-pointer`}
+        className={`add-animation-to-link  font-[600] h-9 ${applyColor} cursor-pointer`}
         onClick={onClickLink}
       >
         {value}

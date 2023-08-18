@@ -8,7 +8,7 @@ const CartLogoWithCount = () => {
   const { cartItemsList, isAddClicked } = useContext(CartContext);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mr-10 md:mr-0">
       {isAddClicked ? (
         <MdFastfood
           size={20}

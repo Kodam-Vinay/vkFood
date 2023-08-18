@@ -31,3 +31,5 @@ export const CLIENT_ID =
 
 export const CONTACT_API_URL =
   "https://portfoli-projects-api-production.up.railway.app/contact-details";
+
+export const MY_WEBSITE = "https://vinaykumarkodam.vercel.app/";

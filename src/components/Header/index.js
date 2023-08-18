@@ -16,7 +16,6 @@ const Header = () => {
     setHamburgerClicked(false);
   };
   const user = UserDetails();
-
   return (
     <nav className="header bg-blue-300 flex justify-between items-center h-[10vh] px-2 xs:px-6 sm:px-10 md:px-20 sticky z-10">
       <Link to="/">
@@ -29,13 +28,20 @@ const Header = () => {
       </Link>
       {/* small screen */}
       <div className="flex items-center w-14 justify-between md:hidden">
-        <img
-          src={user.picture}
-          alt="profileLogo"
-          className={`rounded-full h-8 w-8 ${
-            hamburgerClicked ? "hidden" : "block"
-          }`}
-        />
+        {user.picture ? (
+          <img
+            src={user.picture}
+            alt="profileLogo"
+            className={`rounded-full h-8 w-8 ${
+              hamburgerClicked ? "hidden" : "block"
+            }`}
+          />
+        ) : (
+          <p className="text-white font-bold text-xl bg-green-600 rounded-full h-10 w-10 flex flex-col items-center justify-center">
+            {user.name[0].toUpperCase()}
+          </p>
+        )}
+
         <button
           onClick={() => setHamburgerClicked(true)}
           className={`${hamburgerClicked ? "hidden" : "block"}`}
@@ -72,11 +78,18 @@ const Header = () => {
       {/* from medium screen */}
       <div className="hidden md:flex">
         <ul className="links md:flex md:space-x-5 p-0 md:items-center">
-          <img
-            src={user.picture}
-            alt="profileLogo"
-            className="rounded-full h-10 w-10"
-          />
+          {user.picture ? (
+            <img
+              src={user.picture}
+              alt="profileLogo"
+              className="rounded-full h-10 w-10"
+            />
+          ) : (
+            <p className="text-white font-bold text-xl bg-green-600 rounded-full h-10 w-10 flex flex-col items-center justify-center">
+              {user.name[0].toUpperCase()}
+            </p>
+          )}
+
           {navigationLinks.map((eachItem) => (
             <NaviagationLink
               key={eachItem.id}

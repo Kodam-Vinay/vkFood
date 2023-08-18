@@ -62,6 +62,11 @@ const RenderLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItemsList]);
 
+  function onClickContextMenu(event) {
+    event.preventDefault();
+    return false;
+  }
+
   const storeData = () => {
     localStorage.setItem("cartList", JSON.stringify(cartItemsList));
   };
@@ -129,7 +134,10 @@ const RenderLayout = () => {
           setIsAddClicked: setIsAddClicked,
         }}
       >
-        <div className="h-[97vh] sm:98vh flex flex-col overflow-hidden apply-font">
+        <div
+          className="h-[97vh] sm:98vh flex flex-col overflow-hidden apply-font"
+          onContextMenu={onClickContextMenu}
+        >
           <Header />
           <Outlet /> {/* this outlet will replaced by children components  */}
         </div>

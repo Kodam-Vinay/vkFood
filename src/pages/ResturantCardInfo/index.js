@@ -119,7 +119,6 @@ const ResturantCardInfo = () => {
       }));
     }
   };
-  console.log("render");
 
   const SuccessView = () => {
     const { restaurantInfo, menuInfo } = apiStaus.data;

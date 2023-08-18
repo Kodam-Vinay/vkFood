@@ -5,7 +5,7 @@ const ReusableInput = (props) => {
     <input
       type={type}
       id={inputId}
-      className={`bg-transparent border p-2 w-full outline-blue-400 ${className} rounded-md`}
+      className={`bg-transparent border p-2 w-full outline-none ${className} rounded-md`}
       onChange={onChange}
       placeholder={placeholder}
       onKeyDown={onKeyDown}

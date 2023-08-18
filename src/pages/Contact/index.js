@@ -84,7 +84,7 @@ const Contact = () => {
           <ReusableButton
             type="submit"
             value="Send 📩"
-            className="px-3 mt-2 w-32"
+            className="px-3 mt-2 w-32 border-2"
           />
         );
       case constApiStatus.success:
@@ -92,7 +92,7 @@ const Contact = () => {
           <ReusableButton
             type="submit"
             value="Success ✅"
-            className="px-3 mt-2 bg-green-300 w-32"
+            className="px-3 mt-2 bg-green-300 w-32 text-white border-2"
             isDisabledTrue={true}
           />
         );
@@ -101,14 +101,14 @@ const Contact = () => {
           <ReusableButton
             type="submit"
             value="Fail ❌"
-            className="px-3 mt-2 bg-red-300 w-32"
+            className="px-3 mt-2 bg-red-400 w-32 text-white border-2"
           />
         );
       case constApiStatus.inProgress:
         return (
           <ReusableButton
             type="submit"
-            className="px-2 flex flex-col items-center justify-center w-32"
+            className="px-2 flex flex-col items-center justify-center w-32 border-2"
             value={
               <ThreeDots
                 height="30"
@@ -135,6 +135,7 @@ const Contact = () => {
           <form onSubmit={onSubmitForm} className="space-y-3 order-2">
             <div className="space-y-3 md:space-y-0 md:flex md:space-x-3">
               <ReusableInput
+                className="focus:border-blue-400 border-2"
                 type="text"
                 placeholder="Name"
                 onChange={(event) => setName(event.target.value)}
@@ -142,6 +143,7 @@ const Contact = () => {
                 isDisabledTrue={apiStatus.status === constApiStatus.success}
               />
               <ReusableInput
+                className="focus:border-blue-400 border-2"
                 type="email"
                 placeholder="Email"
                 onChange={(event) => setEmail(event.target.value)}
@@ -150,6 +152,7 @@ const Contact = () => {
               />
             </div>
             <ReusableInput
+              className="focus:border-blue-400 border-2"
               type="text"
               placeholder="Title"
               onChange={(event) => setTitle(event.target.value)}
@@ -157,7 +160,7 @@ const Contact = () => {
               isDisabledTrue={apiStatus.status === constApiStatus.success}
             />
             <textarea
-              className="bg-transparent border p-2 w-full outline-blue-400 rounded-md"
+              className="bg-transparent border-2 p-2 w-full focus:border-blue-400 rounded-md"
               rows={5}
               placeholder="Message"
               onChange={(event) => setMessage(event.target.value)}

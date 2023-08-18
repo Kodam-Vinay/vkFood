@@ -27,7 +27,7 @@ const MenuCardItem = (props) => {
     setIsAddClicked(true);
   };
   return (
-    <li className="border-b-2 p-2 flex justify-between">
+    <li className="border-b-2 p-2 flex justify-between hover:shadow-sm shadow-black">
       <div className="w-2/3 space-y-1">
         {vegClassifier && vegClassifier === "VEG" ? (
           <FoodTypeIcon circle="#0b4f28" bg="#41e887" />
