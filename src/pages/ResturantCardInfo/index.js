@@ -15,6 +15,7 @@ import MenuCardItem from "../../components/MenuCardItem";
 import MenuCardShimmer from "../../components/MenuCardShimmer";
 import CartContext from "../../context/CartContext";
 import NavigationContext from "../../context/NavigationContext";
+import ReusableInput from "../../utils/ReusableInput";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -50,6 +51,7 @@ const ResturantCardInfo = () => {
   const onCickCart = () => {
     setActiveId("cart");
   };
+
   const getData = async () => {
     setApiStatus((prev) => ({
       ...prev,
@@ -134,7 +136,18 @@ const ResturantCardInfo = () => {
       availability,
       sla: { slaString },
     } = restaurantInfo;
-
+    let [filterData, setFilterData] = useState(
+      menuInfo.length > 0 ? menuInfo : []
+    );
+    const onSearchMenu = (event) => {
+      setFilterData(
+        menuInfo.filter((eachItem) =>
+          eachItem?.card?.info?.name
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase())
+        )
+      );
+    };
     return (
       <div className="p-0 flex flex-col justify-center w-full">
         {availability.opened ? (
@@ -193,9 +206,15 @@ const ResturantCardInfo = () => {
             </p>
 
             <hr className="border-dotted my-2 border-black" />
-            <div className="mb-4 flex items-center">
+            <div className="mb-4 flex items-center justify-between w-full">
               <h1 className="font-bold">MENU</h1>
-              {/* <ReusableInput /> */}
+              <div>
+                <ReusableInput
+                  type="search"
+                  onChange={onSearchMenu}
+                  placeholder="search in Menu"
+                />
+              </div>
             </div>
             {cartItemsList.length > 0 ? (
               <Link to="/cart">
@@ -216,14 +235,25 @@ const ResturantCardInfo = () => {
                 </div>
               </Link>
             ) : null}
-            <ul className="menu-restaurant h-[40vh] md:h-[45vh] overflow-y-auto">
-              {menuInfo.map((eachItem) => (
-                <MenuCardItem
-                  key={eachItem?.card?.info?.id}
-                  menuDetails={eachItem?.card?.info}
+            {filterData.length > 0 ? (
+              <ul className="menu-restaurant h-[40vh] md:h-[45vh] overflow-y-auto">
+                {filterData.map((eachItem) => (
+                  <MenuCardItem
+                    key={eachItem?.card?.info?.id}
+                    menuDetails={eachItem?.card?.info}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <div className="flex flex-col space-y-1 items-center  h-[40vh]">
+                <img
+                  src={CLOUDINARY_IMG_URL + "no-food"}
+                  alt="no-food"
+                  className="w-48"
                 />
-              ))}
-            </ul>
+                <h1 className="font-bold text-xl">No Items Found .🍔</h1>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex flex-col items-center h-[80vh]">

@@ -54,6 +54,7 @@ const Explore = () => {
   //   );
   // };
 
+  console.log(apiStaus?.data?.sort(apiStaus?.data?.info?.avgRating));
   const geoLocations = useGeoLocations(
     cityName,
     setSearchEmpty,
@@ -223,13 +224,13 @@ const Explore = () => {
     <div className="p-2 h-[90%] sm:px-3 md:px-10 relative overflow-y-auto">
       <div className="flex flex-col sm:flex-row sm:items-center">
         <div
-          className={`search-city flex items-center border border-black w-fit self-center sm:self-start rounded-md ${
+          className={`search-city flex items-center border border-gray-400 w-fit self-center sm:self-start rounded-md ${
             searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
           }`}
         >
           <ReusableInput
             type="search"
-            className="p-1 pb-2 w-full max-w-[250px]"
+            className="p-1 pb-2 w-full max-w-[250px] border-0"
             placeholder="Enter A City Name"
             onChange={onChangeCityName}
             onKeyDown={(e) => (e.key === "Enter" ? onClickSearch() : null)}
@@ -237,7 +238,7 @@ const Explore = () => {
           />
           <ReusableButton
             value={<FaSearch />}
-            className={`h-10 border flex flex-col items-center justify-center border-black border-r-0 border-b-0 border-t-0 hover:bg-blue-300 ${
+            className={`h-10 border flex flex-col items-center justify-center border-gray-400 border-r-0 border-b-0 border-t-0 hover:bg-blue-300 ${
               searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
             }`}
             onClick={onClickSearch}
