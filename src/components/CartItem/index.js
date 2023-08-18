@@ -10,6 +10,7 @@ const CartItem = (props) => {
   const { name, id, price, defaultPrice, imageId, ItemsInCart } =
     cartItemDetails;
   const { onClickMinus, onClickPlus, onClickRemove } = useContext(CartContext);
+  console.log(ItemsInCart);
   const onClickDecrease = () => {
     onClickMinus(id);
   };
@@ -44,10 +45,16 @@ const CartItem = (props) => {
             />
           </div>
           <div className="div-add-remove-cart-buttons flex items-center justify-between sm:w-28 xs:w-24 mt-4">
+            {/* add disabled when the value is 1 */}
             <ReusableButton
               value={<AiOutlineMinus />}
-              className="add-animation border hover:bg-blue-300 hover:text-white flex items-center justify-center h-7 w-7"
+              className={`${
+                ItemsInCart < 2
+                  ? "bg-gray-200"
+                  : "add-animation border hover:bg-blue-300 hover:text-white"
+              } flex items-center justify-center h-7 w-7`}
               onClick={onClickDecrease}
+              disabled={ItemsInCart < 2}
             />
             <p className="mb-2 text-sm sm:text-xl font-bold text-blue-300">
               {ItemsInCart}

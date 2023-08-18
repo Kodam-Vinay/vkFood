@@ -11,7 +11,7 @@ const Home = () => {
   const user = UserDetails();
   return (
     <div className="home flex flex-col h-[90%]">
-      <h1 className="text-3xl ml-5 xs:ml-10 md:ml-20 pt-4">
+      <h1 className="text-2xl font-bold md:text-3xl ml-5 xs:ml-10 md:ml-20 pt-4">
         Hi, {user.name} !
       </h1>
       <div className="flex flex-col">

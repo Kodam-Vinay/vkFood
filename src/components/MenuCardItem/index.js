@@ -15,13 +15,18 @@ const MenuCardItem = (props) => {
       ? menuDetails?.itemAttribute?.vegClassifier
       : "VEG"
   );
-  const { onClickAdd, setIsAddClicked } = useContext(CartContext);
+  const { onClickAdd, setIsAddClicked, isAddClicked } = useContext(CartContext);
   useEffect(() => {
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       setIsAddClicked(false);
     }, 2000);
+
+    console.log(timerId);
+    return () => {
+      clearTimeout(timerId);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAddClicked]);
   const onClickAddItem = () => {
     onClickAdd(id, menuDetails);
     setIsAddClicked(true);

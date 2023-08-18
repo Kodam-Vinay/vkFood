@@ -135,7 +135,7 @@ const RenderLayout = () => {
         }}
       >
         <div
-          className="h-[93vh] sm:98vh flex flex-col apply-font"
+          className="h-[93vh] sm:99vh flex flex-col apply-font"
           onContextMenu={onClickContextMenu}
         >
           <Header />
