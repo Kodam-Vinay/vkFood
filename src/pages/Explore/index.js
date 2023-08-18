@@ -219,8 +219,8 @@ const Explore = () => {
   //   });
 
   return (
-    <div className="p-2 h-[85%] sm:px-3 md:px-10 relative">
-      <div className="flex flex-col sm:flex-row sm:items-center overflow-hidden h-[10%]">
+    <div className="p-2 h-[85%] sm:px-3 md:px-10 relative overflow-hidden">
+      <div className="flex flex-col sm:flex-row sm:items-center overflow-hidden h-[15%] md:h-[10%]">
         <div
           className={`search-city flex items-center border border-gray-400 w-fit self-center sm:self-start rounded-md ${
             searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
