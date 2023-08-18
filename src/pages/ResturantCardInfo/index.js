@@ -9,7 +9,6 @@ import {
   RESTAURANT_CARD_API_URL_MOBILE,
   SWIGGY_IMG_URL,
 } from "../../config/Constants";
-import Footer from "../../components/Footer";
 import RatingStar from "../../components/svgs/RatingStar";
 import ReusableButton from "../../utils/ReusableButton";
 import MenuCardItem from "../../components/MenuCardItem";
@@ -51,7 +50,6 @@ const ResturantCardInfo = () => {
   const onCickCart = () => {
     setActiveId("cart");
   };
-
   const getData = async () => {
     setApiStatus((prev) => ({
       ...prev,
@@ -121,6 +119,7 @@ const ResturantCardInfo = () => {
       }));
     }
   };
+  console.log("render");
 
   const SuccessView = () => {
     const { restaurantInfo, menuInfo } = apiStaus.data;
@@ -204,7 +203,14 @@ const ResturantCardInfo = () => {
                 <div className="flex flex-col items-center">
                   <ReusableButton
                     type="button"
-                    value="Cart"
+                    value={
+                      <p>
+                        cart{" "}
+                        <sup className="text-green-600">
+                          {cartItemsList.length}
+                        </sup>
+                      </p>
+                    }
                     className="hover:bg-blue-300 bg-red-100 px-4 font-bold hover:text-white flex fixed bottom-10"
                     onClick={onCickCart}
                   />
@@ -264,9 +270,6 @@ const ResturantCardInfo = () => {
     <div className="p-2 h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 relative">
       <div className="main-body h-full w-full flex flex-col mt-4">
         <div className="mb-4">{<RenderResults />}</div>
-        <div className="border sticky bottom-1 flex flex-col items-center w-full">
-          <Footer />
-        </div>
       </div>
     </div>
   );

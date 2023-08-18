@@ -2,7 +2,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
-import About from "./pages/About";
+import Contact from "./pages/Contact";
 import Error from "./pages/Error";
 import Cart from "./pages/Cart";
 import ResturantCardInfo from "./pages/ResturantCardInfo";
@@ -34,9 +34,9 @@ const navigationLinks = [
     route: "/explore-food",
   },
   {
-    id: "about",
-    value: "About",
-    route: "/about",
+    id: "contact",
+    value: "Contact",
+    route: "/contact",
   },
   {
     id: "cart",
@@ -129,7 +129,7 @@ const RenderLayout = () => {
           setIsAddClicked: setIsAddClicked,
         }}
       >
-        <div className="h-[99vh] flex flex-col overflow-hidden font-grotesque">
+        <div className="h-[97vh] sm:98vh flex flex-col overflow-hidden apply-font">
           <Header />
           <Outlet /> {/* this outlet will replaced by children components  */}
         </div>
@@ -166,10 +166,10 @@ function App() {
           ),
         },
         {
-          path: "about",
+          path: "contact",
           element: (
             <ProtectedRoute>
-              <About />
+              <Contact />
             </ProtectedRoute>
           ),
         },

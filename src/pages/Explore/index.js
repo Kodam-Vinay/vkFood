@@ -6,7 +6,6 @@ import ReusableInput from "../../utils/ReusableInput";
 import ReusableButton from "../../utils/ReusableButton";
 import EachRestaurantCard from "../../components/EachRestaurantCard";
 import Shimmer from "../../components/Shimmer";
-import Footer from "../../components/Footer";
 import useDeviceCheck from "../../utils/useDeviceCheck";
 import useGeoLocations from "../../utils/useGeoLocations";
 import {
@@ -262,9 +261,6 @@ const Explore = () => {
       </div>
       <div className="main-body h-full w-full flex flex-col mt-4">
         <div className="mb-4">{RenderResults()}</div>
-        <div className="border flex flex-col h-[5%] items-center justify-center mt-auto w-full">
-          <Footer />
-        </div>
       </div>
     </div>
   );

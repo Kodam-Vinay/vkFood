@@ -67,7 +67,7 @@ const Cart = () => {
   );
 
   return (
-    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80">
+    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80">
       <div className="h-full w-full">
         <div className="w-full flex items-center justify-between h-6">
           <h1 className="font-bold text-xl">Cart</h1>

@@ -28,3 +28,6 @@ export const EMAIL_URL = "mailto:ccvinaykumarkodam@outlook.com";
 
 export const CLIENT_ID =
   "262527034676-87h97in9h2bb0udp3jl7sj92lesc706i.apps.googleusercontent.com";
+
+export const CONTACT_API_URL =
+  "https://portfoli-projects-api-production.up.railway.app/contact-details";

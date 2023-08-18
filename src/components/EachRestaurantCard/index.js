@@ -14,7 +14,7 @@ const EachRestaurantCard = (props) => {
     areaName,
   } = restaurantList;
   return (
-    <Link to={`${id}`} className="w-full sm:max-w-[260px] add-animation">
+    <Link to={`${id}`} className="w-full sm:max-w-[260px]">
       <li className="flex sm:h-[390px] sm:max-w-[260px] sm:flex-col items-center xs:items-start border shadow-md rounded-md p-2 sm:mr-5 sm:mb-3">
         <img
           src={

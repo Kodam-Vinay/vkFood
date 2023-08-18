@@ -6,6 +6,7 @@ import CartContext from "../../context/CartContext";
 
 const CartLogoWithCount = () => {
   const { cartItemsList, isAddClicked } = useContext(CartContext);
+
   return (
     <div className="flex flex-col items-center">
       {isAddClicked ? (

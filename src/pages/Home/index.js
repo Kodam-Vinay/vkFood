@@ -5,11 +5,12 @@ import { useContext } from "react";
 import NavigationContext from "../../context/NavigationContext";
 
 import UserDetails from "../../utils/UserDetails";
+import Footer from "../../components/Footer";
 const Home = () => {
   const { setActiveId } = useContext(NavigationContext);
   const user = UserDetails();
   return (
-    <div className="home flex flex-col h-[80%]">
+    <div className="home flex flex-col h-[90%]">
       <h1 className="text-3xl ml-5 xs:ml-10 md:ml-20 pt-4">
         Hi, {user.name} !!
       </h1>
@@ -26,6 +27,9 @@ const Home = () => {
             onClick={() => setActiveId("explore")}
           />
         </Link>
+      </div>
+      <div className="sticky mt-auto h-full flex flex-col items-center w-full">
+        <Footer />
       </div>
     </div>
   );

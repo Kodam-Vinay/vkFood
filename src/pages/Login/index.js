@@ -27,7 +27,7 @@ const Login = () => {
       {/* login or signup buttons */}
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-3xl font-bold italic text-center mb-5 add-text-shadow-logo md:text-5xl mt-20">
-          Foodie
+          Food
         </h1>
         <GoogleLogin
           onSuccess={(credentialResponse) => {

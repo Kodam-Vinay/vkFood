@@ -5,17 +5,21 @@ import FoodTypeIcon from "../svgs/FoodTypeIcon";
 import { CLOUDINARY_IMG_URL, SWIGGY_IMG_URL } from "../../config/Constants";
 import ReusableButton from "../../utils/ReusableButton";
 import { useContext, useEffect } from "react";
+import { useState } from "react";
 
 const MenuCardItem = (props) => {
   const { menuDetails } = props;
   const { id, name, imageId, price, defaultPrice } = menuDetails;
-  const vegClassifier = menuDetails?.itemAttribute?.vegClassifier;
-  let { onClickAdd, setIsAddClicked } = useContext(CartContext);
+  const [vegClassifier] = useState(
+    menuDetails?.itemAttribute?.vegClassifier
+      ? menuDetails?.itemAttribute?.vegClassifier
+      : "VEG"
+  );
+  const { onClickAdd, setIsAddClicked } = useContext(CartContext);
   useEffect(() => {
     setTimeout(() => {
       setIsAddClicked(false);
     }, 2000);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onClickAddItem = () => {
