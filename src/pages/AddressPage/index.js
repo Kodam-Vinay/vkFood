@@ -1,11 +1,13 @@
-import { useState } from "react";
-
+import { useContext, useState } from "react";
 import ReusableInput from "../../utils/ReusableInput";
 import ReusableButton from "../../utils/ReusableButton";
-
 import { useNavigate } from "react-router-dom";
+import OrderDetailsContext from "../../context/OrderDetailsContext";
+import CartContext from "../../context/CartContext";
 
 const AdressPage = () => {
+  const { setUserAdress } = useContext(OrderDetailsContext);
+  const { setCartItemList } = useContext(CartContext);
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [pincode, setPinCode] = useState("");
@@ -23,10 +25,12 @@ const AdressPage = () => {
       locality,
       address,
     };
+
     if (mobileNumber.length === 10 && pincode.length === 6) {
-      sessionStorage.setItem("addressDetails", JSON.stringify(details));
+      setUserAdress(details);
       navigate("/payment/successful");
       setErrMsg(false);
+      setCartItemList([]);
     } else {
       setErrMsg(true);
     }

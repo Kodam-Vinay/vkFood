@@ -50,7 +50,7 @@ const Cart = () => {
         <span className="border-0 text-blue-300 flex items-center">Total:</span>
         <span className="flex items-center ml-2">
           <FaRupeeSign />
-          {Math.round(TotalPrice)}
+          {TotalPrice}
         </span>
       </h1>
       <ul className="w-full h-full space-y-2 flex flex-col mt-0 pb-4 pt-2 px-1 overflow-y-auto">
@@ -92,11 +92,11 @@ const Cart = () => {
             <Link
               to="/explore-food"
               className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
+              onClick={() => setActiveId("explore")}
             >
               <ReusableButton
                 value="Add More Items"
                 className="font-[500] text-blue-300 border-0 hidden md:block"
-                onClick={() => setActiveId("explore")}
               />
               <AiOutlinePlus />
             </Link>

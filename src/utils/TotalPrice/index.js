@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CartContext from "../../context/CartContext";
+import OrderDetailsContext from "../../context/OrderDetailsContext";
 
 const TotalPriceCalucation = () => {
   const { cartItemsList } = useContext(CartContext);
+  const { setOrderTotalRupees } = useContext(OrderDetailsContext);
   let TotalPrice = 0;
   cartItemsList.map((each) => {
     if (each.price) {
@@ -12,7 +14,10 @@ const TotalPriceCalucation = () => {
     }
     return null;
   });
-  sessionStorage.setItem("totalPrice", JSON.stringify(TotalPrice));
-  return TotalPrice;
+  useEffect(() => {
+    setOrderTotalRupees(TotalPrice);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return Math.round(TotalPrice);
 };
 export default TotalPriceCalucation;

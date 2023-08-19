@@ -21,6 +21,7 @@ import CardPage from "./pages/CardPage";
 import PaymentRoute from "./components/PaymentRoute";
 import CodPage from "./pages/CodPage";
 import AddressPage from "./pages/AddressPage";
+import OrderDetailsContext from "./context/OrderDetailsContext";
 
 const Home = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -57,6 +58,9 @@ const navigationLinks = [
 const RenderLayout = () => {
   const storedData = JSON.parse(localStorage.getItem("cartList"));
   const [isAddClicked, setIsAddClicked] = useState(false);
+  const [paymentMode, setPayMentMode] = useState("");
+  const [orderTotalRupees, setOrderTotalRupees] = useState(0);
+  const [userAddress, setUserAdress] = useState({});
   const [cartItemsList, setCartItemList] = useState(
     storedData !== null ? storedData : []
   );
@@ -122,6 +126,7 @@ const RenderLayout = () => {
       setCartItemList((prev) => [...prev, { ...menuDetails, ItemsInCart: 1 }]);
     }
   };
+
   return (
     <NavigationContext.Provider
       value={{
@@ -130,31 +135,43 @@ const RenderLayout = () => {
         navigationLinks: navigationLinks,
       }}
     >
-      <AddToCartContext.Provider
+      <OrderDetailsContext.Provider
         value={{
-          isAddClicked: isAddClicked,
-          setIsAddClicked: setIsAddClicked,
-          onClickAdd: onClickAdd,
+          userAddress: userAddress,
+          setUserAdress: setUserAdress,
+          paymentMode: paymentMode,
+          setPayMentMode: setPayMentMode,
+          orderTotalRupees: orderTotalRupees,
+          setOrderTotalRupees: setOrderTotalRupees,
         }}
       >
-        <CartContext.Provider
+        <AddToCartContext.Provider
           value={{
-            onClickMinus: onClickMinus,
-            onClickPlus: onClickPlus,
-            onClickRemove: onClickRemove,
-            cartItemsList: cartItemsList,
-            setCartItemList: setCartItemList,
+            isAddClicked: isAddClicked,
+            setIsAddClicked: setIsAddClicked,
+            onClickAdd: onClickAdd,
           }}
         >
-          <div
-            className="h-[93vh] sm:h-[99vh] flex flex-col apply-font"
-            onContextMenu={onClickContextMenu}
+          <CartContext.Provider
+            value={{
+              onClickMinus: onClickMinus,
+              onClickPlus: onClickPlus,
+              onClickRemove: onClickRemove,
+              cartItemsList: cartItemsList,
+              setCartItemList: setCartItemList,
+            }}
           >
-            <Header />
-            <Outlet /> {/* this outlet will replaced by children components  */}
-          </div>
-        </CartContext.Provider>
-      </AddToCartContext.Provider>
+            <div
+              className="h-[93vh] sm:h-[99vh] flex flex-col apply-font"
+              onContextMenu={onClickContextMenu}
+            >
+              <Header />
+              <Outlet />{" "}
+              {/* this outlet will replaced by children components  */}
+            </div>
+          </CartContext.Provider>
+        </AddToCartContext.Provider>
+      </OrderDetailsContext.Provider>
     </NavigationContext.Provider>
   );
 };

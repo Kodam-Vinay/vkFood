@@ -19,7 +19,11 @@ const CodPage = () => {
       </div>
       <div className="mt-10">
         <h1 className="text-xl font-bold italic mb-10">{randomNumber}</h1>
-        <p className="text-red-500 animate-pulse">*Please Enter Above Number</p>
+        {randomNumber !== number && (
+          <p className="text-red-500 animate-pulse">
+            *Please Enter Above Number
+          </p>
+        )}
         <ReusableInput
           onChange={onChnageInput}
           className="mb-5 w-52"
