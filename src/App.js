@@ -19,11 +19,15 @@ import Payment from "./pages/Payment";
 import UpiPage from "./pages/UpiPage";
 import CardPage from "./pages/CardPage";
 import PaymentRoute from "./components/PaymentRoute";
+import CodPage from "./pages/CodPage";
+import AddressPage from "./pages/AddressPage";
 
 const Home = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
   return import("./pages/Home");
 });
+
+const OrderSuccessfulPage = lazy(() => import("./pages/OrderSuccessfulPage"));
 
 const Explore = lazy(() => import("./pages/Explore"));
 
@@ -233,6 +237,14 @@ function App() {
               ),
             },
             {
+              path: "address",
+              element: (
+                <PaymentRoute>
+                  <AddressPage />
+                </PaymentRoute>
+              ),
+            },
+            {
               path: "upi",
               element: (
                 <PaymentRoute>
@@ -246,6 +258,30 @@ function App() {
                 <PaymentRoute>
                   <CardPage />
                 </PaymentRoute>
+              ),
+            },
+            {
+              path: "cod",
+              element: (
+                <PaymentRoute>
+                  <CodPage />
+                </PaymentRoute>
+              ),
+            },
+            {
+              path: "successful",
+              element: (
+                <ProtectedRoute>
+                  <Suspense
+                    fallback={
+                      <div className="h-[80vh] flex flex-col items-center justify-center">
+                        <BallTriangle />
+                      </div>
+                    }
+                  >
+                    <OrderSuccessfulPage />
+                  </Suspense>
+                </ProtectedRoute>
               ),
             },
           ],

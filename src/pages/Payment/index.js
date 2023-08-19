@@ -16,7 +16,7 @@ const paymentMethods = [
     className: "",
   },
   {
-    id: "cash",
+    id: "cod",
     value: "Cash On Delivery",
     className:
       "flex flex-col justify-center px-2 add-animation cursor-pointer font-bold text-xl md:text-3xl",
