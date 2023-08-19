@@ -1,19 +1,21 @@
-import { useEffect, useState } from "react";
-import TotalPriceCalucation from "../../utils/TotalPrice";
+import { useContext, useEffect, useState } from "react";
 import { FaRupeeSign } from "react-icons/fa";
+import CartContext from "../../context/CartContext";
 const OrderSuccessfulPage = () => {
   const storedData = JSON.parse(sessionStorage.getItem("addressDetails"));
-  const total = TotalPriceCalucation();
+  const total = JSON.parse(sessionStorage.getItem("totalPrice"));
+  const { setCartItemList } = useContext(CartContext);
   const [details, setDetails] = useState({});
   useEffect(() => {
     if (storedData !== null) {
       setDetails(storedData);
+      setCartItemList([]);
     } else {
       setDetails({});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  setCartItemList([]);
   return (
     <div className="p-2 flex flex-col w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 space-y-3">
       {storedData ? (

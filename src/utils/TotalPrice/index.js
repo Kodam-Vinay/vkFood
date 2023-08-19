@@ -12,6 +12,7 @@ const TotalPriceCalucation = () => {
     }
     return null;
   });
+  sessionStorage.setItem("totalPrice", JSON.stringify(TotalPrice));
   return TotalPrice;
 };
 export default TotalPriceCalucation;
