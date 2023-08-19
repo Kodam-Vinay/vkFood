@@ -8,6 +8,9 @@ import ReusableButton from "../../utils/ReusableButton";
 import { CLOUDINARY_IMG_URL } from "../../config/Constants";
 import { Link } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
+import { MdShoppingCartCheckout } from "react-icons/md";
+import { AiOutlinePlus } from "react-icons/ai";
+import TotalPriceCalucation from "../../utils/TotalPrice";
 
 const Cart = () => {
   const { cartItemsList, setCartItemList } = useContext(CartContext);
@@ -16,15 +19,7 @@ const Cart = () => {
     setCartItemList([]);
   };
 
-  let TotalPrice = 0;
-  cartItemsList.map((each) => {
-    if (each.price) {
-      TotalPrice += (each.price / 100) * each.ItemsInCart;
-    } else {
-      TotalPrice += (each.defaultPrice / 100) * each.ItemsInCart;
-    }
-    return null;
-  });
+  const TotalPrice = TotalPriceCalucation();
 
   const renderEmptyPage = () => (
     <div className="h-full w-full flex flex-col items-center justify-center">
@@ -67,8 +62,8 @@ const Cart = () => {
   );
 
   return (
-    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80">
-      <div className="h-full w-full">
+    <div className="p-2 flex flex-col justify-center sm:flex-row w-full h-[90%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 overflow-hidden">
+      <div className="h-full w-full flex flex-col">
         <div className="w-full flex items-center justify-between h-6">
           <h1 className="font-bold text-xl">Cart</h1>
           {cartItemsList.length > 0 && (
@@ -79,8 +74,31 @@ const Cart = () => {
             />
           )}
         </div>
-        <div className="mt-5 h-full w-full">
+        <div className="mt-5 h-[75%] md:h-[85%] w-full">
           {cartItemsList.length > 0 ? renderResults() : renderEmptyPage()}
+        </div>
+        <div className="space-x-9 flex flex-row items-center self-center md:self-end h-[15%]">
+          <Link
+            to="/payment"
+            className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
+          >
+            <ReusableButton
+              value="CheckOut"
+              className="font-[500] text-blue-300 border-0 hidden md:block"
+            />
+            <MdShoppingCartCheckout />
+          </Link>
+          <Link
+            to="/explore-food"
+            className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
+          >
+            <ReusableButton
+              value="Add More Items"
+              className="font-[500] text-blue-300 border-0 hidden md:block"
+              onClick={() => setActiveId("explore")}
+            />
+            <AiOutlinePlus />
+          </Link>
         </div>
       </div>
     </div>

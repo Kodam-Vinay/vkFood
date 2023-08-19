@@ -15,6 +15,9 @@ import LoginRoute from "./context/LoginRoute";
 import { BallTriangle } from "react-loader-spinner";
 import CartLogoWithCount from "./components/CartLogoWithCount";
 import AddToCartContext from "./context/AddToCartContext";
+import Payment from "./pages/Payment";
+import UpiPage from "./pages/UpiPage";
+import CardPage from "./pages/CardPage";
 
 const Home = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -100,7 +103,6 @@ const RenderLayout = () => {
   };
 
   const onClickAdd = (id, menuDetails) => {
-    console.log(storedData);
     const result = cartItemsList.find((eachItem) => eachItem.id === id);
     if (result) {
       const newCount = result.ItemsInCart + 1;
@@ -140,7 +142,7 @@ const RenderLayout = () => {
           }}
         >
           <div
-            className="h-[93vh] sm:99vh flex flex-col apply-font"
+            className="h-[94vh] sm:h-[99vh] flex flex-col apply-font"
             onContextMenu={onClickContextMenu}
           >
             <Header />
@@ -210,7 +212,6 @@ function App() {
             },
           ],
         },
-
         {
           path: "cart",
           element: (
@@ -218,6 +219,35 @@ function App() {
               <Cart />
             </ProtectedRoute>
           ),
+        },
+        {
+          path: "payment",
+          children: [
+            {
+              path: "",
+              element: (
+                <ProtectedRoute>
+                  <Payment />
+                </ProtectedRoute>
+              ),
+            },
+            {
+              path: "upi",
+              element: (
+                <ProtectedRoute>
+                  <UpiPage />
+                </ProtectedRoute>
+              ),
+            },
+            {
+              path: "card",
+              element: (
+                <ProtectedRoute>
+                  <CardPage />
+                </ProtectedRoute>
+              ),
+            },
+          ],
         },
       ],
     },
