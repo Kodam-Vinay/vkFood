@@ -10,14 +10,15 @@ import CartContext from "./context/CartContext";
 import useNavigationLink from "./utils/useNavigationLinkSessionStorage";
 import NavigationContext from "./context/NavigationContext";
 import Login from "./pages/Login";
-import ProtectedRoute from "./context/ProtectedRoute";
-import LoginRoute from "./context/LoginRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginRoute from "./components/LoginRoute";
 import { BallTriangle } from "react-loader-spinner";
 import CartLogoWithCount from "./components/CartLogoWithCount";
 import AddToCartContext from "./context/AddToCartContext";
 import Payment from "./pages/Payment";
 import UpiPage from "./pages/UpiPage";
 import CardPage from "./pages/CardPage";
+import PaymentRoute from "./components/PaymentRoute";
 
 const Home = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -142,7 +143,7 @@ const RenderLayout = () => {
           }}
         >
           <div
-            className="h-[94vh] sm:h-[99vh] flex flex-col apply-font"
+            className="h-[93vh] sm:h-[99vh] flex flex-col apply-font"
             onContextMenu={onClickContextMenu}
           >
             <Header />
@@ -226,25 +227,25 @@ function App() {
             {
               path: "",
               element: (
-                <ProtectedRoute>
+                <PaymentRoute>
                   <Payment />
-                </ProtectedRoute>
+                </PaymentRoute>
               ),
             },
             {
               path: "upi",
               element: (
-                <ProtectedRoute>
+                <PaymentRoute>
                   <UpiPage />
-                </ProtectedRoute>
+                </PaymentRoute>
               ),
             },
             {
               path: "card",
               element: (
-                <ProtectedRoute>
+                <PaymentRoute>
                   <CardPage />
-                </ProtectedRoute>
+                </PaymentRoute>
               ),
             },
           ],

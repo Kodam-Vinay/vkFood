@@ -28,7 +28,12 @@ const Payment = () => {
 
   return (
     <div className="p-2 flex flex-col w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80">
-      <h1 className="font-bold text-xl md:text-3xl">Add Payment Method</h1>
+      <div className="flex flex-col md:flex-row justify-between items-center text-center">
+        <h1 className="font-bold text-xl md:text-3xl">Add Payment Method</h1>
+        <p className="text-red-500 animate-pulse">
+          *Data is not stored, so don't enter your personal Details
+        </p>
+      </div>
       <ul className="flex flex-col space-y-4 py-10">
         {paymentMethods.map((each) => (
           <li

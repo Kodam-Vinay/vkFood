@@ -77,29 +77,31 @@ const Cart = () => {
         <div className="mt-5 h-[75%] md:h-[85%] w-full">
           {cartItemsList.length > 0 ? renderResults() : renderEmptyPage()}
         </div>
-        <div className="space-x-9 flex flex-row items-center self-center md:self-end h-[15%]">
-          <Link
-            to="/payment"
-            className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
-          >
-            <ReusableButton
-              value="CheckOut"
-              className="font-[500] text-blue-300 border-0 hidden md:block"
-            />
-            <MdShoppingCartCheckout />
-          </Link>
-          <Link
-            to="/explore-food"
-            className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
-          >
-            <ReusableButton
-              value="Add More Items"
-              className="font-[500] text-blue-300 border-0 hidden md:block"
-              onClick={() => setActiveId("explore")}
-            />
-            <AiOutlinePlus />
-          </Link>
-        </div>
+        {cartItemsList.length > 0 ? (
+          <div className="space-x-9 flex flex-row items-center self-center md:self-end h-[15%]">
+            <Link
+              to="/payment"
+              className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
+            >
+              <ReusableButton
+                value="CheckOut"
+                className="font-[500] text-blue-300 border-0 hidden md:block"
+              />
+              <MdShoppingCartCheckout />
+            </Link>
+            <Link
+              to="/explore-food"
+              className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
+            >
+              <ReusableButton
+                value="Add More Items"
+                className="font-[500] text-blue-300 border-0 hidden md:block"
+                onClick={() => setActiveId("explore")}
+              />
+              <AiOutlinePlus />
+            </Link>
+          </div>
+        ) : null}
       </div>
     </div>
   );
