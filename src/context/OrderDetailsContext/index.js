@@ -7,5 +7,7 @@ const OrderDetailsContext = createContext({
   setOrderTotalRupees: () => {},
   userAddress: {},
   setUserAdress: () => {},
+  cardNumber: "",
+  setCardNumber: () => {},
 });
 export default OrderDetailsContext;

@@ -61,6 +61,7 @@ const RenderLayout = () => {
   const [paymentMode, setPayMentMode] = useState("");
   const [orderTotalRupees, setOrderTotalRupees] = useState(0);
   const [userAddress, setUserAdress] = useState({});
+  const [cardNumber, setCardNumber] = useState("");
   const [cartItemsList, setCartItemList] = useState(
     storedData !== null ? storedData : []
   );
@@ -143,6 +144,8 @@ const RenderLayout = () => {
           setPayMentMode: setPayMentMode,
           orderTotalRupees: orderTotalRupees,
           setOrderTotalRupees: setOrderTotalRupees,
+          setCardNumber: setCardNumber,
+          cardNumber: cardNumber,
         }}
       >
         <AddToCartContext.Provider

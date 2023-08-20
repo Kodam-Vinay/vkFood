@@ -55,11 +55,11 @@ const AdressPage = () => {
             required={true}
           />
           <ReusableInput
-            type="text"
+            type="tel"
             className="focus:border-blue-400 border-2"
             onChange={(event) => {
               setMobileNumber((v) =>
-                event.target.validity.valid ? event.target.value : v
+                event.target.validity.valid ? event.target.value : ""
               );
             }}
             placeholder="Enter Your Mobile No"
@@ -72,10 +72,10 @@ const AdressPage = () => {
         <div className="flex flex-col items-center md:flex-row space-y-2 md:space-y-0 md:space-x-10">
           <ReusableInput
             className="focus:border-blue-400 border-2"
-            type="text"
+            type="tel"
             onChange={(event) => {
               setPinCode((v) =>
-                event.target.validity.valid ? event.target.value : v
+                event.target.validity.valid ? event.target.value : ""
               );
             }}
             placeholder="Enter Your Pincode"
