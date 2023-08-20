@@ -45,7 +45,7 @@ const Payment = () => {
             key={each.id}
             className={`border h-16 bg-gray-100 rounded-sm shadow-sm add-animation cursor-pointer ${
               each.className
-            } ${activePayment === each.id ? "bg-gray-800" : ""}`}
+            } ${activePayment === each.id ? "bg-gray-800 text-white" : ""}`}
             onClick={() => {
               setActivePayment(each.id);
               setPayMentMode(each.paymentMethod);

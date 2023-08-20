@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import CaptchaCode from "../../components/CaptchaCode";
 import ReusableInput from "../../utils/ReusableInput";
 import Cards from "react-credit-cards-2";
@@ -53,7 +53,6 @@ const CardPage = () => {
           onSubmit={onSubmitDetails}
         >
           <div className="flex w-full mb-2">
-            <p></p>
             <ReusableInput
               type="tel"
               value={number}
@@ -78,7 +77,6 @@ const CardPage = () => {
             />
           </div>
           <div className="flex w-full">
-            <p></p>
             <ReusableInput
               type="tel"
               value={cvc}

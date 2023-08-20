@@ -81,7 +81,7 @@ const Cart = () => {
           <div className="space-x-9 flex flex-row items-center self-center md:self-end h-[15%]">
             <Link
               to="/payment"
-              className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
+              className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-2 md:py-0"
             >
               <ReusableButton
                 value="CheckOut"
@@ -91,7 +91,7 @@ const Cart = () => {
             </Link>
             <Link
               to="/explore-food"
-              className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-0 md:py-0"
+              className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-2 md:py-0"
               onClick={() => setActiveId("explore")}
             >
               <ReusableButton
