@@ -8,10 +8,6 @@ const OrderSuccessfulPage = () => {
   const { paymentMode, userAddress, orderTotalRupees, cardNumber } =
     useContext(OrderDetailsContext);
   const { setActiveId } = useContext(NavigationContext);
-  console.log(paymentMode);
-  console.log(userAddress);
-  console.log(orderTotalRupees);
-  console.log(cardNumber);
   return (
     <div className="p-2 flex flex-col w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 space-y-3">
       {orderTotalRupees && paymentMode && userAddress ? (
@@ -30,7 +26,7 @@ const OrderSuccessfulPage = () => {
               Order Total:{" "}
               <span className="flex items-center ml-5">
                 <FaRupeeSign />
-                {orderTotalRupees}
+                {Math.round(orderTotalRupees)}
               </span>
             </p>
             <p className="flex items-center">payment Method: {paymentMode}</p>
@@ -48,7 +44,7 @@ const OrderSuccessfulPage = () => {
             </p>
             <p>Mobile No :- {userAddress.mobileNumber}</p>
           </div>
-          <Link to="/explore">
+          <Link to="/explore-food">
             <ReusableButton
               value="Explore"
               onClick={() => setActiveId("explore")}
@@ -58,7 +54,7 @@ const OrderSuccessfulPage = () => {
       ) : (
         <>
           <h1>There is Nothing to Show Here</h1>
-          <Link to="/explore">
+          <Link to="/explore-food">
             <ReusableButton
               value="Explore"
               onClick={() => setActiveId("explore")}
