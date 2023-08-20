@@ -24,7 +24,7 @@ export const LINKEDIN_URL =
 
 export const INSTAGRAM_URL = "https://www.instagram.com/_vinay_vinni_7/";
 
-export const EMAIL_URL = "mailto:ccvinaykumarkodam@outlook.com";
+export const EMAIL_URL = "mailto:contactvinaykumarkodam@gmail.com";
 
 export const CLIENT_ID =
   "262527034676-87h97in9h2bb0udp3jl7sj92lesc706i.apps.googleusercontent.com";
