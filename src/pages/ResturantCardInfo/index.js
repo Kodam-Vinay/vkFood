@@ -32,6 +32,7 @@ const ResturantCardInfo = () => {
     cityName: "",
     data: {},
   });
+  console.log(apiStaus);
   const isMobile = useDeviceCheck();
 
   let geoLocation = JSON.parse(localStorage.getItem("geoLactions"));
@@ -51,7 +52,6 @@ const ResturantCardInfo = () => {
   const onCickCart = () => {
     setActiveId("cart");
   };
-
   const getData = async () => {
     setApiStatus((prev) => ({
       ...prev,

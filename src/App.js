@@ -252,7 +252,17 @@ function App() {
               path: "",
               element: (
                 <PaymentRoute>
-                  <Payment />
+                  <Suspense
+                    fallback={
+                      <div className="h-[80vh] flex flex-col items-center justify-center">
+                        <h1 className="text-xl font-bold">
+                          Payment Section is Loading....
+                        </h1>
+                      </div>
+                    }
+                  >
+                    <Payment />
+                  </Suspense>
                 </PaymentRoute>
               ),
             },
