@@ -35,4 +35,4 @@ export const CONTACT_API_URL =
 export const MY_WEBSITE = "https://vinaykumarkodam.vercel.app/";
 
 export const AUTO_LOCATION_URL =
-  "http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit=5&appid=a3547addf902f2a1e709f062a2e801dd";
+  "https://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit=5&appid=a3547addf902f2a1e709f062a2e801dd";
