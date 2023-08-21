@@ -15,7 +15,6 @@ const UpiPage = () => {
       setIsDetailsEntered(false);
     }
   };
-  console.log();
   return (
     <div className="p-2 flex flex-col w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80">
       <div className="flex flex-col md:flex-row justify-between items-center text-center mb-4">

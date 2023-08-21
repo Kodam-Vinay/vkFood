@@ -250,9 +250,7 @@ const Explore = () => {
                 <BiCurrentLocation />
               </>
             }
-            className={`h-10 border flex flex-row items-center justify-center ml-2 hover:bg-blue-300 hover:text-white ${
-              searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
-            }`}
+            className={`h-10 border flex flex-row items-center justify-center ml-2 hover:bg-blue-300 hover:text-white`}
             onClick={onClickAutoLoaction}
           />
         </div>
