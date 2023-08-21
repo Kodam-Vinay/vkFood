@@ -75,6 +75,7 @@ const Explore = () => {
     setIsAutoClicked(true);
     setSearchClicked(false);
     setCityName(autoCityName);
+    setSearchEmpty(false);
     AutoLocation();
     const result = JSON.parse(localStorage.getItem("autoLocation"));
     setAutoLocation(result);
