@@ -7,6 +7,7 @@ import NaviagationLink from "../NavigationLink";
 import NavigationContext from "../../context/NavigationContext";
 import UserDetails from "../../utils/UserDetails";
 import LogoutPopup from "../LogoutPopup";
+import { CLOUDINARY_IMG_URL } from "../../config/Constants";
 const Header = () => {
   const { activeId, setActiveId, navigationLinks } =
     useContext(NavigationContext);
@@ -19,12 +20,12 @@ const Header = () => {
   return (
     <nav className="header bg-blue-300 flex justify-between items-center h-[10vh] px-2 xs:px-6 sm:px-10 md:px-20 sticky z-10">
       <Link to="/">
-        <h1
-          className="logo text-3xl text-white add-style-food-icon cursor-pointer"
+        <img
+          src={CLOUDINARY_IMG_URL + "web-logo"}
+          alt="website-logo"
           onClick={() => setActiveId("home")}
-        >
-          Food
-        </h1>
+          className="w-12 h-12 md:w-14 md:h-14"
+        />
       </Link>
       {/* small screen */}
       <div className="flex items-center w-14 justify-between md:hidden">
