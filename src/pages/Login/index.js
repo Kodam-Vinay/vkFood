@@ -16,7 +16,7 @@ const Login = () => {
   }
 
   return (
-    <div className="login bg-[#34ebe5] h-full w-full">
+    <div className="login bg-[#93c5fd] h-full w-full">
       <div className="absolute -top-16 -left-20">
         <img
           src={CLOUDINARY_IMG_URL + "login-logo.webp"}
@@ -26,9 +26,11 @@ const Login = () => {
       </div>
       {/* login or signup buttons */}
       <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-3xl font-bold italic text-center mb-5 add-text-shadow-logo md:text-5xl mt-20">
-          Food
-        </h1>
+        <img
+          src={CLOUDINARY_IMG_URL + "web-logo"}
+          alt="website-logo"
+          className="w-12 h-12 md:w-14 md:h-14 mb-6"
+        />
         <GoogleLogin
           onSuccess={(credentialResponse) => {
             setCredentials(credentialResponse.credential);

@@ -12,10 +12,11 @@ const TotalPriceCalucation = () => {
     } else {
       TotalPrice += (each.defaultPrice / 100) * each.ItemsInCart;
     }
-    return null;
+    return TotalPrice;
   });
+
   useEffect(() => {
-    setOrderTotalRupees(TotalPrice);
+    setOrderTotalRupees(Math.round(TotalPrice));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return Math.round(TotalPrice);

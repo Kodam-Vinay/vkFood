@@ -26,7 +26,7 @@ const OrderSuccessfulPage = () => {
               Order Total:{" "}
               <span className="flex items-center ml-5">
                 <FaRupeeSign />
-                {Math.round(orderTotalRupees)}
+                {orderTotalRupees}
               </span>
             </p>
             <p className="flex items-center">payment Method: {paymentMode}</p>

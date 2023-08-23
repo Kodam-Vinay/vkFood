@@ -6,7 +6,7 @@ const ReusableButton = forwardRef((props, ref) => {
     <button
       className={`${className} border px-2 py-1 rounded-md pb-2 outline-none cursor-pointer`}
       onClick={onClick}
-      type={type}
+      type={type ? type : "button"}
       ref={ref}
       disabled={disabled}
     >
