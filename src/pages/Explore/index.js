@@ -12,9 +12,11 @@ import useGeoLocations from "../../utils/useGeoLocations";
 import {
   ALL_RESTAURANTS_API_URL_DESKTOP,
   ALL_RESTAURANTS_API_URL_MOBILE,
+  CLOUDINARY_IMG_URL,
 } from "../../config/Constants";
 import AutoLocation from "../../utils/AutoLocation";
 import useAutoLocationPlace from "../../utils/useAutoLocationPlace";
+import NoCityFound from "../../components/svgs/NoCityFound";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -187,7 +189,12 @@ const Explore = () => {
         </ul>
       ) : (
         <div className="h-full flex flex-col justify-center items-center">
-          <p className="text-xl font-bold">
+          <img
+            src={CLOUDINARY_IMG_URL + "not-available"}
+            alt="not available"
+            className="h-44 md:h-72 w-96"
+          />
+          <p className="text-xl font-bold mt-4">
             🥺 Sorry, Delivery is Not Available in your city
           </p>
         </div>
@@ -197,8 +204,8 @@ const Explore = () => {
 
   const FailureView = () => (
     <div className="flex flex-col items-center justify-center h-full w-full">
-      <h1>Failure View</h1>
-      <p>{apiStaus.errorMsg}</p>
+      <NoCityFound />
+      <p className="text-xl font-bold mt-4">{apiStaus.errorMsg}</p>
     </div>
   );
 
