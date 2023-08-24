@@ -74,11 +74,11 @@ const Explore = () => {
   };
 
   const onClickAutoLoaction = async () => {
+    setSearchEmpty(false);
+    AutoLocation();
     setIsAutoClicked(true);
     setSearchClicked(false);
     setCityName(autoCityName);
-    setSearchEmpty(false);
-    AutoLocation();
     const result = JSON.parse(localStorage.getItem("autoLocation"));
     setAutoLocation(result);
   };
@@ -190,11 +190,11 @@ const Explore = () => {
       ) : (
         <div className="h-full flex flex-col justify-center items-center">
           <img
-            src={CLOUDINARY_IMG_URL + "not-available"}
+            src={CLOUDINARY_IMG_URL + "delivery-availibility"}
             alt="not available"
-            className="h-44 md:h-72 w-96"
+            className="h-56 md:h-72 w-64 md:w-96"
           />
-          <p className="text-xl font-bold mt-4">
+          <p className="text-xl font-bold mt-4 text-center">
             🥺 Sorry, Delivery is Not Available in your city
           </p>
         </div>
