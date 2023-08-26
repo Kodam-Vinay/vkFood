@@ -26,6 +26,7 @@ const constApiStatus = {
 
 const ResturantCardInfo = () => {
   const { id } = useParams();
+
   const [apiStaus, setApiStatus] = useState({
     status: constApiStatus.initial,
     errorMsg: "",
@@ -33,8 +34,7 @@ const ResturantCardInfo = () => {
     data: {},
   });
   const isMobile = useDeviceCheck();
-
-  let geoLocation = JSON.parse(localStorage.getItem("geoLactions"));
+  let geoLocation = JSON.parse(localStorage.getItem("menuItem"));
   if (geoLocation === null) {
     geoLocation = {
       lat: 17.360589,
