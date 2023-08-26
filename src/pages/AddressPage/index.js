@@ -6,7 +6,7 @@ import OrderDetailsContext from "../../context/OrderDetailsContext";
 import CartContext from "../../context/CartContext";
 
 const AdressPage = () => {
-  const { setUserAdress } = useContext(OrderDetailsContext);
+  const { setUserAdress, paymentMode } = useContext(OrderDetailsContext);
   const { setCartItemList } = useContext(CartContext);
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -38,9 +38,17 @@ const AdressPage = () => {
 
   return (
     <div className="p-2 flex flex-col w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 space-y-3">
-      <h1 className="font-bold text-xl md:text-3xl">Cash On Delivery</h1>
+      <div className="flex flex-col md:flex-rowitems-center justify-between">
+        <h1 className="font-bold text-xl md:text-3xl">Enter Your Address</h1>
+        <p>
+          Payment Mode:{" "}
+          <span className="text-[#93c5fd] font-bold text-lg">
+            {paymentMode}
+          </span>
+        </p>
+      </div>
       <p className="text-red-500 animate-pulse">
-        *Data is not stored, so don't enter your personal Details
+        *Data is not stored, don't enter your personal Details
       </p>
       <form className="space-y-3 w-full" onSubmit={onSubmitDetails}>
         <div className="flex flex-col items-center md:flex-row space-y-2 md:space-y-0 md:space-x-10">

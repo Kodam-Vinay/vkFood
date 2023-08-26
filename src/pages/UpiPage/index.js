@@ -20,7 +20,7 @@ const UpiPage = () => {
       <div className="flex flex-col md:flex-row justify-between items-center text-center mb-4">
         <h1 className="font-bold text-xl md:text-3xl">UPI</h1>
         <p className="text-red-500 animate-pulse">
-          *Data is not stored, so don't enter your personal Details
+          *Data is not stored, don't enter your personal Details
         </p>
       </div>
       <form

@@ -13,7 +13,7 @@ const OrderSuccessfulPage = () => {
       {orderTotalRupees && paymentMode && userAddress ? (
         <>
           <p className="text-red-500 animate-pulse">
-            *Data is not stored, so don't enter your personal Details
+            *Data is not stored, don't enter your personal Details
           </p>
           <h1 className="font-bold text-xl md:text-3xl">
             Hello, {userAddress.name}
