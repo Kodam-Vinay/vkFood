@@ -35,6 +35,7 @@ const UpiPage = () => {
           required={true}
         />
         <ReusableButton
+          type="submit"
           value="Submit"
           className="hover:bg-blue-300 hover:text-white border mt-2 font-bold"
         />
