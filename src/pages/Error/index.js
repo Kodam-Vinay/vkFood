@@ -1,9 +1,10 @@
-import { useRouteError, Link } from "react-router-dom";
+import { useRouteError, Link, useNavigate } from "react-router-dom";
 import ReusableButton from "../../utils/ReusableButton";
 import { CLOUDINARY_IMG_URL } from "../../config/Constants";
 
 const Error = () => {
   const errorMsg = useRouteError();
+  const navigate = useNavigate();
   const { status } = errorMsg;
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-5">
@@ -24,9 +25,7 @@ const Error = () => {
           type="button"
           value="Home"
           className="hover:bg-blue-400 hover:text-white font-[600] text-base md:text-xl"
-          onClick={() =>
-            sessionStorage.setItem("activeId", JSON.stringify("home"))
-          }
+          onClick={() => navigate("/")}
         />
       </Link>
     </div>

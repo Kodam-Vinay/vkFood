@@ -4,7 +4,6 @@ import "./App.css";
 import Header from "./components/Header";
 
 import CartContext from "./context/CartContext";
-import useNavigationLink from "./utils/useNavigationLinkSessionStorage";
 import NavigationContext from "./context/NavigationContext";
 
 import CartLogoWithCount from "./components/CartLogoWithCount";
@@ -65,7 +64,7 @@ const RenderLayout = () => {
   const storeData = () => {
     localStorage.setItem("cartList", JSON.stringify(cartItemsList));
   };
-  useNavigationLink(activeId);
+
   const onClickMinus = (id) => {
     const updatedList = cartItemsList.map((eachItem) => {
       if (eachItem.id === id) {

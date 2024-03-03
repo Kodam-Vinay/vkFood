@@ -61,7 +61,7 @@ const Header = () => {
               !hamburgerClicked ? "hidden" : "block"
             } self-end mb-4`}
           >
-            <AiOutlineClose color="red" />
+            <AiOutlineClose color="black" />
           </button>
           <ul className="links bg-red-400 px-5 py-2">
             {navigationLinks.map((eachItem) => (

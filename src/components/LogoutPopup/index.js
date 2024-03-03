@@ -13,7 +13,6 @@ const LogoutPopup = () => {
     Cookies.remove("jwtToken");
     navigate("/login");
     sessionStorage.removeItem("apiData");
-    sessionStorage.setItem("activeId", JSON.stringify("home"));
   };
 
   return (

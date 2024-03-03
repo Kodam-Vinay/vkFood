@@ -16,7 +16,7 @@ const Login = () => {
   }
 
   return (
-    <div className="login bg-[#93c5fd] h-full w-full">
+    <div className="login bg-red-700 h-full w-full">
       <div className="absolute -top-16 -left-20">
         <img
           src={CLOUDINARY_IMG_URL + "login-logo.webp"}
@@ -31,6 +31,10 @@ const Login = () => {
           alt="website-logo"
           className="w-12 h-12 md:w-14 md:h-14 mb-6"
         />
+        <p className="mb-4 font-bold text-white">
+          <span className="italic font-[500] mr-1">Order Food</span> With Just
+          One Click...
+        </p>
         <GoogleLogin
           onSuccess={(credentialResponse) => {
             setCredentials(credentialResponse.credential);
