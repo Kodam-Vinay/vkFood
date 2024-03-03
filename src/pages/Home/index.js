@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import { CLOUDINARY_IMG_URL } from "../../config/Constants";
 import ReusableButton from "../../utils/ReusableButton";
-import { useContext } from "react";
-import NavigationContext from "../../context/NavigationContext";
 
 import UserDetails from "../../utils/UserDetails";
 import Footer from "../../components/Footer";
 const Home = () => {
-  const { setActiveId } = useContext(NavigationContext);
   const user = UserDetails();
   return (
     <div className="home flex flex-col h-[90%]">
@@ -18,13 +15,12 @@ const Home = () => {
         <img
           src={CLOUDINARY_IMG_URL + "delivery-boy-home-page"}
           alt="homePageLogo"
-          className="max-w-[300px] self-center"
+          className="max-w-[240px] md:max-w-[300px] self-center"
         />
         <Link to="explore-food" className="self-center">
           <ReusableButton
             value="Explore Food"
-            className="hover:bg-blue-400 hover:text-white "
-            onClick={() => setActiveId("explore")}
+            className="hover:bg-red-700 hover:text-white add-animation"
           />
         </Link>
       </div>

@@ -1,36 +1,17 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Outlet, RouterProvider } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
-import Contact from "./pages/Contact";
-import Error from "./pages/Error";
-import Cart from "./pages/Cart";
-import ResturantCardInfo from "./pages/ResturantCardInfo";
+
 import CartContext from "./context/CartContext";
 import useNavigationLink from "./utils/useNavigationLinkSessionStorage";
 import NavigationContext from "./context/NavigationContext";
-import Login from "./pages/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
-import LoginRoute from "./components/LoginRoute";
-import { BallTriangle } from "react-loader-spinner";
+
 import CartLogoWithCount from "./components/CartLogoWithCount";
 import AddToCartContext from "./context/AddToCartContext";
-import Payment from "./pages/Payment";
-import UpiPage from "./pages/UpiPage";
-import CardPage from "./pages/CardPage";
-import PaymentRoute from "./components/PaymentRoute";
-import CodPage from "./pages/CodPage";
-import AddressPage from "./pages/AddressPage";
+
 import OrderDetailsContext from "./context/OrderDetailsContext";
-
-const Home = lazy(async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return import("./pages/Home");
-});
-
-const OrderSuccessfulPage = lazy(() => import("./pages/OrderSuccessfulPage"));
-
-const Explore = lazy(() => import("./pages/Explore"));
+import ReactRouter from "./components/ReactRouter";
 
 const navigationLinks = [
   {
@@ -113,11 +94,11 @@ const RenderLayout = () => {
   };
 
   const onClickAdd = (id, menuDetails) => {
-    const result = cartItemsList.find((eachItem) => eachItem.id === id);
+    const result = cartItemsList?.find((eachItem) => eachItem.id === id);
     if (result) {
-      const newCount = result.ItemsInCart + 1;
-      const updatedList = cartItemsList.map((eachItem) => {
-        if (eachItem.id === id) {
+      const newCount = result?.ItemsInCart + 1;
+      const updatedList = cartItemsList?.map((eachItem) => {
+        if (eachItem?.id === id) {
           return { ...eachItem, ItemsInCart: newCount };
         }
         return eachItem;
@@ -165,7 +146,7 @@ const RenderLayout = () => {
             }}
           >
             <div
-              className="h-[93vh] sm:h-[99vh] flex flex-col apply-font"
+              className="h-[93vh] sm:h-[99vh] flex flex-col apply-font overflow-hidden"
               onContextMenu={onClickContextMenu}
             >
               <Header />
@@ -180,153 +161,7 @@ const RenderLayout = () => {
 };
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <ProtectedRoute>
-          <RenderLayout />
-        </ProtectedRoute>
-      ),
-      errorElement: <Error />,
-      children: [
-        {
-          path: "/",
-          element: (
-            <ProtectedRoute>
-              <Suspense
-                fallback={
-                  <div className="h-[80vh] flex flex-col items-center justify-center">
-                    <BallTriangle />
-                  </div>
-                }
-              >
-                <Home />
-              </Suspense>
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "contact",
-          element: (
-            <ProtectedRoute>
-              <Contact />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "explore-food",
-          children: [
-            {
-              path: "",
-              element: (
-                <ProtectedRoute>
-                  <Suspense fallback={<h1>Loading.....</h1>}>
-                    <Explore />
-                  </Suspense>
-                </ProtectedRoute>
-              ),
-            },
-            {
-              path: ":id",
-              element: (
-                <ProtectedRoute>
-                  <ResturantCardInfo />
-                </ProtectedRoute>
-              ),
-            },
-          ],
-        },
-        {
-          path: "cart",
-          element: (
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "payment",
-          children: [
-            {
-              path: "",
-              element: (
-                <PaymentRoute>
-                  <Suspense
-                    fallback={
-                      <div className="h-[80vh] flex flex-col items-center justify-center">
-                        <h1 className="text-xl font-bold">
-                          Payment Section is Loading....
-                        </h1>
-                      </div>
-                    }
-                  >
-                    <Payment />
-                  </Suspense>
-                </PaymentRoute>
-              ),
-            },
-            {
-              path: "address",
-              element: (
-                <PaymentRoute>
-                  <AddressPage />
-                </PaymentRoute>
-              ),
-            },
-            {
-              path: "upi",
-              element: (
-                <PaymentRoute>
-                  <UpiPage />
-                </PaymentRoute>
-              ),
-            },
-            {
-              path: "card",
-              element: (
-                <PaymentRoute>
-                  <CardPage />
-                </PaymentRoute>
-              ),
-            },
-            {
-              path: "cod",
-              element: (
-                <PaymentRoute>
-                  <CodPage />
-                </PaymentRoute>
-              ),
-            },
-            {
-              path: "successful",
-              element: (
-                <ProtectedRoute>
-                  <Suspense
-                    fallback={
-                      <div className="h-[80vh] flex flex-col items-center justify-center">
-                        <BallTriangle />
-                      </div>
-                    }
-                  >
-                    <OrderSuccessfulPage />
-                  </Suspense>
-                </ProtectedRoute>
-              ),
-            },
-          ],
-        },
-      ],
-    },
-    {
-      path: "/login",
-      element: (
-        <LoginRoute>
-          <Login />
-        </LoginRoute>
-      ),
-    },
-  ]);
+  const router = ReactRouter({ RenderLayout });
   return <RouterProvider router={router} />;
 }
 

@@ -13,6 +13,8 @@ const constApiStatus = {
 };
 
 const Contact = () => {
+  const isMessageSent = JSON.parse(sessionStorage.getItem("messageSend"));
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
@@ -63,6 +65,7 @@ const Contact = () => {
           setEmail("");
           setTitle("");
           setMessage("");
+          JSON.stringify(sessionStorage.setItem("messageSend", true));
         } else {
           setApiStatus((prev) => ({
             ...prev,
@@ -84,7 +87,7 @@ const Contact = () => {
           <ReusableButton
             type="submit"
             value="Send 📩"
-            className="px-3 mt-2 w-32 border-2"
+            className="px-3 mt-2 w-32 border-2 add-animation hover:bg-red-700 hover:text-white"
           />
         );
       case constApiStatus.success:
@@ -92,7 +95,7 @@ const Contact = () => {
           <ReusableButton
             type="submit"
             value="Success ✅"
-            className="px-3 mt-2 bg-green-300 w-32 text-white border-2"
+            className="px-3 mt-2 bg-green-300 w-32 text-white border-2 add-animation hover:bg-red-700 hover:text-white"
             isDisabledTrue={true}
           />
         );
@@ -101,14 +104,14 @@ const Contact = () => {
           <ReusableButton
             type="submit"
             value="Fail ❌"
-            className="px-3 mt-2 bg-red-400 w-32 text-white border-2"
+            className="px-3 mt-2 bg-red-400 w-32 text-white border-2 add-animation hover:bg-red-700 hover:text-white"
           />
         );
       case constApiStatus.inProgress:
         return (
           <ReusableButton
             type="submit"
-            className="px-2 flex flex-col items-center justify-center w-32 border-2"
+            className="px-2 flex flex-col items-center justify-center w-32 border-2 add-animation hover:bg-red-700 hover:text-white"
             value={
               <ThreeDots
                 height="30"
@@ -135,37 +138,37 @@ const Contact = () => {
           <form onSubmit={onSubmitForm} className="space-y-3 order-2">
             <div className="space-y-3 md:space-y-0 md:flex md:space-x-3">
               <ReusableInput
-                className="focus:border-blue-400 border-2"
+                className="focus:border-red-400 border-2"
                 type="text"
                 placeholder="Name"
                 onChange={(event) => setName(event.target.value)}
                 value={name}
-                isDisabledTrue={apiStatus.status === constApiStatus.success}
+                isDisabledTrue={isMessageSent}
               />
               <ReusableInput
-                className="focus:border-blue-400 border-2"
+                className="focus:border-red-400 border-2"
                 type="email"
                 placeholder="Email"
                 onChange={(event) => setEmail(event.target.value)}
                 value={email}
-                isDisabledTrue={apiStatus.status === constApiStatus.success}
+                isDisabledTrue={isMessageSent}
               />
             </div>
             <ReusableInput
-              className="focus:border-blue-400 border-2"
+              className="focus:border-red-400 border-2"
               type="text"
               placeholder="Title"
               onChange={(event) => setTitle(event.target.value)}
               value={title}
-              isDisabledTrue={apiStatus.status === constApiStatus.success}
+              isDisabledTrue={isMessageSent}
             />
             <textarea
-              className="bg-transparent border-2 p-2 w-full focus:border-blue-400 rounded-md"
+              className="bg-transparent border-2 p-2 w-full focus:outline-red-400 rounded-md"
               rows={5}
               placeholder="Message"
               onChange={(event) => setMessage(event.target.value)}
               value={message}
-              disabled={apiStatus.status === constApiStatus.success}
+              disabled={isMessageSent}
             />
             {renderButton()}
             <p className="text-red-500">

@@ -13,7 +13,8 @@ const CartLogoWithCount = () => {
       {isAddClicked ? (
         <MdFastfood
           size={20}
-          color="red"
+          color="yellow"
+          stroke="green"
           className="add-animation-cart-icon absolute -mt-4"
         />
       ) : (

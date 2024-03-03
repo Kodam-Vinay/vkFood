@@ -12,6 +12,7 @@ const ReusableInput = (props) => {
     required,
     minLength,
     onFocus,
+    isDisabledTrue,
   } = props;
   return (
     <input
@@ -27,6 +28,7 @@ const ReusableInput = (props) => {
       required={required}
       minLength={minLength}
       onFocus={onFocus}
+      disabled={isDisabledTrue}
     />
   );
 };

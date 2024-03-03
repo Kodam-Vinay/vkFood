@@ -46,12 +46,12 @@ const AdressPage = () => {
       </div>
       <p>
         Payment Mode:{" "}
-        <span className="text-[#93c5fd] font-bold text-lg">{paymentMode}</span>
+        <span className="text-red-500 font-bold text-lg">{paymentMode}</span>
       </p>
       <form className="space-y-3 w-full" onSubmit={onSubmitDetails}>
         <div className="flex flex-col items-center md:flex-row space-y-2 md:space-y-0 md:space-x-10">
           <ReusableInput
-            className="focus:border-blue-400 border-2"
+            className="focus:border-red-400 border-2"
             type="text"
             onChange={(event) => {
               setName(event.target.value);
@@ -62,7 +62,7 @@ const AdressPage = () => {
           />
           <ReusableInput
             type="tel"
-            className="focus:border-blue-400 border-2"
+            className="focus:border-red-400 border-2"
             onChange={(event) => {
               setMobileNumber((v) =>
                 event.target.validity.valid ? event.target.value : ""
@@ -77,7 +77,7 @@ const AdressPage = () => {
         </div>
         <div className="flex flex-col items-center md:flex-row space-y-2 md:space-y-0 md:space-x-10">
           <ReusableInput
-            className="focus:border-blue-400 border-2"
+            className="focus:border-red-400 border-2"
             type="tel"
             onChange={(event) => {
               setPinCode((v) =>
@@ -91,7 +91,7 @@ const AdressPage = () => {
             required={true}
           />
           <ReusableInput
-            className="focus:border-blue-400 border-2"
+            className="focus:border-red-400 border-2"
             type="text"
             onChange={(event) => {
               setLocality(event.target.value);
@@ -102,7 +102,7 @@ const AdressPage = () => {
           />
         </div>
         <textarea
-          className="bg-transparent p-2 w-full focus:border-blue-400 border-2 rounded-md"
+          className="bg-transparent p-2 w-full focus:outline-red-400 border-2 rounded-md"
           rows={5}
           placeholder="Enter Your Adress (Area And Street)"
           value={address}
@@ -111,7 +111,11 @@ const AdressPage = () => {
           }}
           required={true}
         />
-        <ReusableButton type="submit" value="Place Order" />
+        <ReusableButton
+          type="submit"
+          value="Place Order"
+          className="hover:bg-red-700 hover:text-white add-animation"
+        />
         <p className="text-red-500">
           {errMsg ? "*Please Provide all valid Details" : ""}
         </p>

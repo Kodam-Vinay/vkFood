@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import "./style.css";
@@ -9,26 +9,29 @@ import UserDetails from "../../utils/UserDetails";
 import LogoutPopup from "../LogoutPopup";
 import { CLOUDINARY_IMG_URL } from "../../config/Constants";
 const Header = () => {
+  const navigate = useNavigate();
   const { activeId, setActiveId, navigationLinks } =
     useContext(NavigationContext);
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
-  const onClickNavigationLink = (id) => {
-    setActiveId(id);
-    setHamburgerClicked(false);
-  };
+
+  const activenavigationLink = useLocation();
+
+  useEffect(() => {
+    setActiveId(activenavigationLink?.pathname);
+  }, [activenavigationLink?.pathname]);
+
   const user = UserDetails();
   return (
-    <nav className="header bg-blue-300 flex justify-between items-center h-[10vh] px-2 xs:px-6 sm:px-10 md:px-20 sticky z-10">
-      <Link to="/">
-        <img
-          src={CLOUDINARY_IMG_URL + "web-logo"}
-          alt="website-logo"
-          onClick={() => setActiveId("home")}
-          className="w-12 h-12 md:w-14 md:h-14"
-        />
-      </Link>
+    <nav className="header bg-red-700 flex justify-between items-center h-[10vh] px-2 xs:px-6 sm:px-10 md:px-20 sticky z-10">
+      <img
+        src={CLOUDINARY_IMG_URL + "web-logo"}
+        alt="website-logo"
+        className="w-12 h-12 md:w-14 md:h-14 cursor-pointer"
+        onClick={() => navigate("/")}
+      />
+
       {/* small screen */}
-      <div className="flex items-center w-14 justify-between md:hidden">
+      <div className="flex items-center w-14 justify-between md:hidden ">
         {user.picture ? (
           <img
             src={user.picture}
@@ -60,13 +63,12 @@ const Header = () => {
           >
             <AiOutlineClose color="red" />
           </button>
-          <ul className="links bg-gray-200 px-5 py-2">
+          <ul className="links bg-red-400 px-5 py-2">
             {navigationLinks.map((eachItem) => (
               <NaviagationLink
                 key={eachItem.id}
                 navigationList={eachItem}
-                onClickNavigationLink={onClickNavigationLink}
-                isActive={eachItem.id === activeId}
+                isActive={eachItem.route === activeId}
               />
             ))}
             <li className="add-animation-to-link font-[600] h-9 cursor-pointer">
@@ -95,8 +97,7 @@ const Header = () => {
             <NaviagationLink
               key={eachItem.id}
               navigationList={eachItem}
-              onClickNavigationLink={onClickNavigationLink}
-              isActive={eachItem.id === activeId}
+              isActive={eachItem.route === activeId}
             />
           ))}
           <li className="add-animation-to-link font-[600] h-9 cursor-pointer">

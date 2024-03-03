@@ -31,13 +31,13 @@ const UpiPage = () => {
           value={upiId}
           onChange={(e) => setUpiId(e.target.value)}
           placeholder="Enter Your Upi"
-          className="focus:border-blue-400 border-2"
+          className="focus:border-red-400 border-2"
           required={true}
         />
         <ReusableButton
           type="submit"
           value="Submit"
-          className="hover:bg-blue-300 hover:text-white border mt-2 font-bold"
+          className="hover:bg-red-700 hover:text-white border mt-2 font-bold add-animation"
         />
         {isDetailsEntered && <CaptchaCode className="mt-2 mb-2" />}
       </form>

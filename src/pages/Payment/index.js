@@ -57,10 +57,16 @@ const Payment = () => {
       </ul>
       <div className="flex self-center md:self-end space-x-2">
         <Link to="/cart">
-          <ReusableButton value="Cancel" className="w-fit  add-animation" />
+          <ReusableButton
+            value="Cancel"
+            className="w-fit add-animation hover:bg-red-500 hover:text-white"
+          />
         </Link>
         <Link to={`${activePayment}`}>
-          <ReusableButton value="Proceed" className="w-fit  add-animation" />
+          <ReusableButton
+            value="Proceed"
+            className="w-fit add-animation hover:bg-green-500 hover:text-white"
+          />
         </Link>
       </div>
     </div>

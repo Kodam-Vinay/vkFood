@@ -103,17 +103,17 @@ const CardPage = () => {
               pattern="[0-9]*"
               onFocus={(event) => setFocus(event.target.name)}
               maxLength={4}
-              className="focus:border-blue-400 border-2 w-1/2 text-xs md:text-base"
+              className="focus:border-red-400 border-2 w-1/2 text-xs md:text-base"
             />
           </div>
           <ReusableButton
             type="submit"
             value="Submit"
-            className="hover:bg-blue-300 hover:text-white border mt-2 text-gray-400"
+            className="hover:bg-red-700 hover:text-white border mt-2 text-gray-400 add-animation"
           />
         </form>
       </div>
-      {isDetailsEntered ? <CaptchaCode className="mt-2 mb-2" /> : null}
+      {isDetailsEntered ? <CaptchaCode className="mt-2 mb-2 " /> : null}
     </div>
   );
 };

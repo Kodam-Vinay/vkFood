@@ -27,20 +27,18 @@ const constApiStatus = {
 
 const Explore = () => {
   const storedData = JSON.parse(sessionStorage.getItem("apiData"));
-  const [cityName, setCityName] = useState(
-    storedData !== null ? storedData.cityName : ""
-  );
+
   const [autoLocation, setAutoLocation] = useState({
     lat: "",
     lon: "",
   });
-  const autoCityName = useAutoLocationPlace();
+
   const [isAutoClicked, setIsAutoClicked] = useState(false);
   const [isSearchEmpty, setSearchEmpty] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
-  const [apiStaus, setApiStatus] = useState(
+  const [apiStatus, setApiStatus] = useState(
     storedData !== null
-      ? storedData.apiStaus
+      ? storedData?.apiStatus
       : {
           status: constApiStatus.initial,
           errorMsg: "",
@@ -48,6 +46,23 @@ const Explore = () => {
           data: [],
         }
   );
+
+  const [cityName, setCityName] = useState(
+    apiStatus?.cityName !== "" ? apiStatus?.cityName : ""
+  );
+
+  const autoCityName = useAutoLocationPlace({
+    isAutoLocationClicked: isAutoClicked,
+    setIsAutoClicked: setIsAutoClicked,
+  });
+
+  useEffect(() => {
+    setCityName(apiStatus?.cityName);
+  }, [apiStatus?.cityName]);
+
+  useEffect(() => {
+    if (isAutoClicked) setCityName(autoCityName);
+  }, [isAutoClicked]);
 
   const geoLocations = useGeoLocations(
     cityName,
@@ -57,14 +72,21 @@ const Explore = () => {
     searchClicked
   );
 
-  sessionStorage.setItem(
-    "apiData",
-    JSON.stringify({ apiStaus, geoLocations, cityName })
-  );
+  useEffect(() => {
+    sessionStorage.setItem(
+      "apiData",
+      JSON.stringify({ apiStatus, geoLocations })
+    );
+  }, [apiStatus, geoLocations, searchClicked]);
 
   const isMobile = useDeviceCheck();
   useEffect(() => {
-    getData();
+    if (
+      (autoLocation.lat !== "" && autoLocation.lon !== "") ||
+      (geoLocations.lat !== "" && geoLocations.lon !== "")
+    ) {
+      getData();
+    }
     // eslint-disable-next-line
   }, [geoLocations, autoLocation]);
 
@@ -74,17 +96,13 @@ const Explore = () => {
   };
 
   const onClickAutoLoaction = async () => {
+    AutoLocation();
     setIsAutoClicked(true);
     setSearchClicked(false);
-    setCityName(autoCityName);
-    AutoLocation();
     const result = JSON.parse(localStorage.getItem("autoLocation"));
-    setAutoLocation(result);
-  };
-
-  const onChangeCityName = (event) => {
-    setSearchClicked(false);
-    setCityName(event.target.value);
+    if (result !== null) {
+      setAutoLocation(result);
+    }
   };
 
   const getData = async () => {
@@ -176,10 +194,10 @@ const Explore = () => {
 
   const SuccessView = () => (
     <>
-      {apiStaus?.data?.length > 0 ? (
+      {apiStatus?.data?.length > 0 ? (
         <ul className="p-1 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap w-full space-y-3 h-full">
           <li></li>
-          {apiStaus?.data?.map((each) => (
+          {apiStatus?.data?.map((each) => (
             <EachRestaurantCard
               key={each.info.id}
               restaurantList={each?.info}
@@ -204,12 +222,12 @@ const Explore = () => {
   const FailureView = () => (
     <div className="flex flex-col items-center justify-center h-full w-full">
       <NoCityFound />
-      <p className="text-xl font-bold mt-4">{apiStaus.errorMsg}</p>
+      <p className="text-xl font-bold mt-4">{apiStatus.errorMsg}</p>
     </div>
   );
 
   const RenderResults = () => {
-    switch (apiStaus.status) {
+    switch (apiStatus.status) {
       case constApiStatus.inProgress:
         return <Shimmer />;
       case constApiStatus.success:
@@ -234,13 +252,16 @@ const Explore = () => {
               type="search"
               className="p-1 pb-2 w-full max-w-[250px] border-0"
               placeholder="Enter A City Name"
-              onChange={onChangeCityName}
+              onChange={(e) => {
+                setSearchClicked(false);
+                setCityName(e.target.value);
+              }}
               onKeyDown={(e) => (e.key === "Enter" ? onClickSearch() : null)}
               value={cityName}
             />
             <ReusableButton
               value={<FaSearch />}
-              className={`h-10 border flex flex-col items-center justify-center border-gray-400 border-r-0 border-b-0 border-t-0 hover:bg-blue-300 ${
+              className={`h-10 border flex flex-col items-center justify-center border-gray-400 border-r-0 border-b-0 border-t-0 hover:bg-red-700 hover:text-white ${
                 searchClicked && isSearchEmpty
                   ? "border-red-600 border-2"
                   : null
@@ -257,16 +278,16 @@ const Explore = () => {
                 <BiCurrentLocation />
               </>
             }
-            className={`h-10 border flex flex-row items-center justify-center ml-2 hover:bg-blue-300 hover:text-white`}
+            className={`h-10 border flex flex-row items-center justify-center ml-2 hover:bg-red-700 hover:text-white`}
             onClick={onClickAutoLoaction}
           />
         </div>
-        {apiStaus?.status === constApiStatus?.success ? (
+        {apiStatus?.status === constApiStatus?.success ? (
           <p className="text-center sm:m-auto flex items-center justify-center my-2 font-bold capitalize">
             <MdLocationPin />
-            {apiStaus.cityName}
+            {apiStatus.cityName}
           </p>
-        ) : apiStaus?.status === constApiStatus?.inProgress ? (
+        ) : apiStatus?.status === constApiStatus?.inProgress ? (
           <p className="text-center sm:mx-auto flex items-center justify-center">
             <ProgressBar
               height="40"

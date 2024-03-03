@@ -22,7 +22,7 @@ const CaptchaCode = ({ className }) => {
         )}
         <ReusableInput
           onChange={onChnageInput}
-          className="mb-5 w-52"
+          className="mb-5 w-52 focus:border-red-400"
           placeholder="Enter Above code"
         />
       </div>
@@ -32,7 +32,7 @@ const CaptchaCode = ({ className }) => {
           className={`rounded-md w-52 ${
             randomNumber !== number
               ? "bg-gray-500"
-              : "hover:bg-blue-300 hover:text-white border"
+              : "hover:bg-red-700 hover:text-white border add-animation"
           }`}
           disabled={randomNumber !== number}
         />

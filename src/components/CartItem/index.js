@@ -31,10 +31,11 @@ const CartItem = (props) => {
         title={name}
         className="h-24 rounded-md w-24 self-center sm:h-36 sm:w-36 shadow-sm shadow-black mr-5"
       />
+      <label></label>
       <div className="h-full w-full">
         <div className="space-y-2">
           <div className="flex items-center justify-between px-2">
-            <p className="font-[600] sm:font-bold text-sm sm:text-xl text-blue-300">
+            <p className="font-[600] sm:font-bold text-sm sm:text-xl text-red-500">
               {name}
             </p>
             <ReusableButton
@@ -55,7 +56,7 @@ const CartItem = (props) => {
               onClick={onClickDecrease}
               disabled={ItemsInCart < 2}
             />
-            <p className="mb-2 text-sm sm:text-xl font-bold text-blue-300">
+            <p className="mb-2 text-sm sm:text-xl font-bold text-red-500">
               {ItemsInCart}
             </p>
             <ReusableButton

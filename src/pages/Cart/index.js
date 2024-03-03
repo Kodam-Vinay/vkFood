@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
-import NavigationContext from "../../context/NavigationContext";
 import "./style.css";
 import CartItem from "../../components/CartItem";
 import { v4 as uuidV4 } from "uuid";
@@ -14,7 +13,7 @@ import TotalPriceCalucation from "../../utils/TotalPrice";
 
 const Cart = () => {
   const { cartItemsList, setCartItemList } = useContext(CartContext);
-  const { setActiveId } = useContext(NavigationContext);
+
   const onClickRemoveAll = () => {
     setCartItemList([]);
   };
@@ -37,7 +36,6 @@ const Cart = () => {
           <ReusableButton
             value="Go To Explore"
             className="hover:bg-blue-300 hover:text-white"
-            onClick={() => setActiveId("explore")}
           />
         </Link>
       </div>
@@ -47,7 +45,7 @@ const Cart = () => {
   const renderResults = () => (
     <div className="w-full h-full p-2 flex flex-col">
       <h1 className="font-bold text-xl mb-3 self-end flex items-center">
-        <span className="border-0 text-blue-300 flex items-center">Total:</span>
+        <span className="border-0 text-red-500 flex items-center">Total:</span>
         <span className="flex items-center ml-2">
           <FaRupeeSign />
           {TotalPrice}
@@ -69,7 +67,7 @@ const Cart = () => {
           {cartItemsList.length > 0 && (
             <ReusableButton
               value="Remove All"
-              className="font-[500] border-0 text-blue-300"
+              className="font-[500] border-0 text-red-500"
               onClick={onClickRemoveAll}
             />
           )}
@@ -85,18 +83,17 @@ const Cart = () => {
             >
               <ReusableButton
                 value="CheckOut"
-                className="font-[500] text-blue-300 border-0 hidden md:block"
+                className="font-[500] text-red-500 border-0 hidden md:block"
               />
               <MdShoppingCartCheckout />
             </Link>
             <Link
               to="/explore-food"
               className="flex items-center border rounded-md add-animation p-1 h-fit px-10 py-5 md:px-2 md:py-0"
-              onClick={() => setActiveId("explore")}
             >
               <ReusableButton
                 value="Add More Items"
-                className="font-[500] text-blue-300 border-0 hidden md:block"
+                className="font-[500] text-red-500 border-0 hidden md:block"
               />
               <AiOutlinePlus />
             </Link>

@@ -3,11 +3,9 @@ import { FaRupeeSign } from "react-icons/fa";
 import OrderDetailsContext from "../../context/OrderDetailsContext";
 import ReusableButton from "../../utils/ReusableButton";
 import { Link } from "react-router-dom";
-import NavigationContext from "../../context/NavigationContext";
 const OrderSuccessfulPage = () => {
   const { paymentMode, userAddress, orderTotalRupees, cardNumber } =
     useContext(OrderDetailsContext);
-  const { setActiveId } = useContext(NavigationContext);
   return (
     <div className="p-2 flex flex-col w-full h-[85%] xs:px-5 sm:px-10 md:px-40 lg:px-52 xl:px-80 space-y-3">
       {orderTotalRupees && paymentMode && userAddress ? (
@@ -47,7 +45,7 @@ const OrderSuccessfulPage = () => {
           <Link to="/explore-food">
             <ReusableButton
               value="Explore"
-              onClick={() => setActiveId("explore")}
+              className="hover:bg-red-700 hover:text-white add-animation"
             />
           </Link>
         </>
@@ -57,7 +55,7 @@ const OrderSuccessfulPage = () => {
           <Link to="/explore-food">
             <ReusableButton
               value="Explore"
-              onClick={() => setActiveId("explore")}
+              className="hover:bg-red-700 hover:text-white add-animation"
             />
           </Link>
         </>
