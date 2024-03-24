@@ -103,7 +103,6 @@ const Explore = () => {
   };
 
   const getData = async () => {
-    if (!cityName) return;
     const { lat, lon } = isAutoClicked ? autoLocation : geoLocations;
     if (lat === "" && lon === "") {
       setSearchClicked(false);
