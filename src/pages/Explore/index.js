@@ -126,6 +126,7 @@ const Explore = () => {
                 "lat=dummy1&lng=dummy2",
                 `lat=${lat}&lng=${lon}`
               );
+          console.log(apiUrl);
           const response = await fetch(apiUrl);
           if (response.ok === true) {
             const data = await response.json();
