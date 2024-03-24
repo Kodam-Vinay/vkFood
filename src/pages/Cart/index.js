@@ -35,7 +35,7 @@ const Cart = () => {
         <Link to="/explore-food">
           <ReusableButton
             value="Go To Explore"
-            className="hover:bg-blue-300 hover:text-white"
+            className="hover:bg-red-700 hover:text-white add-animation"
           />
         </Link>
       </div>
@@ -67,7 +67,7 @@ const Cart = () => {
           {cartItemsList.length > 0 && (
             <ReusableButton
               value="Remove All"
-              className="font-[500] border-0 text-red-500"
+              className="font-[500] border-0 text-red-500 add-animation"
               onClick={onClickRemoveAll}
             />
           )}

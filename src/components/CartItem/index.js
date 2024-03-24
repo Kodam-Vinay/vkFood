@@ -29,7 +29,7 @@ const CartItem = (props) => {
         }
         alt={name}
         title={name}
-        className="h-24 rounded-md w-24 self-center sm:h-36 sm:w-36 shadow-sm shadow-black mr-5"
+        className="h-[50%] rounded-md w-[40%] self-center sm:h-36 sm:w-36 shadow-sm shadow-black mr-5"
       />
       <label></label>
       <div className="h-full w-full">
@@ -66,14 +66,21 @@ const CartItem = (props) => {
             />
           </div>
         </div>
-        <p className="flex items-center text-sm sm:text-xl mt-3 p-2">
-          <FaRupeeSign />
-          <span>
-            {price
-              ? Math.round(price / 100) * ItemsInCart
-              : Math.round(defaultPrice / 100) * ItemsInCart}
-          </span>
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3 p-2">
+          <p className="flex items-center text-sm sm:text-xl mr-2">
+            <FaRupeeSign />
+            <span>{price ? Math.round(price / 100) : defaultPrice}</span>
+          </p>
+          <p className="text-xs mxs:text-sm sm:text-base">
+            {ItemsInCart > 1
+              ? `Total: Rs.${
+                  price
+                    ? Math.round(price / 100) * ItemsInCart
+                    : Math.round(defaultPrice / 100) * ItemsInCart
+                }`
+              : ""}
+          </p>
+        </div>
       </div>
     </li>
   );

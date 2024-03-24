@@ -1,10 +1,4 @@
 import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { MdLocationPin } from "react-icons/md";
-import { ProgressBar } from "react-loader-spinner";
-import { BiCurrentLocation } from "react-icons/bi";
-import ReusableInput from "../../utils/ReusableInput";
-import ReusableButton from "../../utils/ReusableButton";
 import EachRestaurantCard from "../../components/EachRestaurantCard";
 import Shimmer from "../../components/Shimmer";
 import useDeviceCheck from "../../utils/useDeviceCheck";
@@ -14,9 +8,9 @@ import {
   ALL_RESTAURANTS_API_URL_MOBILE,
   CLOUDINARY_IMG_URL,
 } from "../../config/Constants";
-import AutoLocation from "../../utils/AutoLocation";
 import useAutoLocationPlace from "../../utils/useAutoLocationPlace";
 import NoCityFound from "../../components/svgs/NoCityFound";
+import ExploreMainPage from "../../components/ExploreMainPage";
 
 const constApiStatus = {
   initial: "INITIAL",
@@ -26,16 +20,22 @@ const constApiStatus = {
 };
 
 const Explore = () => {
-  const storedData = JSON.parse(sessionStorage.getItem("apiData"));
-
+  const storedData = JSON.parse(localStorage.getItem("apiData"));
+  const checkAutoClicked = JSON.parse(localStorage.getItem("isAutoClicked"));
+  const checkSearchClicked = JSON.parse(localStorage.getItem("isAutoClicked"));
   const [autoLocation, setAutoLocation] = useState({
     lat: "",
     lon: "",
   });
-
-  const [isAutoClicked, setIsAutoClicked] = useState(false);
+  const [isAutoClicked, setIsAutoClicked] = useState(
+    checkAutoClicked !== null ? checkAutoClicked : false
+  );
   const [isSearchEmpty, setSearchEmpty] = useState(false);
-  const [searchClicked, setSearchClicked] = useState(false);
+
+  const [searchClicked, setSearchClicked] = useState(
+    checkSearchClicked !== null ? checkSearchClicked : false
+  );
+
   const [apiStatus, setApiStatus] = useState(
     storedData !== null
       ? storedData?.apiStatus
@@ -51,33 +51,30 @@ const Explore = () => {
     apiStatus?.cityName !== "" ? apiStatus?.cityName : ""
   );
 
-  const autoCityName = useAutoLocationPlace({
+  useAutoLocationPlace({
     isAutoLocationClicked: isAutoClicked,
     setIsAutoClicked: setIsAutoClicked,
+    setCityName: setCityName,
+    setAutoLocation: setAutoLocation,
   });
 
-  useEffect(() => {
-    setCityName(apiStatus?.cityName);
-  }, [apiStatus?.cityName]);
-
-  useEffect(() => {
-    if (isAutoClicked) setCityName(autoCityName);
-  }, [isAutoClicked]);
-
-  const geoLocations = useGeoLocations(
+  const geoLocations = useGeoLocations({
     cityName,
     setSearchEmpty,
     setApiStatus,
     constApiStatus,
-    searchClicked
-  );
+    searchClicked,
+    isAutoLocationClicked: isAutoClicked,
+  });
 
   useEffect(() => {
-    sessionStorage.setItem(
+    const apiStatusWithCity = { ...apiStatus, cityName: cityName };
+    localStorage.setItem(
       "apiData",
-      JSON.stringify({ apiStatus, geoLocations })
+      JSON.stringify({ apiStatus: apiStatusWithCity })
     );
-  }, [apiStatus, geoLocations, searchClicked]);
+    // eslint-disable-next-line
+  }, [searchClicked, isAutoClicked, apiStatus?.success]);
 
   const isMobile = useDeviceCheck();
   useEffect(() => {
@@ -93,19 +90,20 @@ const Explore = () => {
   const onClickSearch = async () => {
     setSearchClicked(true);
     setIsAutoClicked(false);
+    JSON.stringify(localStorage.setItem("isAutoClicked", false));
+    JSON.stringify(localStorage.setItem("isSearchCliked", true));
   };
 
-  const onClickAutoLoaction = async () => {
-    AutoLocation();
+  const onClickAutoLocation = () => {
+    setCityName("");
     setIsAutoClicked(true);
     setSearchClicked(false);
-    const result = JSON.parse(localStorage.getItem("autoLocation"));
-    if (result !== null) {
-      setAutoLocation(result);
-    }
+    JSON.stringify(localStorage.setItem("isAutoClicked", true));
+    JSON.stringify(localStorage.setItem("isSearchCliked", false));
   };
 
   const getData = async () => {
+    if (!cityName) return;
     const { lat, lon } = isAutoClicked ? autoLocation : geoLocations;
     if (lat === "" && lon === "") {
       setSearchClicked(false);
@@ -119,67 +117,73 @@ const Explore = () => {
           status: constApiStatus.inProgress,
         }));
         let apiUrl = "";
-        apiUrl = isMobile
-          ? ALL_RESTAURANTS_API_URL_MOBILE.replace(
-              "lat=dummy1&lng=dummy2",
-              `lat=${lat}&lng=${lon}`
-            )
-          : ALL_RESTAURANTS_API_URL_DESKTOP.replace(
-              "lat=dummy1&lng=dummy2",
-              `lat=${lat}&lng=${lon}`
-            );
-        const response = await fetch(apiUrl);
-        if (response.ok === true) {
-          const data = await response.json();
-          if (isMobile) {
-            if (
-              data?.data?.success?.cards[4]?.gridWidget?.gridElements
-                ?.infoWithStyle?.restaurants
-            ) {
-              setApiStatus((prev) => ({
-                ...prev,
-                data: data?.data?.success?.cards[4]?.gridWidget?.gridElements
-                  ?.infoWithStyle?.restaurants,
-                cityName: cityName,
-                status: constApiStatus.success,
-              }));
+        if (cityName !== "") {
+          apiUrl = isMobile
+            ? ALL_RESTAURANTS_API_URL_MOBILE.replace(
+                "lat=dummy1&lng=dummy2",
+                `lat=${lat}&lng=${lon}`
+              )
+            : ALL_RESTAURANTS_API_URL_DESKTOP.replace(
+                "lat=dummy1&lng=dummy2",
+                `lat=${lat}&lng=${lon}`
+              );
+          const response = await fetch(apiUrl);
+          if (response.ok === true) {
+            const data = await response.json();
+            if (isMobile) {
+              if (
+                data?.data?.success?.cards[4]?.gridWidget?.gridElements
+                  ?.infoWithStyle?.restaurants
+              ) {
+                setApiStatus((prev) => ({
+                  ...prev,
+                  data: data?.data?.success?.cards[4]?.gridWidget?.gridElements
+                    ?.infoWithStyle?.restaurants,
+                  cityName: cityName,
+                  status: constApiStatus.success,
+                  errorMsg: "",
+                }));
+              } else {
+                setApiStatus((prev) => ({
+                  ...prev,
+                  data: data?.data?.success?.cards[1]?.gridWidget?.gridElements
+                    ?.infoWithStyle?.restaurants,
+                  cityName: cityName,
+                  status: constApiStatus.success,
+                  errorMsg: "",
+                }));
+              }
             } else {
-              setApiStatus((prev) => ({
-                ...prev,
-                data: data?.data?.success?.cards[1]?.gridWidget?.gridElements
-                  ?.infoWithStyle?.restaurants,
-                cityName: cityName,
-                status: constApiStatus.success,
-              }));
+              if (
+                data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+                  ?.restaurants
+              ) {
+                setApiStatus((prev) => ({
+                  ...prev,
+                  data: data?.data?.cards[2]?.card?.card?.gridElements
+                    ?.infoWithStyle?.restaurants,
+                  cityName: cityName,
+                  status: constApiStatus.success,
+                  errorMsg: "",
+                }));
+              } else {
+                setApiStatus((prev) => ({
+                  ...prev,
+                  data: data?.data?.cards[1]?.card?.card?.gridElements
+                    ?.infoWithStyle?.restaurants,
+                  cityName: cityName,
+                  status: constApiStatus.success,
+                  errorMsg: "",
+                }));
+              }
             }
           } else {
-            if (
-              data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-                ?.restaurants
-            ) {
-              setApiStatus((prev) => ({
-                ...prev,
-                data: data?.data?.cards[2]?.card?.card?.gridElements
-                  ?.infoWithStyle?.restaurants,
-                cityName: cityName,
-                status: constApiStatus.success,
-              }));
-            } else {
-              setApiStatus((prev) => ({
-                ...prev,
-                data: data?.data?.cards[1]?.card?.card?.gridElements
-                  ?.infoWithStyle?.restaurants,
-                cityName: cityName,
-                status: constApiStatus.success,
-              }));
-            }
+            setApiStatus((prev) => ({
+              ...prev,
+              status: constApiStatus.failure,
+              errorMsg: "Please Check Your City Name Once",
+            }));
           }
-        } else {
-          setApiStatus((prev) => ({
-            ...prev,
-            status: constApiStatus.failure,
-            errorMsg: "Please Check Your City Name Once",
-          }));
         }
       } catch (error) {
         setApiStatus((prev) => ({
@@ -192,32 +196,34 @@ const Explore = () => {
     }
   };
 
-  const SuccessView = () => (
-    <>
-      {apiStatus?.data?.length > 0 ? (
-        <ul className="p-1 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap w-full space-y-3 h-full">
-          <li></li>
-          {apiStatus?.data?.map((each) => (
-            <EachRestaurantCard
-              key={each.info.id}
-              restaurantList={each?.info}
+  const SuccessView = () => {
+    return (
+      <>
+        {apiStatus?.data?.length > 0 ? (
+          <ul className="p-1 flex flex-col items-center justify-center sm:flex-row sm:flex-wrap w-full space-y-3 h-full">
+            <li></li>
+            {apiStatus?.data?.map((each) => (
+              <EachRestaurantCard
+                key={each.info.id}
+                restaurantList={each?.info}
+              />
+            ))}
+          </ul>
+        ) : (
+          <div className="h-full flex flex-col justify-center items-center">
+            <img
+              src={CLOUDINARY_IMG_URL + "delivery-availibility"}
+              alt="not available"
+              className="h-56 md:h-72 w-64 md:w-96"
             />
-          ))}
-        </ul>
-      ) : (
-        <div className="h-full flex flex-col justify-center items-center">
-          <img
-            src={CLOUDINARY_IMG_URL + "delivery-availibility"}
-            alt="not available"
-            className="h-56 md:h-72 w-64 md:w-96"
-          />
-          <p className="text-xl font-bold mt-4 text-center">
-            🥺 Sorry, Delivery is Not Available in your city
-          </p>
-        </div>
-      )}
-    </>
-  );
+            <p className="text-xl font-bold mt-4 text-center">
+              🥺 Sorry, Delivery is Not Available in your city
+            </p>
+          </div>
+        )}
+      </>
+    );
+  };
 
   const FailureView = () => (
     <div className="flex flex-col items-center justify-center h-full w-full">
@@ -240,68 +246,18 @@ const Explore = () => {
   };
 
   return (
-    <div className="p-2 h-[90%] sm:px-3 md:px-10 relative overflow-hidden">
-      <div className="flex flex-col sm:flex-row sm:items-center overflow-hidden h-[14%] md:h-[10%]">
-        <div className="flex">
-          <div
-            className={`search-city flex items-center border border-gray-400 w-fit self-center sm:self-start rounded-md ${
-              searchClicked && isSearchEmpty ? "border-red-600 border-2" : null
-            }`}
-          >
-            <ReusableInput
-              type="search"
-              className="p-1 pb-2 w-full max-w-[250px] border-0"
-              placeholder="Enter A City Name"
-              onChange={(e) => {
-                setSearchClicked(false);
-                setCityName(e.target.value);
-              }}
-              onKeyDown={(e) => (e.key === "Enter" ? onClickSearch() : null)}
-              value={cityName}
-            />
-            <ReusableButton
-              value={<FaSearch />}
-              className={`h-10 border flex flex-col items-center justify-center border-gray-400 border-r-0 border-b-0 border-t-0 hover:bg-red-700 hover:text-white ${
-                searchClicked && isSearchEmpty
-                  ? "border-red-600 border-2"
-                  : null
-              }`}
-              onClick={onClickSearch}
-            />
-          </div>
-          <ReusableButton
-            value={
-              <>
-                <span className="hidden md:block md:mr-2 font-bold">
-                  Get Current Location
-                </span>
-                <BiCurrentLocation />
-              </>
-            }
-            className={`h-10 border flex flex-row items-center justify-center ml-2 hover:bg-red-700 hover:text-white`}
-            onClick={onClickAutoLoaction}
-          />
-        </div>
-        {apiStatus?.status === constApiStatus?.success ? (
-          <p className="text-center sm:m-auto flex items-center justify-center my-2 font-bold capitalize">
-            <MdLocationPin />
-            {apiStatus.cityName}
-          </p>
-        ) : apiStatus?.status === constApiStatus?.inProgress ? (
-          <p className="text-center sm:mx-auto flex items-center justify-center">
-            <ProgressBar
-              height="40"
-              width="150"
-              borderColor="#F4442E"
-              barColor="#51E5FF"
-            />
-          </p>
-        ) : null}
-      </div>
-      <div className="main-body w-full flex flex-col mt-4 overflow-y-auto h-full pb-20">
-        <div className="mb-4">{RenderResults()}</div>
-      </div>
-    </div>
+    <ExploreMainPage
+      searchClicked={searchClicked}
+      isSearchEmpty={isSearchEmpty}
+      setSearchClicked={setSearchClicked}
+      setCityName={setCityName}
+      onClickSearch={onClickSearch}
+      RenderResults={RenderResults}
+      onClickAutoLocation={onClickAutoLocation}
+      cityName={cityName}
+      apiStatus={apiStatus}
+      constApiStatus={constApiStatus}
+    />
   );
 };
 export default Explore;

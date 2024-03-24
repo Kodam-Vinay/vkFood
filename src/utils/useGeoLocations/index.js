@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import { GEO_LOCATION_URL } from "../../config/Constants";
 
-const useGeoLocations = (
+const useGeoLocations = ({
   cityName,
   setSearchEmpty,
   setApiStatus,
   constApiStatus,
-  searchClicked
-) => {
+  searchClicked,
+  isAutoLocationClicked,
+}) => {
   useEffect(() => {
     getGeoLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchClicked]);
+  }, [searchClicked, !isAutoLocationClicked]);
 
   const [geoLocations, setGeoLocations] = useState({ lat: "", lon: "" });
   const getGeoLocation = async () => {
     if (cityName === "" && searchClicked) {
       setSearchEmpty(true);
-    } else if (cityName !== "" && searchClicked) {
+    } else if (cityName !== "" && searchClicked && !isAutoLocationClicked) {
       setSearchEmpty(false);
       setApiStatus((prev) => ({
         ...prev,
